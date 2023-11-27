@@ -1,13 +1,31 @@
-import { Module } from '@nestjs/common';
+import { DynamicModule, Module } from '@nestjs/common';
 import { AssistantService } from './assistant.service';
 import { ChatbotService } from './chatbot.service';
 import { ThreadService } from './thread.service';
+import { AiService } from './ai.service';
+import { AssistantConfig } from './assistant.model';
 
-const sharedServices = [AssistantService, ThreadService, ChatbotService];
+const sharedServices = [
+  AiService,
+  AssistantService,
+  ThreadService,
+  ChatbotService,
+];
 
 @Module({
-  imports: [],
   providers: [...sharedServices],
   exports: [...sharedServices],
 })
-export class AssistantModule {}
+export class AssistantModule {
+  static forRoot(config: AssistantConfig): DynamicModule {
+    return {
+      module: AssistantModule,
+      providers: [
+        {
+          provide: 'config',
+          useValue: config,
+        },
+      ],
+    };
+  }
+}

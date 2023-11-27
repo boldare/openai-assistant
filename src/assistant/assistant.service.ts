@@ -2,6 +2,8 @@ import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Assistant } from 'openai/resources/beta';
 import { AiService } from './ai.service';
 import { AssistantConfig } from './assistant.model';
+import { writeFile, readFile } from 'fs/promises';
+import * as envfile from 'envfile';
 
 @Injectable()
 export class AssistantService implements OnModuleInit {
@@ -40,8 +42,24 @@ export class AssistantService implements OnModuleInit {
     );
 
     this.logger.log(`Created new assistant (${assistant.id})`);
-    // @TODO: Save Assistant ID in the ENV variables
+    await this.saveAssistantId(assistant.id);
 
     return assistant;
+  }
+
+  async saveAssistantId(id: string): Promise<void> {
+    try {
+      const sourcePath = './.env';
+      const envVariables = await readFile(sourcePath);
+      const parsedVariables = envfile.parse(envVariables.toString());
+      const newVariables = {
+        ...parsedVariables,
+        ASSISTANT_ID: id,
+      };
+
+      await writeFile(sourcePath, envfile.stringify(newVariables));
+    } catch (error) {
+      this.logger.error(`Can't save save variable: ${error}`);
+    }
   }
 }

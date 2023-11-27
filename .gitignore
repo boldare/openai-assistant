@@ -42,4 +42,5 @@ lerna-debug.log*
 data
 
 .env.*
+!.env.dist
 storage

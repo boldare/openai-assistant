@@ -1,14 +1,14 @@
-import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Assistant } from 'openai/resources/beta';
-import { AiService } from './ai.service';
-import { AssistantConfig } from './assistant.model';
 import { writeFile, readFile } from 'fs/promises';
 import * as envfile from 'envfile';
+import { AiService } from './ai.service';
+import { AssistantConfig } from './assistant.model';
 
 @Injectable()
-export class AssistantService implements OnModuleInit {
+export class AssistantService {
   private readonly logger = new Logger(AssistantService.name);
-  private readonly assistants = this.aiService.openai.beta.assistants;
+  private readonly assistants = this.aiService.provider.beta.assistants;
   public assistant: Assistant;
 
   constructor(
@@ -16,21 +16,17 @@ export class AssistantService implements OnModuleInit {
     private readonly aiService: AiService,
   ) {}
 
-  async onModuleInit(): Promise<void> {
-    this.assistant = await this.init();
-  }
-
-  async init(): Promise<Assistant> {
+  async init(): Promise<void> {
     const { id, params, options } = this.config;
 
     if (!id) {
-      return this.create();
+      this.assistant = await this.create();
     }
 
     try {
-      return await this.assistants.update(id, params, options);
+      this.assistant = await this.assistants.update(id, params, options);
     } catch (e) {
-      return this.create();
+      this.assistant = await this.create();
     }
   }
 
@@ -58,7 +54,7 @@ export class AssistantService implements OnModuleInit {
 
       await writeFile(sourcePath, envfile.stringify(newVariables));
     } catch (error) {
-      this.logger.error(`Can't save save variable: ${error}`);
+      this.logger.error(`Can't save variable: ${error}`);
     }
   }
 }

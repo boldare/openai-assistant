@@ -1,12 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { AssistantModule } from './assistant/assistant.module';
-import assistantModuleOptions from './config/assistant.config';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({ load: [assistantModuleOptions] }),
-    AssistantModule.forRoot(assistantModuleOptions()),
-  ],
+  imports: [ChatModule],
 })
 export class AppModule {}

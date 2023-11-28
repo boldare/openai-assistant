@@ -3,5 +3,5 @@ import OpenAI from 'openai';
 
 @Injectable()
 export class AiService {
-  openai = new OpenAI();
+  provider = new OpenAI();
 }

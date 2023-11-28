@@ -21,15 +21,14 @@ export class AssistantService implements OnModuleInit {
   }
 
   async init(): Promise<Assistant> {
-    const assistantId = this.config.id;
+    const { id, params, options } = this.config;
 
-    if (!assistantId) {
+    if (!id) {
       return this.create();
     }
 
     try {
-      // @TODO: Retrieve and edit assistant API
-      return await this.assistants.retrieve(assistantId);
+      return await this.assistants.update(id, params, options);
     } catch (e) {
       return this.create();
     }

@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
-import { AssistantConfig } from '../assistant/assistant.model';
 import { AssistantCreateParams } from 'openai/resources/beta';
+import { AssistantConfig } from '../assistant/assistant.model';
 
 export const assistantParams: AssistantCreateParams = {
   name: 'AI Template',

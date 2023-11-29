@@ -1,24 +1,20 @@
-import { Injectable } from '@nestjs/common';
-import { Assistant, Thread } from 'openai/resources/beta';
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Thread } from 'openai/resources/beta';
 import { AiService } from '../assistant/ai.service';
 import { ChatbotService } from '../assistant/chatbot.service';
-import { ChatCall, ChatUpdateFiles } from './chat.model';
-import { AssistantService } from '../assistant/assistant.service';
-import { ChatConfig } from './chat.config';
+import { ChatCall } from './chat.model';
 
 @Injectable()
-export class ChatService {
+export class ChatService implements OnModuleInit {
   // @TODO: this is only as an example
   defaultThread: Thread;
 
   constructor(
     private readonly aiService: AiService,
     private readonly chatbotService: ChatbotService,
-    private readonly assistantService: AssistantService,
-    private readonly chatConfig: ChatConfig,
   ) {}
 
-  async init(): Promise<void> {
+  async onModuleInit(): Promise<void> {
     this.defaultThread = await this.createThread();
   }
 
@@ -29,11 +25,5 @@ export class ChatService {
   async call({ message }: ChatCall): Promise<string> {
     const threadId = this.defaultThread.id;
     return this.chatbotService.call(threadId, message);
-  }
-
-  async updateFiles({ files }: ChatUpdateFiles): Promise<Assistant> {
-    return this.assistantService.updateFiles(
-      files || this.chatConfig.get().files || [],
-    );
   }
 }

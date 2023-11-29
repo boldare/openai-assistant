@@ -8,3 +8,7 @@ export interface AssistantConfig {
   filesDir?: string;
   files?: string[];
 }
+
+export interface AssistantFiles {
+  files?: string[];
+}

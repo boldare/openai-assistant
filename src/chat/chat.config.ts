@@ -1,23 +1,21 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { registerAs } from '@nestjs/config';
+import { AssistantCreateParams } from 'openai/resources/beta';
 import { AssistantConfig } from '../assistant/assistant.model';
 
-@Injectable()
-export class ChatConfig {
-  constructor(private readonly configService: ConfigService) {}
+export const assistantParams: AssistantCreateParams = {
+  name: 'AI Template',
+  instructions: `You are a personal assistant.`,
+  tools: [{ type: 'retrieval' }],
+  model: 'gpt-4-1106-preview',
+  metadata: {},
+};
 
-  get(): AssistantConfig {
-    return {
-      id: this.configService.get('ASSISTANT_ID') || '',
-      filesDir: './src/knowledge',
-      files: ['about-us.txt'],
-      params: {
-        name: 'AI Template',
-        instructions: `You are a personal assistant.`,
-        tools: [{ type: 'retrieval' }],
-        model: 'gpt-4-1106-preview',
-        metadata: {},
-      },
-    };
-  }
-}
+export const chatConfig = registerAs(
+  'assistant',
+  (): AssistantConfig => ({
+    id: process.env.ASSISTANT_ID || '',
+    params: assistantParams,
+    filesDir: './src/knowledge',
+    files: ['about-us.txt'],
+  }),
+);

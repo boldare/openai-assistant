@@ -1,11 +1,16 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { Assistant } from 'openai/resources/beta';
-import { ChatCall, ChatUpdateFiles } from './chat.model';
+import { ChatCall } from './chat.model';
 import { ChatService } from './chat.service';
+import { AssistantFiles } from '../assistant/assistant.model';
+import { Assistant } from 'openai/resources/beta';
+import { AssistantService } from '../assistant/assistant.service';
 
 @Controller('chat')
 export class ChatController {
-  constructor(public readonly chatService: ChatService) {}
+  constructor(
+    public readonly chatService: ChatService,
+    public readonly assistantService: AssistantService,
+  ) {}
 
   @Post()
   async call(@Body() payload: ChatCall): Promise<string> {
@@ -13,7 +18,7 @@ export class ChatController {
   }
 
   @Post('/files')
-  async updateFiles(@Body() payload: ChatUpdateFiles): Promise<Assistant> {
-    return this.chatService.updateFiles(payload);
+  async updateFiles(@Body() { files }: AssistantFiles): Promise<Assistant> {
+    return this.assistantService.updateFiles(files);
   }
 }

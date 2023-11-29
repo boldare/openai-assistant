@@ -5,4 +5,6 @@ export interface AssistantConfig {
   id: string;
   params: AssistantCreateParams;
   options?: RequestOptions;
+  filesDir?: string;
+  files?: string[];
 }

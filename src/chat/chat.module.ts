@@ -1,16 +1,27 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ChatController } from './chat.controller';
-import chatConfig from './chat.config';
 import { AssistantModule } from '../assistant/assistant.module';
+import { AssistantService } from '../assistant/assistant.service';
 import { ChatService } from './chat.service';
+import { ChatConfig } from './chat.config';
 
 @Module({
+  imports: [ConfigModule, AssistantModule],
   controllers: [ChatController],
-  providers: [ChatService],
-  imports: [
-    ConfigModule.forRoot({ load: [chatConfig] }),
-    AssistantModule.forRoot(chatConfig()),
-  ],
+  providers: [ChatConfig, ChatService],
 })
-export class ChatModule {}
+export class ChatModule implements OnModuleInit {
+  constructor(
+    private readonly assistantService: AssistantService,
+    private readonly chatConfig: ChatConfig,
+    private readonly chatService: ChatService,
+  ) {}
+
+  async onModuleInit(): Promise<void> {
+    const config = this.chatConfig.get();
+
+    await this.assistantService.init(config);
+    await this.chatService.init();
+  }
+}

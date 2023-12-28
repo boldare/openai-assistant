@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Run, RunSubmitToolOutputsParams } from 'openai/resources/beta/threads';
-import { AiService } from './ai.service';
-import { AgentService } from './agent.service';
+import { AiService } from '../ai/ai.service';
+import { AgentService } from '../agent/agent.service';
 
 @Injectable()
 export class RunService {
@@ -12,6 +12,11 @@ export class RunService {
     private readonly aiService: AiService,
     private readonly agentsService: AgentService,
   ) {}
+
+  async continueRun(run: Run): Promise<Run> {
+    await new Promise(resolve => setTimeout(resolve, this.timeout));
+    return this.threads.runs.retrieve(run.thread_id, run.id);
+  }
 
   async resolve(run: Run): Promise<void> {
     while (true)
@@ -24,10 +29,10 @@ export class RunService {
           return;
         case 'requires_action':
           await this.submitAction(run);
+          run = await this.continueRun(run);
           continue;
         default:
-          await new Promise(resolve => setTimeout(resolve, this.timeout));
-          run = await this.threads.runs.retrieve(run.thread_id, run.id);
+          run = await this.continueRun(run);
       }
   }
 
@@ -37,15 +42,15 @@ export class RunService {
     }
 
     const toolCalls = run.required_action.submit_tool_outputs.tool_calls || [];
-    const outputs: RunSubmitToolOutputsParams.ToolOutput[] = [];
+    const outputs: RunSubmitToolOutputsParams.ToolOutput[] = await Promise.all(
+      toolCalls.map(async toolCall => {
+        const { name, arguments: params } = toolCall.function;
+        const agent = this.agentsService.get(name);
+        const output = await agent({ params, threadId: run.thread_id });
 
-    for (const toolCall of toolCalls) {
-      const { name, arguments: arg } = toolCall.function;
-      const agent = this.agentsService.get(name);
-      const output = await agent(arg);
-
-      outputs.push({ tool_call_id: toolCall.id, output });
-    }
+        return { tool_call_id: toolCall.id, output };
+      }),
+    );
 
     await this.threads.runs.submitToolOutputs(run.thread_id, run.id, {
       tool_outputs: outputs,

@@ -1,7 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Thread } from 'openai/resources/beta';
-import { AiService } from '../assistant/ai.service';
-import { ChatbotService } from '../assistant/chatbot.service';
+import { AiService } from '../assistant/ai/ai.service';
+import { ChatbotService } from '../assistant/chatbot/chatbot.service';
 import { ChatCall } from './chat.model';
 
 @Injectable()

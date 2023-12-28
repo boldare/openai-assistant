@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FileObject } from 'openai/resources';
 import { createReadStream } from 'fs';
-import { AiService } from './ai.service';
+import { AiService } from './ai/ai.service';
 import { AssistantConfig } from './assistant.model';
 
 @Injectable()

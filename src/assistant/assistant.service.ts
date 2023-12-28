@@ -1,9 +1,10 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Assistant, AssistantCreateParams } from 'openai/resources/beta';
-import { AiService } from './ai.service';
+import { AiService } from './ai/ai.service';
 import { AssistantConfig } from './assistant.model';
 import { AssistantFilesService } from './assistant-files.service';
 import { AssistantMemoryService } from './assistant-memory.service';
+import { AgentService } from './agent/agent.service';
 
 @Injectable()
 export class AssistantService {
@@ -16,30 +17,41 @@ export class AssistantService {
     private readonly aiService: AiService,
     private readonly assistantFilesService: AssistantFilesService,
     private readonly assistantMemoryService: AssistantMemoryService,
+    private readonly agentService: AgentService,
   ) {}
 
+  getParams(): AssistantCreateParams {
+    return {
+      ...this.config.params,
+      tools: [...(this.config.params.tools || []), ...this.agentService.tools],
+    };
+  }
+
   async init(): Promise<void> {
-    const { id, params, options } = this.config;
+    const { id, options } = this.config;
 
     if (!id) {
-      await this.create();
+      return await this.create();
     }
 
     try {
-      this.assistant = await this.assistants.update(id, params, options);
+      this.assistant = await this.assistants.update(
+        id,
+        this.getParams(),
+        options,
+      );
     } catch (e) {
       await this.create();
     }
   }
 
   async update(params: Partial<AssistantCreateParams>): Promise<void> {
-    this.assistant = await this.assistants.update(this.assistant.id, {
-      ...params,
-    });
+    this.assistant = await this.assistants.update(this.assistant.id, params);
   }
 
   async create(): Promise<void> {
-    const { params, options } = this.config;
+    const { options } = this.config;
+    const params = this.getParams();
     this.assistant = await this.assistants.create(params, options);
 
     if (this.config.files?.length) {

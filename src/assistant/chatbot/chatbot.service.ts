@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { AiService } from './ai.service';
-import { AssistantService } from './assistant.service';
+import { AiService } from '../ai/ai.service';
+import { AssistantService } from '../assistant.service';
 import {
   MessageContentText,
   MessageCreateParams,
   Run,
   ThreadMessage,
 } from 'openai/resources/beta/threads';
-import { RunService } from './run.service';
+import { RunService } from '../run/run.service';
 
 @Injectable()
 export class ChatbotService {

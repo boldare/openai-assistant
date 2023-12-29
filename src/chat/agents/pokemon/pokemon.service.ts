@@ -12,11 +12,15 @@ export class PokemonService {
     private readonly configService: ConfigService,
   ) {}
 
-  async getPokemon(name: string): Promise<string> {
+  async getPokemon(name: string): Promise<object> {
     return firstValueFrom(
-      this.httpService
-        .get(`${this.apiUrl}/pokemon/${name.toLowerCase()}`)
-        .pipe(map(res => res.data)),
+      this.httpService.get(`${this.apiUrl}/pokemon/${name.toLowerCase()}`).pipe(
+        map(res => res.data),
+        map(res => ({
+          name: res?.['name'],
+          stats: res?.['stats'],
+        })),
+      ),
     );
   }
 }

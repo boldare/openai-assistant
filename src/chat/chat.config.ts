@@ -3,8 +3,8 @@ import { AssistantCreateParams } from 'openai/resources/beta';
 import { AssistantConfig } from '../assistant/assistant.model';
 
 export const assistantParams: AssistantCreateParams = {
-  name: 'AI Template',
-  instructions: `You are a personal assistant.`,
+  name: 'Pokemon Assistant',
+  instructions: `You can ask questions about Pokemon. For example, "What is Pikachu's type?" or "What is Pikachu's base stats?", or "Which pokemon has a bigger chance of winning in a battle between Pikachu and Charmander?".`,
   tools: [{ type: 'retrieval' }],
   model: 'gpt-4-1106-preview',
   metadata: {},

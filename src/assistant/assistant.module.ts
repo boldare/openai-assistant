@@ -1,20 +1,24 @@
 import { DynamicModule, Module, OnModuleInit } from '@nestjs/common';
 import { AssistantService } from './assistant.service';
-import { ChatbotService } from './chatbot.service';
-import { AiService } from './ai.service';
+import { ChatbotService } from './chatbot/chatbot.service';
+import { AiService } from './ai/ai.service';
+import { RunService } from './run/run.service';
 import { AssistantConfig } from './assistant.model';
-import { RunService } from './run.service';
-import { AgentService } from './agent.service';
+import { AssistantFilesService } from './assistant-files.service';
+import { AssistantMemoryService } from './assistant-memory.service';
+import { AgentModule } from './agent/agent.module';
 
 const sharedServices = [
   AiService,
   AssistantService,
+  AssistantFilesService,
+  AssistantMemoryService,
   ChatbotService,
   RunService,
-  AgentService,
 ];
 
 @Module({
+  imports: [AgentModule],
   providers: [...sharedServices],
   exports: [...sharedServices],
 })

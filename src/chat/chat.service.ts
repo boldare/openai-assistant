@@ -22,8 +22,8 @@ export class ChatService implements OnModuleInit {
     return this.aiService.provider.beta.threads.create();
   }
 
-  async call({ message }: ChatCall): Promise<string> {
+  async call({ content }: ChatCall): Promise<string> {
     const threadId = this.defaultThread.id;
-    return this.chatbotService.call(threadId, message);
+    return this.chatbotService.call(threadId, content);
   }
 }

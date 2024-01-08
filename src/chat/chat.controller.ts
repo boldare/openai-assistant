@@ -13,8 +13,10 @@ export class ChatController {
   ) {}
 
   @Post()
-  async call(@Body() payload: ChatCall): Promise<string> {
-    return this.chatService.call(payload);
+  async call(@Body() payload: ChatCall): Promise<ChatCall> {
+    return {
+      content: await this.chatService.call(payload),
+    };
   }
 
   @Post('/files')

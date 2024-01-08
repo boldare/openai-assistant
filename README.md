@@ -1,73 +1,85 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# GenAI project template - Typescript
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Project template to make starting project easier. Project uses OpenAI API to create assistants. To demonstrate the usage of the API, project contains the agent answering the questions concerning pokemons. Project is aimed to be used as a starting point for chatbots development.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Project is built with `nestJS` and `typescript`.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Pre-requisities
+
+- Node.js v20.0.6 or higher
+- npm
+
+---
 
 ## Installation
 
+Run the following command to install the dependencies:
+
 ```bash
-$ yarn install
+$ npm install
 ```
 
 ## Running the app
 
+In order to run the app, you need to run the following command:
+
 ```bash
 # development
-$ yarn run start
+$ npm run start
 
 # watch mode
-$ yarn run start:dev
+$ npm run start:dev
 
-# production mode
-$ yarn run start:prod
+# build
+$ npm run build
 ```
 
 ## Test
 
+Tests are written with `jest` and `supertest`. To run the tests, you need to run the following command:
+
 ```bash
 # unit tests
-$ yarn run test
+$ npm run test
 
-# e2e tests
-$ yarn run test:e2e
+# watch
+$ npm run test:watch
 
 # test coverage
-$ yarn run test:cov
+$ npm run test:cov
+
+# e2e tests
+$ npm run test:e2e
+
+# debug
+$ npm run test:debug
 ```
 
-## Support
+### Formatting
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Following command will run the prettier:
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# format - prettier
+$ npm run format
+```
 
-## License
+## Secrets
 
-Nest is [MIT licensed](LICENSE).
+Project takes advantage of the `envfile` dependency to manage secrets. Assuming so, you need to copy `.env.dist` to `.env` file in the root directory of the project and fill it with the relevant secrets.
+
+```bash
+$ cp .env.dist .env
+```
+
+---
+
+## Architecture
+
+Project is oriented on the OpenAI assistants API. Therefore, it is built with the following architecture:
+
+ - `src/assistant` - contains the logic responsible for creation of the assistant and its usage. Every time you run the program it will check whether an assistant exists. If not, it will create one. If yes, it will use the existing one. It has also the basis for the chatbot development. It also contains the runtime handling.
+- `src/chat` - contains the logic responsible for the implementation of the chatbot. It is oriented specifically on the project's use case. It contains agents oriented for the project's need. It uses the `assistant` module to handle user requests and to implement agents defined in this directory.

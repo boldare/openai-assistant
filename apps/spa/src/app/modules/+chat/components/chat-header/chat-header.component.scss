@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  max-height: 100px;
+  min-height: 25px;
+  cursor: pointer;
+}

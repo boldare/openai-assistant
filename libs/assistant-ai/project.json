@@ -1,0 +1,35 @@
+{
+  "name": "assistant-ai",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/assistant-ai/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/assistant-ai",
+        "tsConfig": "libs/assistant-ai/tsconfig.lib.json",
+        "packageJson": "libs/assistant-ai/package.json",
+        "main": "libs/assistant-ai/src/index.ts",
+        "assets": ["libs/assistant-ai/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs assistant-ai {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/assistant-ai/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

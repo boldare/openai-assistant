@@ -1,8 +1,10 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   OnInit,
   QueryList,
+  ViewChild,
   ViewChildren,
 } from '@angular/core';
 import { ChatService } from '../../shared/chat.service';
@@ -20,6 +22,9 @@ import { ChatFormComponent } from '../../components/chat-form/chat-form.componen
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Subscription } from 'rxjs';
 import { ChatHeaderComponent } from '../../components/chat-header/chat-header.component';
+import { ChatRecorderComponent } from '../../components/chat-recorder/chat-recorder.component';
+import { environment } from '../../../../../environments/environment';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'ai-chat',
@@ -35,22 +40,31 @@ import { ChatHeaderComponent } from '../../components/chat-header/chat-header.co
     MessageTypingComponent,
     ChatFormComponent,
     ChatHeaderComponent,
+    ChatRecorderComponent,
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
 export class ChatComponent implements OnInit, AfterViewInit {
   @ViewChildren('item') item?: QueryList<MarkdownComponent>;
-  messages: MessageHistory[] = [];
+  @ViewChild('audio') audio!: ElementRef;
+  audioSource = '';
+  messages: MessageHistory[] = [{ role: ChatRole.Assistant, content: 'Hello' }];
   content: string = '';
   isLoading = false;
   threadId = toSignal(this.threadService.threadId$, { initialValue: '' });
   subscription: Subscription = new Subscription();
+  isAudioEnabled = environment.isAudioEnabled;
 
   constructor(
     private readonly chatService: ChatService,
     private readonly threadService: ThreadService,
+    private domSanitizer: DomSanitizer,
   ) {}
+
+  sanitize(url: string) {
+    return this.domSanitizer.bypassSecurityTrustUrl(url);
+  }
 
   ngAfterViewInit() {
     this.scrollDown();
@@ -81,6 +95,27 @@ export class ChatComponent implements OnInit, AfterViewInit {
   clearChat(): void {
     this.messages = [];
     this.threadService.saveThreadId('');
+  }
+
+  sendAudio(file: Blob) {
+    this.isLoading = true;
+    this.chatService
+      .transcription({
+        threadId: this.threadId() || 'thread_tzl2WHL4zU8zEHXljsBCPJoq',
+        file: file as File,
+      })
+      .subscribe(response => {
+        this.sendMessage(response.content);
+      });
+  }
+
+  speech(message: MessageHistory) {
+    this.chatService.speech(message).subscribe(response => {
+      const audio = new Audio();
+      audio.src = `/assets/${response.filename}`;
+      this.audioSource = audio.src;
+      this.audio.nativeElement.load();
+    });
   }
 
   sendMessage(content: string) {

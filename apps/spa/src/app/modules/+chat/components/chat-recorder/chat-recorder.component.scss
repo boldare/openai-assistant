@@ -1,0 +1,51 @@
+.recording {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.9);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  border-radius: 8px 8px 0 8px;
+  width: 42px;
+  height: 40px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+
+    .recording-circle {
+      background-color: #ffb0b0;
+    }
+  }
+
+  &.is-active {
+    .recording-circle {
+      background-color: #e83333;
+      animation: ease pulse 1.5s infinite;
+    }
+  }
+}
+
+.recording-circle {
+  background-color: #fff;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: red;
+    transform: scale(1);
+  }
+  50% {
+    background-color: #f06c6c;
+    transform: scale(1.1);
+  }
+  100% {
+    background-color: red;
+    transform: scale(1);
+  }
+}

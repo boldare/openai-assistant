@@ -7,6 +7,7 @@ import { AssistantConfig } from './assistant.model';
 import { AssistantFilesService } from './assistant-files.service';
 import { AssistantMemoryService } from './assistant-memory.service';
 import { AgentModule } from '../agent/agent.module';
+import { HttpModule } from '@nestjs/axios';
 
 const sharedServices = [
   AiService,
@@ -18,7 +19,7 @@ const sharedServices = [
 ];
 
 @Module({
-  imports: [AgentModule],
+  imports: [HttpModule, AgentModule],
   providers: [...sharedServices],
   exports: [...sharedServices],
 })

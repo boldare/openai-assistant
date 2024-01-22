@@ -9,40 +9,64 @@
         </button>
       </div>
 
+      <audio
+        style="display: none;"
+        [src]="sanitize(audioSource)"
+        id="audio"
+        controls
+        #audio
+        (ended)="audioSource = ''"
+        autoplay
+      ></audio>
+
       <div class="messages">
+
         @for (message of messages; track message) {
-        <div
-          markdown
-          class="message"
-          [ngClass]="'message-' + message.role"
-          [data]="message.content"
-          #item
-        ></div>
+          <div
+            class="message"
+            [ngClass]="'message-' + message.role"
+          >
+          <span markdown [data]="message.content" #item></span>
+          @if (isAudioEnabled) {
+            <span class="audio-controls">
+              @if(!audioSource) {
+                <mat-icon (click)="speech(message)">play_circle</mat-icon>
+              } @else {
+                <mat-icon (click)="audioSource = ''">pause_circle</mat-icon>
+              }
+            </span>
+          }
+        </div>
         } @empty {
         <div>Start the conversation...</div>
         }
         <ai-message-typing [isLoading]="isLoading"></ai-message-typing>
       </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>
-          Your message...
-        </mat-label>
-        <input
-          matInput
-          [(ngModel)]="content"
-          (keydown.enter)="sendMessage(content)"
-          [disabled]="isLoading"
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="sendMessage(content)"
-          [disabled]="isLoading"
-        >
-          <mat-icon>send</mat-icon>
-        </button>
-      </mat-form-field>
+      <div class="chat__controls">
+        @if (isAudioEnabled) {
+          <ai-chat-recorder (send$)="sendAudio($event)"></ai-chat-recorder>
+        }
+        <mat-form-field appearance="fill">
+          <mat-label>
+            Your message...
+          </mat-label>
+          <input
+            matInput
+            [(ngModel)]="content"
+            (keydown.enter)="sendMessage(content)"
+            [disabled]="isLoading"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="sendMessage(content)"
+            [disabled]="isLoading"
+          >
+            <mat-icon>send</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
     } @else {
       <ai-chat-form (initMessage$)="sendMessage($event)"></ai-chat-form>
     }

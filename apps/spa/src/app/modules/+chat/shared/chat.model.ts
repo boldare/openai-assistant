@@ -10,6 +10,21 @@ export interface MessagePayload {
   threadId: string;
 }
 
+export interface AudioPayload {
+  file: File;
+  threadId: string;
+}
+
+export interface AudioResponse {
+  content: string;
+  threadId: string;
+}
+
+export interface SpeechResponse {
+  content: string;
+  filename: string;
+}
+
 export enum ChatRole {
   User = 'user',
   Assistant = 'assistant',

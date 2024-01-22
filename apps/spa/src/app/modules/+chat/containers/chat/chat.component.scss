@@ -23,6 +23,7 @@
 }
 
 .message {
+  position: relative;
   background: #f1f1ef;
   border-radius: 12px;
   display: inline-flex;
@@ -48,4 +49,26 @@
 .close {
   display: flex;
   justify-content: flex-end;
+}
+
+.chat__controls {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+
+  mat-form-field {
+    margin-bottom: -22px;
+  }
+}
+
+.audio-controls {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: -12px;
+
+  mat-icon {
+    cursor: pointer;
+  }
 }

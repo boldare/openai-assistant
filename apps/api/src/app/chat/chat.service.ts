@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Thread } from 'openai/resources/beta';
-import { ChatCall, ThreadConfig } from './chat.model';
+import { ChatAudio, ChatCall, ThreadConfig } from './chat.model';
 import { AiService, ChatbotService } from '@boldare/assistant-ai';
+import fs from 'fs';
 
 @Injectable()
 export class ChatService {
@@ -23,5 +24,16 @@ export class ChatService {
       threadId,
       content: await this.chatbotService.call(threadId, content),
     };
+  }
+
+  async transcription(payload: ChatAudio): Promise<ChatCall> {
+    const stream = fs.createReadStream(
+      `./apps/spa/src/assets/${payload.filename}`,
+    );
+    const transcription = await this.aiService.transcription(stream);
+    return await this.call({
+      threadId: payload.threadId,
+      content: transcription.text,
+    });
   }
 }

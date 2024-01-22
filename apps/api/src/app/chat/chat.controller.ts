@@ -1,14 +1,30 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { Assistant, Thread } from 'openai/resources/beta';
 import { ChatCall, GetThreadParams, ThreadConfig } from './chat.model';
 import { ChatService } from './chat.service';
-import { AssistantFiles, AssistantService } from '@boldare/assistant-ai';
+import {
+  AiService,
+  AssistantFiles,
+  AssistantService,
+} from '@boldare/assistant-ai';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import * as fs from 'fs';
 
 @Controller('chat')
 export class ChatController {
   constructor(
     public readonly chatService: ChatService,
     public readonly assistantService: AssistantService,
+    public readonly aiService: AiService,
   ) {}
 
   @Get('thread/:id')
@@ -26,7 +42,33 @@ export class ChatController {
     return await this.chatService.call(payload);
   }
 
-  @Post('/files')
+  @Post('transcription')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './apps/spa/src/assets',
+        filename(req, file, callback) {
+          callback(null, `audio-${new Date().toJSON()}.wav`);
+        },
+      }),
+    }),
+  )
+  async postTranscription(@UploadedFile() file: Express.Multer.File) {
+    const stream = fs.createReadStream(
+      `./apps/spa/src/assets/${file.filename}`,
+    );
+    return {
+      content: (await this.aiService.transcription(stream)).text,
+      filename: file.filename,
+    };
+  }
+
+  @Post('speech')
+  async postSpeech(@Body() { content }: { content: string }) {
+    return await this.aiService.speech(content);
+  }
+
+  @Post('files')
   async updateFiles(@Body() { files }: AssistantFiles): Promise<Assistant> {
     return this.assistantService.updateFiles(files);
   }

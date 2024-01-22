@@ -9,7 +9,8 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
-import { ChatCall, Events } from './chat.model';
+import { ChatAudio, ChatCall, Events } from './chat.model';
+import * as events from 'events';
 
 @WebSocketGateway({
   cors: {
@@ -32,17 +33,34 @@ export class ChatGateway implements OnGatewayConnection {
   @SubscribeMessage(Events.SendMessage)
   async listenForMessages(
     @MessageBody() request: ChatCall,
-    @ConnectedSocket() socket: Socket
+    @ConnectedSocket() socket: Socket,
   ) {
-    this.logger.log(`Socket "send message" (${socket.id}): 
+    this.logger.log(`Socket "${Events.SendMessage}" (${socket.id}):
     * thread: ${request.threadId}
     * content: ${request.content}`);
 
     const message = await this.chatService.call(request);
 
     this.server.to(socket.id).emit(Events.MessageReceived, message);
-    this.logger.log(`Socket "message received" (${socket.id}): 
+    this.logger.log(`Socket "${Events.MessageReceived}" (${socket.id}):
     * thread: ${message.threadId}
     * content: ${message.content}`);
+  }
+
+  @SubscribeMessage(Events.SendAudio)
+  async listenForAudio(
+    @MessageBody() request: ChatAudio,
+    @ConnectedSocket() socket: Socket,
+  ) {
+    this.logger.log(`Socket "${Events.SendAudio}" (${socket.id}):
+    * thread: ${request.threadId}
+    * file: ${request.filename}`);
+
+    const message = await this.chatService.transcription(request);
+
+    this.server.to(socket.id).emit(Events.MessageReceived, message);
+    this.logger.log(`Socket "${Events.AudioReceived}" (${socket.id}):
+    * thread: ${message.threadId}
+    * file: ${message.content}`);
   }
 }

@@ -6,12 +6,16 @@ import { chatConfig } from './chat.config';
 import { AgentsModule } from './agents/agents.module';
 import { ChatGateway } from './chat.gateway';
 import { AssistantModule } from '@boldare/assistant-ai';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ load: [chatConfig] }),
     AssistantModule.forRoot(chatConfig()),
     AgentsModule,
+    MulterModule.register({
+      dest: './apps/spa/src/assets',
+    }),
   ],
   controllers: [ChatController],
   providers: [ChatService, ChatGateway],

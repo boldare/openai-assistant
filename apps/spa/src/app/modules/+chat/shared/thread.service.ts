@@ -6,7 +6,9 @@ import { ThreadConfig, ThreadResponse } from './chat.model';
 
 @Injectable({ providedIn: 'root' })
 export class ThreadService {
-  threadId$ = new BehaviorSubject<string>('');
+  threadId$ = new BehaviorSubject<string>(
+    localStorage.getItem('threadId') || '',
+  );
 
   constructor(private readonly httpClient: HttpClient) {}
 

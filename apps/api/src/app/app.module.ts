@@ -10,6 +10,9 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', 'spa'),
       exclude: ['/api*'],
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, 'src', 'assets'),
+    }),
   ],
 })
 export class AppModule {}

@@ -12,3 +12,8 @@ export interface AssistantConfig {
 export interface AssistantFiles {
   files?: string[];
 }
+
+export interface SpeechResponse {
+  content: string;
+  filename: string;
+}

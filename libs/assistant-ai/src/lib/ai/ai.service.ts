@@ -3,7 +3,6 @@ import OpenAI from 'openai';
 import * as fs from 'fs';
 import { Transcription } from 'openai/resources/audio';
 import { SpeechResponse } from '../assistant';
-import { environment } from '../../../../../apps/spa/src/environments/environment';
 
 @Injectable()
 export class AiService {
@@ -27,7 +26,7 @@ export class AiService {
     const filename = `audio-${new Date().toJSON()}.wav`;
 
     fs.appendFileSync(
-      `${environment.audioUploadPath}/${filename}`,
+      `${process.env['AUDIO_UPLOAD_PATH']}/${filename}`,
       Buffer.from(arraybuffer),
     );
 

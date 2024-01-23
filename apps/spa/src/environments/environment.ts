@@ -1,6 +1,6 @@
 export const environment = {
-  apiUrl: 'https://your-app-name.herokuapp.com/api',
-  websocketUrl: 'https://your-app-name.herokuapp.com',
+  apiUrl: 'https://ai-voice-assistant-141aa5f30cb5.herokuapp.com/api',
+  websocketUrl: 'https://ai-voice-assistant-141aa5f30cb5.herokuapp.com',
   isAudioEnabled: true,
-  audioUploadPath: './apps/spa/src/assets/uploads',
+  audioUploadPath: './dist/apps/spa/assets/uploads',
 };

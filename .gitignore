@@ -44,3 +44,4 @@ Thumbs.db
 .env
 .env.*
 !.env.dist
+/apps/spa/src/assets/uploads

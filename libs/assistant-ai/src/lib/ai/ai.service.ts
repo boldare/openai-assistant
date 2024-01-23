@@ -32,25 +32,4 @@ export class AiService {
 
     return { content, filename };
   }
-
-  // async speech(input: string): Promise<ArrayBuffer> {
-  //   const { data } = await firstValueFrom(
-  //     this.http.post<ArrayBuffer>(
-  //       `https://api.openai.com/v1/audio/speech`,
-  //       {
-  //         model: 'tts-1',
-  //         voice: 'alloy',
-  //         input,
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${process.env['OPENAI_API_KEY']}`,
-  //           'Content-Type': 'application/json',
-  //         },
-  //       },
-  //     ),
-  //   );
-  //
-  //   return data;
-  // }
 }

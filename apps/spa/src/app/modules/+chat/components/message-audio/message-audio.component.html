@@ -1,0 +1,19 @@
+@if (isAudioEnabled) {
+  <span class="audio-controls">
+
+    @if(!isStarted) {
+      <mat-icon (click)="speech()">play_circle</mat-icon>
+    } @else {
+      <mat-icon (click)="pause()">pause_circle</mat-icon>
+    }
+  </span>
+
+  <audio
+    style="display: none;"
+    [src]="sanitize(audioSource)"
+    (ended)="onEnded()"
+    autoplay
+    controls
+    #audio
+  ></audio>
+}

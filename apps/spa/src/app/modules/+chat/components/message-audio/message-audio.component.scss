@@ -1,0 +1,10 @@
+.audio-controls {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: -12px;
+
+  mat-icon {
+    cursor: pointer;
+  }
+}

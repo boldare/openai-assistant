@@ -1,10 +1,8 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   OnInit,
   QueryList,
-  ViewChild,
   ViewChildren,
 } from '@angular/core';
 import { ChatService } from '../../shared/chat.service';
@@ -24,7 +22,7 @@ import { Subscription } from 'rxjs';
 import { ChatHeaderComponent } from '../../components/chat-header/chat-header.component';
 import { ChatRecorderComponent } from '../../components/chat-recorder/chat-recorder.component';
 import { environment } from '../../../../../environments/environment';
-import { DomSanitizer } from '@angular/platform-browser';
+import { MessageAudioComponent } from '../../components/message-audio/message-audio.component';
 
 @Component({
   selector: 'ai-chat',
@@ -41,15 +39,15 @@ import { DomSanitizer } from '@angular/platform-browser';
     ChatFormComponent,
     ChatHeaderComponent,
     ChatRecorderComponent,
+    MessageAudioComponent,
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
 export class ChatComponent implements OnInit, AfterViewInit {
   @ViewChildren('item') item?: QueryList<MarkdownComponent>;
-  @ViewChild('audio') audio!: ElementRef;
   audioSource = '';
-  messages: MessageHistory[] = [{ role: ChatRole.Assistant, content: 'Hello' }];
+  messages: MessageHistory[] = [];
   content: string = '';
   isLoading = false;
   threadId = toSignal(this.threadService.threadId$, { initialValue: '' });
@@ -59,12 +57,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   constructor(
     private readonly chatService: ChatService,
     private readonly threadService: ThreadService,
-    private domSanitizer: DomSanitizer,
   ) {}
-
-  sanitize(url: string) {
-    return this.domSanitizer.bypassSecurityTrustUrl(url);
-  }
 
   ngAfterViewInit() {
     this.scrollDown();
@@ -101,21 +94,12 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.chatService
       .transcription({
-        threadId: this.threadId() || 'thread_tzl2WHL4zU8zEHXljsBCPJoq',
+        threadId: this.threadId(),
         file: file as File,
       })
       .subscribe(response => {
         this.sendMessage(response.content);
       });
-  }
-
-  speech(message: MessageHistory) {
-    this.chatService.speech(message).subscribe(response => {
-      const audio = new Audio();
-      audio.src = `/assets/${response.filename}`;
-      this.audioSource = audio.src;
-      this.audio.nativeElement.load();
-    });
   }
 
   sendMessage(content: string) {

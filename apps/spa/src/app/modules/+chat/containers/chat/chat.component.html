@@ -9,33 +9,14 @@
         </button>
       </div>
 
-      <audio
-        style="display: none;"
-        [src]="sanitize(audioSource)"
-        id="audio"
-        controls
-        #audio
-        (ended)="audioSource = ''"
-        autoplay
-      ></audio>
-
       <div class="messages">
-
         @for (message of messages; track message) {
           <div
             class="message"
             [ngClass]="'message-' + message.role"
           >
           <span markdown [data]="message.content" #item></span>
-          @if (isAudioEnabled) {
-            <span class="audio-controls">
-              @if(!audioSource) {
-                <mat-icon (click)="speech(message)">play_circle</mat-icon>
-              } @else {
-                <mat-icon (click)="audioSource = ''">pause_circle</mat-icon>
-              }
-            </span>
-          }
+          <ai-message-audio [message]="message"></ai-message-audio>
         </div>
         } @empty {
         <div>Start the conversation...</div>

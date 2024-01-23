@@ -21,7 +21,8 @@
           "@angular/material/prebuilt-themes/indigo-pink.css",
           "apps/spa/src/styles.scss"
         ],
-        "scripts": []
+        "scripts": [],
+        "allowedCommonJsDependencies": ["recordrtc"]
       },
       "configurations": {
         "production": {

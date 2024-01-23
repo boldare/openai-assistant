@@ -45,7 +45,7 @@ export class MessageAudioComponent {
       .speech(this.message)
       .pipe(delay(100))
       .subscribe(response => {
-        this.audioSource = `/assets/${response.filename}`;
+        this.audioSource = `/assets/uploads/${response.filename}`;
         this.audio.nativeElement.load();
       });
   }

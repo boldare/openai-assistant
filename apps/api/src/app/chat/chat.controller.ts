@@ -46,7 +46,7 @@ export class ChatController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './apps/spa/src/assets',
+        destination: `${process.env.AUDIO_UPLOAD_PATH}`,
         filename(req, file, callback) {
           callback(null, `audio-${new Date().toJSON()}.wav`);
         },
@@ -55,7 +55,7 @@ export class ChatController {
   )
   async postTranscription(@UploadedFile() file: Express.Multer.File) {
     const stream = fs.createReadStream(
-      `./apps/spa/src/assets/${file.filename}`,
+      `${process.env.AUDIO_UPLOAD_PATH}/${file.filename}`,
     );
     return {
       content: (await this.aiService.transcription(stream)).text,

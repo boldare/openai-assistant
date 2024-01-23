@@ -3,6 +3,7 @@ import { Thread } from 'openai/resources/beta';
 import { ChatAudio, ChatCall, ThreadConfig } from './chat.model';
 import { AiService, ChatbotService } from '@boldare/assistant-ai';
 import fs from 'fs';
+import { environment } from '../../../../spa/src/environments/environment';
 
 @Injectable()
 export class ChatService {
@@ -28,7 +29,7 @@ export class ChatService {
 
   async transcription(payload: ChatAudio): Promise<ChatCall> {
     const stream = fs.createReadStream(
-      `./apps/spa/src/assets/${payload.filename}`,
+      `${environment.audioUploadPath}/${payload.filename}`,
     );
     const transcription = await this.aiService.transcription(stream);
     return await this.call({

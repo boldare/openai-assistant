@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
 import * as RecordRTC from 'recordrtc';
 import { NgClass, NgIf } from '@angular/common';
 
@@ -18,12 +17,6 @@ export class ChatRecorderComponent {
   url!: string;
   blob!: Blob;
   error!: string;
-
-  constructor(private domSanitizer: DomSanitizer) {}
-
-  sanitize(url: string) {
-    return this.domSanitizer.bypassSecurityTrustUrl(url);
-  }
 
   initiateRecording() {
     this.recording = true;

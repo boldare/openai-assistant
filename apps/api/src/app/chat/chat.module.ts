@@ -13,9 +13,7 @@ import { MulterModule } from '@nestjs/platform-express';
     ConfigModule.forRoot({ load: [chatConfig] }),
     AssistantModule.forRoot(chatConfig()),
     AgentsModule,
-    MulterModule.register({
-      dest: './apps/spa/src/assets',
-    }),
+    MulterModule.register({}),
   ],
   controllers: [ChatController],
   providers: [ChatService, ChatGateway],

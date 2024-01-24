@@ -6,11 +6,13 @@ import { ThreadConfig, ThreadResponse } from './chat.model';
 
 @Injectable({ providedIn: 'root' })
 export class ThreadService {
-  threadId$ = new BehaviorSubject<string>('');
+  initialThreadId = environment.isThreadMemorized ? localStorage.getItem('threadId') || '' : '';
+  threadId$ = new BehaviorSubject<string>(this.initialThreadId);
 
   constructor(private readonly httpClient: HttpClient) {}
 
   saveThreadId(id: string): void {
+    localStorage.setItem('threadId', id);
     this.threadId$.next(id);
   }
 

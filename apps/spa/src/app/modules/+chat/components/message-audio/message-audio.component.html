@@ -7,13 +7,4 @@
       <mat-icon (click)="pause()">pause_circle</mat-icon>
     }
   </span>
-
-  <audio
-    style="display: none;"
-    [src]="sanitize(audioSource)"
-    (ended)="onEnded()"
-    autoplay
-    controls
-    #audio
-  ></audio>
 }

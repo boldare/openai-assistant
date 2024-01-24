@@ -13,7 +13,7 @@ export interface AssistantFiles {
   files?: string[];
 }
 
-export interface SpeechResponse {
+export interface SpeechPayload {
   content: string;
-  filename: string;
+  voice?: 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer';
 }

@@ -6,11 +6,12 @@ import {
   AudioPayload,
   AudioResponse,
   ChatEvents,
+  ChatSpeech,
   MessagePayload,
   MessageResponse,
-  SpeechResponse,
 } from './chat.model';
 import io from 'socket.io-client';
+import { SpeechPayload } from '@boldare/assistant-ai';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -39,8 +40,8 @@ export class ChatService {
     );
   }
 
-  speech(payload: MessageResponse): Observable<SpeechResponse> {
-    return this.httpClient.post<SpeechResponse>(
+  speech(payload: SpeechPayload): Observable<ChatSpeech> {
+    return this.httpClient.post<ChatSpeech>(
       `${environment.apiUrl}/chat/speech`,
       payload,
     );

@@ -2,27 +2,21 @@ import { Injectable } from '@nestjs/common';
 import OpenAI from 'openai';
 import * as fs from 'fs';
 import { Transcription } from 'openai/resources/audio';
-import { SpeechResponse } from '../assistant';
+import { Uploadable } from 'openai/uploads';
+import { SpeechPayload } from '../assistant';
 
 @Injectable()
 export class AiService {
   provider = new OpenAI();
 
-  async transcription(file: fs.ReadStream): Promise<Transcription> {
+  async transcription(file: Uploadable): Promise<Transcription> {
     return this.provider.audio.transcriptions.create({
       file,
       model: 'whisper-1',
     });
   }
 
-  async speech(content: string): Promise<SpeechResponse> {
-    const response = await this.provider.audio.speech.create({
-      model: 'tts-1',
-      voice: 'alloy',
-      input: content,
-    });
-
-    const arraybuffer = await response.arrayBuffer();
+  async saveFile(arraybuffer: ArrayBuffer): Promise<{ filename: string }> {
     const filename = `audio-${new Date().toJSON()}.wav`;
 
     fs.appendFileSync(
@@ -30,6 +24,16 @@ export class AiService {
       Buffer.from(arraybuffer),
     );
 
-    return { content, filename };
+    return { filename };
+  }
+
+  async speech(data: SpeechPayload): Promise<Buffer> {
+    const response = await this.provider.audio.speech.create({
+      model: 'tts-1',
+      voice: data.voice || 'alloy',
+      input: data.content,
+    });
+
+    return Buffer.from(await response.arrayBuffer());
   }
 }

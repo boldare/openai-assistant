@@ -8,8 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ChatFormService } from '../../shared/chat-form.service';
-import { ThreadConfig } from '../../shared/chat.model';
+import { SpeechVoice, ThreadConfig } from '../../shared/chat.model';
 import { MatSelectModule } from '@angular/material/select';
+import { KeyValuePipe } from '@angular/common';
 
 @Component({
   selector: 'ai-chat-form',
@@ -22,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule,
     MatCheckboxModule,
     MatSelectModule,
+    KeyValuePipe,
   ],
   templateUrl: './chat-form.component.html',
   styleUrl: './chat-form.component.scss',
@@ -61,4 +63,6 @@ export class ChatFormComponent {
         this.initMessage$.emit('hello!');
       });
   }
+
+  protected readonly SpeechVoice = SpeechVoice;
 }

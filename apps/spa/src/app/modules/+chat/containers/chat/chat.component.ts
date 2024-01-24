@@ -46,7 +46,6 @@ import { MessageAudioComponent } from '../../components/message-audio/message-au
 })
 export class ChatComponent implements OnInit, AfterViewInit {
   @ViewChildren('item') item?: QueryList<MarkdownComponent>;
-  audioSource = '';
   messages: MessageHistory[] = [];
   content: string = '';
   isLoading = false;

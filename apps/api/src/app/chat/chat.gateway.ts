@@ -10,7 +10,6 @@ import {
 import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { ChatAudio, ChatCall, Events } from './chat.model';
-import * as events from 'events';
 
 @WebSocketGateway({
   cors: {
@@ -54,7 +53,7 @@ export class ChatGateway implements OnGatewayConnection {
   ) {
     this.logger.log(`Socket "${Events.SendAudio}" (${socket.id}):
     * thread: ${request.threadId}
-    * file: ${request.filename}`);
+    * file: ${request.file}`);
 
     const message = await this.chatService.transcription(request);
 

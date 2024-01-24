@@ -10,6 +10,19 @@
     <input formControlName="firstName" matInput />
   </mat-form-field>
 
+  <mat-form-field>
+    <mat-label>
+      Voice
+    </mat-label>
+    <mat-select formControlName="voice">
+      @for (voice of SpeechVoice | keyvalue; track voice.key) {
+        <mat-option [value]="voice.value">
+          {{ voice.value }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
   <button
     mat-raised-button
     color="primary"

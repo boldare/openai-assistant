@@ -42,6 +42,7 @@ export class ChatRecorderComponent {
 
   stopRecording() {
     this.record?.stop(this.processRecording.bind(this));
+    URL.revokeObjectURL(this.url);
   }
 
   processRecording(blob: Blob) {

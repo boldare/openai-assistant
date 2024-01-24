@@ -6,7 +6,7 @@ export interface ChatCall {
 }
 
 export interface ChatAudio {
-  filename: string;
+  file: File;
   threadId: string;
 }
 

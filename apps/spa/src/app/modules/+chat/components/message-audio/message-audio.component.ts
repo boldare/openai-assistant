@@ -1,10 +1,11 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChatService } from '../../shared/chat.service';
-import { MessageHistory } from '../../shared/chat.model';
+import { ChatSpeech, MessageHistory, SpeechVoice } from '../../shared/chat.model';
 import { environment } from '../../../../../environments/environment';
-import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
 import { delay } from 'rxjs';
+import { SpeechPayload } from '@boldare/assistant-ai';
+import { ChatFormService } from '../../shared/chat-form.service';
 
 @Component({
   selector: 'ai-message-audio',
@@ -13,51 +14,63 @@ import { delay } from 'rxjs';
   templateUrl: './message-audio.component.html',
   styleUrl: './message-audio.component.scss',
 })
-export class MessageAudioComponent {
-  @ViewChild('audio') audio!: ElementRef;
+export class MessageAudioComponent implements OnInit {
   @Input() message!: MessageHistory;
-  audioSource = '';
+  form = this.chatFormService.form;
   isAudioEnabled = environment.isAudioEnabled;
   isStarted = false;
+  audio = new Audio();
 
   constructor(
     private readonly chatService: ChatService,
-    private domSanitizer: DomSanitizer,
+    private readonly chatFormService: ChatFormService,
   ) {}
 
-  sanitize(url: string) {
-    return this.domSanitizer.bypassSecurityTrustUrl(url);
+  ngOnInit(): void {
+    this.audio.onended = this.onEnded.bind(this);
   }
 
-  speech() {
-    if (this.isStarted) {
-      return;
-    }
+  audioDataToBlob(audioData: number[]): Blob {
+    const byteArray = new Uint8Array(audioData);
+    return new Blob([byteArray], { type: 'audio/wav' });
+  }
 
+  handleAudioData(response: ChatSpeech): void {
+    const blob = this.audioDataToBlob(response.data);
+
+    this.audio.src = URL.createObjectURL(blob);
+    this.play();
+  }
+
+  speech(): void {
     this.isStarted = true;
 
-    if (this.audioSource) {
-      this.audio.nativeElement.autoplay = true;
+    if (this.audio.src) {
+      this.play();
       return;
     }
 
+    const payload: SpeechPayload = {
+      content: this.message.content,
+      voice: this.form.controls.voice.value as SpeechVoice
+    };
+
     this.chatService
-      .speech(this.message)
+      .speech(payload)
       .pipe(delay(100))
-      .subscribe(response => {
-        this.audioSource = `/assets/uploads/${response.filename}`;
-        this.audio.nativeElement.load();
-      });
+      .subscribe(response => this.handleAudioData(response));
   }
 
-  onEnded() {
+  play(): void {
+    this.audio.play().catch(e => console.error('Error playing audio:', e));
+  }
+
+  onEnded(): void {
     this.isStarted = false;
-    this.audio.nativeElement.autoplay = false;
   }
 
-  pause() {
-    this.audio.nativeElement.autoplay = false;
-    this.audio.nativeElement.pause();
+  pause(): void {
+    this.audio.pause();
     this.isStarted = false;
   }
 }

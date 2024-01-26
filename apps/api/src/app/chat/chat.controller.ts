@@ -4,21 +4,21 @@ import {
   Get,
   Param,
   Post,
-  UploadedFile,
+  UploadedFile, UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 import { Assistant, Thread } from 'openai/resources/beta';
-import { ChatCall, GetThreadParams, ThreadConfig } from './chat.model';
+import { GetThreadParams, ThreadConfig } from './chat.model';
 import { ChatService } from './chat.service';
 import {
   AiService,
   AssistantFiles,
-  AssistantService, SpeechPayload,
+  AssistantService, ChatCall, ChatCallResponse, SpeechPayload, OpenAiFile,
 } from '@boldare/assistant-ai';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express';
 // @ts-ignore
 import { multer } from 'multer';
-import { toFile } from 'openai/uploads'
+import { toFile } from 'openai/uploads';
 
 @Controller('chat')
 export class ChatController {
@@ -39,7 +39,7 @@ export class ChatController {
   }
 
   @Post()
-  async call(@Body() payload: ChatCall): Promise<ChatCall> {
+  async call(@Body() payload: ChatCall): Promise<ChatCallResponse> {
     return await this.chatService.call(payload);
   }
 
@@ -57,8 +57,14 @@ export class ChatController {
     return await this.aiService.speech(payload);
   }
 
-  @Post('files')
-  async updateFiles(@Body() { files }: AssistantFiles): Promise<Assistant> {
+  @Post('files/assistant')
+  async updateAssistantFiles(@Body() { files }: AssistantFiles): Promise<Assistant> {
     return this.assistantService.updateFiles(files);
+  }
+
+  @Post('files')
+  @UseInterceptors(FileFieldsInterceptor([{ name: 'files', maxCount: 10 }]))
+  async updateFiles(@UploadedFiles() uploadedData: { files: Express.Multer.File[] }): Promise<OpenAiFile[]> {
+    return this.aiService.files(uploadedData.files);
   }
 }

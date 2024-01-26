@@ -1,10 +1,10 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Assistant, AssistantCreateParams } from 'openai/resources/beta';
-import { AiService } from '../ai/ai.service';
+import { AiService } from '../ai';
+import { AgentService } from '../agent';
 import { AssistantConfig } from './assistant.model';
 import { AssistantFilesService } from './assistant-files.service';
 import { AssistantMemoryService } from './assistant-memory.service';
-import { AgentService } from '../agent/agent.service';
 
 @Injectable()
 export class AssistantService {

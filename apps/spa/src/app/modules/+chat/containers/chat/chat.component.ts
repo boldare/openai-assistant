@@ -23,6 +23,8 @@ import { ChatHeaderComponent } from '../../components/chat-header/chat-header.co
 import { ChatRecorderComponent } from '../../components/chat-recorder/chat-recorder.component';
 import { environment } from '../../../../../environments/environment';
 import { MessageAudioComponent } from '../../components/message-audio/message-audio.component';
+import { ChatFilesComponent } from '../../components/chat-files/chat-files.component';
+import { FilesService } from '../../shared/files.service';
 
 @Component({
   selector: 'ai-chat',
@@ -40,6 +42,7 @@ import { MessageAudioComponent } from '../../components/message-audio/message-au
     ChatHeaderComponent,
     ChatRecorderComponent,
     MessageAudioComponent,
+    ChatFilesComponent,
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
@@ -56,6 +59,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   constructor(
     private readonly chatService: ChatService,
     private readonly threadService: ThreadService,
+    private readonly filesService: FilesService,
   ) {}
 
   ngAfterViewInit() {
@@ -101,12 +105,27 @@ export class ChatComponent implements OnInit, AfterViewInit {
       });
   }
 
-  sendMessage(content: string) {
+  async sendFiles(): Promise<string[]> {
+    const files = this.filesService.files$.value;
+
+    if (!files.length) {
+      return [];
+    }
+
+    const uploadedFiles = await this.chatService.uploadFiles({
+      files,
+    });
+    this.filesService.clear();
+    return uploadedFiles?.map(file => file.id) || [];
+  }
+
+  async sendMessage(content: string) {
     this.isLoading = true;
     this.messages.push({ role: ChatRole.User, content });
     this.chatService.sendMessage({
       content,
       threadId: this.threadId(),
+      file_ids: await this.sendFiles(),
     });
     this.content = '';
     this.scrollDown();

@@ -2,8 +2,11 @@ import { Injectable } from '@nestjs/common';
 import OpenAI from 'openai';
 import * as fs from 'fs';
 import { Transcription } from 'openai/resources/audio';
-import { Uploadable } from 'openai/uploads';
+import { toFile, Uploadable } from 'openai/uploads';
 import { SpeechPayload } from '../assistant';
+import { FileObject } from 'openai/resources';
+// @ts-ignore
+import { multer } from 'multer';
 
 @Injectable()
 export class AiService {
@@ -35,5 +38,16 @@ export class AiService {
     });
 
     return Buffer.from(await response.arrayBuffer());
+  }
+
+  async files(files: Express.Multer.File[]): Promise<FileObject[]> {
+    return await Promise.all(
+      files.map(async file => {
+        return this.provider.files.create({
+          file: await toFile(file.buffer, file.originalname),
+          purpose: 'assistants',
+        });
+      })
+    );
   }
 }

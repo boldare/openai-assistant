@@ -1,15 +1,6 @@
 import { FormControl } from '@angular/forms';
 import { ThreadCreateParams } from 'openai/resources/beta';
 
-export interface MessageResponse {
-  content: string;
-}
-
-export interface ChatSpeech {
-  type: 'buffer';
-  data: number[];
-}
-
 export enum SpeechVoice {
   alloy = 'alloy',
   echo = 'echo',
@@ -19,15 +10,6 @@ export enum SpeechVoice {
   shimmer = 'shimmer',
 }
 
-export interface MessagePayload {
-  content: string;
-  threadId: string;
-}
-
-export interface AudioPayload {
-  file: File;
-  threadId: string;
-}
 
 export interface AudioResponse {
   content: string;

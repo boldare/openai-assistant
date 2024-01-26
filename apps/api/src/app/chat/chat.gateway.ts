@@ -9,7 +9,8 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
-import { ChatAudio, ChatCall, Events } from './chat.model';
+import { Events } from './chat.model';
+import { ChatAudio, ChatCall } from '@boldare/assistant-ai';
 
 @WebSocketGateway({
   cors: {
@@ -36,6 +37,7 @@ export class ChatGateway implements OnGatewayConnection {
   ) {
     this.logger.log(`Socket "${Events.SendMessage}" (${socket.id}):
     * thread: ${request.threadId}
+    * files: ${request?.file_ids}
     * content: ${request.content}`);
 
     const message = await this.chatService.call(request);

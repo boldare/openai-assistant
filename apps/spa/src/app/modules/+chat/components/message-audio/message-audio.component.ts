@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChatService } from '../../shared/chat.service';
-import { ChatSpeech, MessageHistory, SpeechVoice } from '../../shared/chat.model';
+import { MessageHistory, SpeechVoice } from '../../shared/chat.model';
 import { environment } from '../../../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon';
 import { delay } from 'rxjs';
-import { SpeechPayload } from '@boldare/assistant-ai';
+import { ChatAudioResponse, SpeechPayload } from '@boldare/assistant-ai';
 import { ChatFormService } from '../../shared/chat-form.service';
 
 @Component({
@@ -35,7 +35,7 @@ export class MessageAudioComponent implements OnInit {
     return new Blob([byteArray], { type: 'audio/wav' });
   }
 
-  handleAudioData(response: ChatSpeech): void {
+  handleAudioData(response: ChatAudioResponse): void {
     const blob = this.audioDataToBlob(response.data);
 
     this.audio.src = URL.createObjectURL(blob);

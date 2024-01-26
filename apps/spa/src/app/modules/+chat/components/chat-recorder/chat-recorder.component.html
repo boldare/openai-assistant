@@ -1,8 +1,8 @@
 <div
-  class="recording"
-  title="Record"
+  class="chat-recorder"
   [ngClass]="{'is-active': recording }"
   (click)="onRecord()"
 >
-  <div class="recording-circle"></div>
+  <mat-icon class="chat-recorder__icon">mic</mat-icon>
+  <div class="chat-recorder__circle"></div>
 </div>

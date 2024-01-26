@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import {
-  AudioPayload,
   AudioResponse,
   ChatEvents,
-  ChatSpeech,
-  MessagePayload,
-  MessageResponse,
 } from './chat.model';
 import io from 'socket.io-client';
-import { SpeechPayload } from '@boldare/assistant-ai';
+import {
+  ChatAudio,
+  ChatAudioResponse,
+  ChatCall,
+  ChatCallResponse,
+  SpeechPayload,
+  UploadFileResponse, UploadFilesPayload,
+} from '@boldare/assistant-ai';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -19,17 +22,17 @@ export class ChatService {
 
   constructor(private readonly httpClient: HttpClient) {}
 
-  postMessage(content: string): Observable<MessageResponse> {
-    return this.httpClient.post<MessageResponse>(`${environment.apiUrl}/chat`, {
+  postMessage(content: string): Observable<ChatCallResponse> {
+    return this.httpClient.post<ChatCallResponse>(`${environment.apiUrl}/chat`, {
       content,
     });
   }
 
-  sendMessage(payload: MessagePayload): void {
+  sendMessage(payload: ChatCall): void {
     this.socket.emit(ChatEvents.SendMessage, payload);
   }
 
-  transcription(payload: AudioPayload): Observable<AudioResponse> {
+  transcription(payload: ChatAudio): Observable<AudioResponse> {
     const formData = new FormData();
     // @ts-ignore
     Object.keys(payload).forEach(key => formData.append(key, payload[key]));
@@ -40,19 +43,30 @@ export class ChatService {
     );
   }
 
-  speech(payload: SpeechPayload): Observable<ChatSpeech> {
-    return this.httpClient.post<ChatSpeech>(
+  speech(payload: SpeechPayload): Observable<ChatAudioResponse> {
+    return this.httpClient.post<ChatAudioResponse>(
       `${environment.apiUrl}/chat/speech`,
       payload,
     );
   }
 
   getMessages() {
-    return new Observable<MessagePayload>(observer => {
+    return new Observable<ChatCall>(observer => {
       this.socket.on(ChatEvents.MessageReceived, data => observer.next(data));
       return () => {
         this.socket.disconnect();
       };
     });
+  }
+
+  async uploadFiles(payload: UploadFilesPayload): Promise<UploadFileResponse> {
+    const formData = new FormData();
+
+    payload.files.forEach((file) => formData.append('files', file));
+
+    return await lastValueFrom(this.httpClient.post<UploadFileResponse>(
+      `${environment.apiUrl}/chat/files`,
+      formData,
+    ));
   }
 }

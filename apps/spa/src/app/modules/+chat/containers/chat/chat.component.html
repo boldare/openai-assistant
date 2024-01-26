@@ -28,6 +28,9 @@
         @if (isAudioEnabled) {
           <ai-chat-recorder (send$)="sendAudio($event)"></ai-chat-recorder>
         }
+        @if (isAudioEnabled) {
+          <ai-chat-files></ai-chat-files>
+        }
         <mat-form-field appearance="fill">
           <mat-label>
             Your message...

@@ -5,8 +5,11 @@ import { AssistantConfig } from '@boldare/assistant-ai';
 export const assistantParams: AssistantCreateParams = {
   name: '@boldare/assistant-ai',
   instructions: `You are a chatbot assistant. Use the general knowledge to answer questions. Speak briefly and clearly.`,
-  tools: [],
-  model: 'gpt-3.5-turbo-1106',
+  tools: [
+    { type: 'code_interpreter' },
+    { type: 'retrieval' },
+  ],
+  model: 'gpt-4-turbo-preview',
   metadata: {},
 };
 

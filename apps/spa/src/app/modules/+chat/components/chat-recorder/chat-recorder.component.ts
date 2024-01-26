@@ -2,11 +2,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import * as RecordRTC from 'recordrtc';
 import { NgClass, NgIf } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'ai-chat-recorder',
   standalone: true,
-  imports: [RouterLink, NgIf, NgClass],
+  imports: [RouterLink, NgIf, NgClass, MatIcon],
   templateUrl: './chat-recorder.component.html',
   styleUrl: './chat-recorder.component.scss',
 })

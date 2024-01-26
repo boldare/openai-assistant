@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChatRecorderComponent } from './chat-recorder.component';
 
-describe('MessageTyping', () => {
+describe('ChatRecorderComponent', () => {
   let component: ChatRecorderComponent;
   let fixture: ComponentFixture<ChatRecorderComponent>;
 

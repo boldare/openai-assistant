@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChatHeaderComponent } from './chat-header.component';
 
-describe('MessageTyping', () => {
+describe('ChatHeaderComponent', () => {
   let component: ChatHeaderComponent;
   let fixture: ComponentFixture<ChatHeaderComponent>;
 

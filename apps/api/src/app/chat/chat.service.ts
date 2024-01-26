@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Thread } from 'openai/resources/beta';
-import { ChatAudio, ChatCall, ThreadConfig } from './chat.model';
-import { AiService, ChatbotService } from '@boldare/assistant-ai';
+import { ThreadConfig } from './chat.model';
+import { AiService, ChatAudio, ChatbotService, ChatCall, ChatCallResponse } from '@boldare/assistant-ai';
 
 @Injectable()
 export class ChatService {
@@ -18,10 +18,10 @@ export class ChatService {
     return this.aiService.provider.beta.threads.create({ messages });
   }
 
-  async call({ threadId, content }: ChatCall): Promise<ChatCall> {
+  async call(payload: ChatCall): Promise<ChatCallResponse> {
     return {
-      threadId,
-      content: await this.chatbotService.call(threadId, content),
+      threadId: payload.threadId,
+      content: await this.chatbotService.call(payload),
     };
   }
 

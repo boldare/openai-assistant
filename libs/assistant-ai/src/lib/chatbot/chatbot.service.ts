@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { AiService } from '../ai/ai.service';
-import { AssistantService } from '../assistant/assistant.service';
 import {
   MessageContentText,
   MessageCreateParams,
   Run,
   ThreadMessage,
 } from 'openai/resources/beta/threads';
-import { RunService } from '../run/run.service';
+import { AiService } from '../ai';
+import { RunService } from '../run';
+import { AssistantService, ChatCall } from '../assistant';
 
 @Injectable()
 export class ChatbotService {
@@ -20,9 +20,15 @@ export class ChatbotService {
     private readonly runService: RunService,
   ) {}
 
-  async call(threadId: string, content: string): Promise<string> {
-    const userMessage: MessageCreateParams = { role: 'user', content };
-    await this.threads.messages.create(threadId, userMessage);
+  async call(payload: ChatCall): Promise<string> {
+    const { threadId, content, file_ids } = payload;
+    const message: MessageCreateParams = {
+      role: 'user',
+      content,
+      file_ids,
+    };
+
+    await this.threads.messages.create(threadId, message);
 
     const run = await this.threads.runs.create(threadId, {
       assistant_id: this.assistantService.assistant.id,

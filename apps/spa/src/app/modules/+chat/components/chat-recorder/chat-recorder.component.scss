@@ -1,36 +1,47 @@
-.recording {
+.chat-recorder {
+  position: relative;
   display: inline-flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: 8px;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: #f5f5f5;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
-  border-radius: 8px 8px 0 8px;
-  width: 42px;
+  border-radius: 8px;
+  width: 40px;
   height: 40px;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-
-    .recording-circle {
-      background-color: #ffb0b0;
-    }
+    background-color: #ececec;
   }
 
   &.is-active {
-    .recording-circle {
+    background-color: #000;
+
+    .chat-recorder__circle {
+      display: block;
       background-color: #e83333;
       animation: ease pulse 1.5s infinite;
+    }
+
+    .chat-recorder__icon {
+      color: #ffffff;
     }
   }
 }
 
-.recording-circle {
-  background-color: #fff;
-  width: 20px;
-  height: 20px;
+.chat-recorder__icon {
+  z-index: 1;
+}
+
+.chat-recorder__circle {
+  display: none;
+  position: absolute;
+  z-index: 0;
+  background-color: #e83333;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   transition: all 0.2s ease-in-out;
 }
@@ -41,8 +52,7 @@
     transform: scale(1);
   }
   50% {
-    background-color: #f06c6c;
-    transform: scale(1.1);
+    transform: scale(1.15);
   }
   100% {
     background-color: red;

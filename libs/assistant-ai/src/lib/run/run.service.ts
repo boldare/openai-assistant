@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Run, RunSubmitToolOutputsParams } from 'openai/resources/beta/threads';
-import { AiService } from '../ai/ai.service';
-import { AgentService } from '../agent/agent.service';
+import { AiService } from '../ai';
+import { AgentService } from '../agent';
 
 @Injectable()
 export class RunService {

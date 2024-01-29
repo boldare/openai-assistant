@@ -8,9 +8,8 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { ChatEvents, ChatAudio, ChatCall } from './chat.model';
 import { ChatService } from './chat.service';
-import { Events } from './chat.model';
-import { ChatAudio, ChatCall } from '@boldare/assistant-ai';
 
 @WebSocketGateway({
   cors: {
@@ -20,47 +19,46 @@ import { ChatAudio, ChatCall } from '@boldare/assistant-ai';
   },
 })
 export class ChatGateway implements OnGatewayConnection {
-  @WebSocketServer()
-  private readonly server: Server;
+  @WebSocketServer() private readonly server!: Server;
   private readonly logger: Logger;
 
-  constructor(private readonly chatService: ChatService) {
+  constructor(private readonly chatsService: ChatService) {
     this.logger = new Logger(ChatGateway.name);
   }
 
   async handleConnection() {}
 
-  @SubscribeMessage(Events.SendMessage)
+  @SubscribeMessage(ChatEvents.SendMessage)
   async listenForMessages(
     @MessageBody() request: ChatCall,
     @ConnectedSocket() socket: Socket,
   ) {
-    this.logger.log(`Socket "${Events.SendMessage}" (${socket.id}):
+    this.logger.log(`Socket "${ChatEvents.SendMessage}" (${socket.id}):
     * thread: ${request.threadId}
     * files: ${request?.file_ids}
     * content: ${request.content}`);
 
-    const message = await this.chatService.call(request);
+    const message = await this.chatsService.call(request);
 
-    this.server.to(socket.id).emit(Events.MessageReceived, message);
-    this.logger.log(`Socket "${Events.MessageReceived}" (${socket.id}):
+    this.server.to(socket.id).emit(ChatEvents.MessageReceived, message);
+    this.logger.log(`Socket "${ChatEvents.MessageReceived}" (${socket.id}):
     * thread: ${message.threadId}
     * content: ${message.content}`);
   }
 
-  @SubscribeMessage(Events.SendAudio)
+  @SubscribeMessage(ChatEvents.SendAudio)
   async listenForAudio(
     @MessageBody() request: ChatAudio,
     @ConnectedSocket() socket: Socket,
   ) {
-    this.logger.log(`Socket "${Events.SendAudio}" (${socket.id}):
+    this.logger.log(`Socket "${ChatEvents.SendAudio}" (${socket.id}):
     * thread: ${request.threadId}
     * file: ${request.file}`);
 
-    const message = await this.chatService.transcription(request);
+    const message = await this.chatsService.transcription(request);
 
-    this.server.to(socket.id).emit(Events.MessageReceived, message);
-    this.logger.log(`Socket "${Events.AudioReceived}" (${socket.id}):
+    this.server.to(socket.id).emit(ChatEvents.MessageReceived, message);
+    this.logger.log(`Socket "${ChatEvents.AudioReceived}" (${socket.id}):
     * thread: ${message.threadId}
     * file: ${message.content}`);
   }

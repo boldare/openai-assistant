@@ -15,9 +15,9 @@
       Voice
     </mat-label>
     <mat-select formControlName="voice">
-      @for (voice of SpeechVoice | keyvalue; track voice.key) {
-        <mat-option [value]="voice.value">
-          {{ voice.value }}
+      @for (voice of voices; track voice) {
+        <mat-option [value]="voice">
+          {{ voice }}
         </mat-option>
       }
     </mat-select>

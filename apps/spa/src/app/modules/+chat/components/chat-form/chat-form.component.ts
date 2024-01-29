@@ -8,9 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ChatFormService } from '../../shared/chat-form.service';
-import { SpeechVoice, ThreadConfig } from '../../shared/chat.model';
+import { ThreadConfig } from '../../shared/chat.model';
 import { MatSelectModule } from '@angular/material/select';
 import { KeyValuePipe } from '@angular/common';
+import { SpeechVoice } from '@boldare/assistant-ai';
 
 @Component({
   selector: 'ai-chat-form',
@@ -31,6 +32,14 @@ import { KeyValuePipe } from '@angular/common';
 export class ChatFormComponent {
   isLoading = false;
   form = this.chatFormService.form;
+  voices = [
+    SpeechVoice.Alloy,
+    SpeechVoice.Echo,
+    SpeechVoice.Fable,
+    SpeechVoice.Nova,
+    SpeechVoice.Onyx,
+    SpeechVoice.Shimmer,
+  ];
   @Output() initMessage$ = new EventEmitter<string>();
 
   constructor(
@@ -63,6 +72,4 @@ export class ChatFormComponent {
         this.initMessage$.emit('hello!');
       });
   }
-
-  protected readonly SpeechVoice = SpeechVoice;
 }

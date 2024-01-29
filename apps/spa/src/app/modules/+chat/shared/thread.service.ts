@@ -18,7 +18,7 @@ export class ThreadService {
 
   postThread(payload: ThreadConfig): Observable<ThreadResponse> {
     return this.httpClient.post<ThreadResponse>(
-      `${environment.apiUrl}/chat/thread`,
+      `${environment.apiUrl}/assistant/threads`,
       payload,
     );
   }

@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChatService } from '../../shared/chat.service';
-import { MessageHistory, SpeechVoice } from '../../shared/chat.model';
+import { MessageHistory } from '../../shared/chat.model';
 import { environment } from '../../../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon';
 import { delay } from 'rxjs';
-import { ChatAudioResponse, SpeechPayload } from '@boldare/assistant-ai';
+import { ChatAudioResponse, SpeechPayload, SpeechVoice } from '@boldare/assistant-ai';
 import { ChatFormService } from '../../shared/chat-form.service';
 
 @Component({

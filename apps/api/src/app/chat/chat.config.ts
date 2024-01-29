@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import { AssistantCreateParams } from 'openai/resources/beta';
-import { AssistantConfig } from '@boldare/assistant-ai';
+import { AssistantConfigParams } from '@boldare/assistant-ai';
 
 export const assistantParams: AssistantCreateParams = {
   name: '@boldare/assistant-ai',
@@ -13,12 +13,14 @@ export const assistantParams: AssistantCreateParams = {
   metadata: {},
 };
 
+export const assistantConfig: AssistantConfigParams = {
+  id: process.env.ASSISTANT_ID || '',
+  params: assistantParams,
+  filesDir: './apps/api/src/app/knowledge',
+  files: [],
+}
+
 export const chatConfig = registerAs(
   'assistant',
-  (): AssistantConfig => ({
-    id: process.env.ASSISTANT_ID || '',
-    params: assistantParams,
-    filesDir: './apps/api/src/app/knowledge',
-    files: [],
-  }),
+  (): AssistantConfigParams => (assistantConfig),
 );

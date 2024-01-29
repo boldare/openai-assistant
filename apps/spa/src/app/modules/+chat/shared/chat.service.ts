@@ -23,7 +23,7 @@ export class ChatService {
   constructor(private readonly httpClient: HttpClient) {}
 
   postMessage(content: string): Observable<ChatCallResponse> {
-    return this.httpClient.post<ChatCallResponse>(`${environment.apiUrl}/chat`, {
+    return this.httpClient.post<ChatCallResponse>(`${environment.apiUrl}/assistant/chat`, {
       content,
     });
   }
@@ -38,14 +38,14 @@ export class ChatService {
     Object.keys(payload).forEach(key => formData.append(key, payload[key]));
 
     return this.httpClient.post<AudioResponse>(
-      `${environment.apiUrl}/chat/transcription`,
+      `${environment.apiUrl}/assistant/ai/transcription`,
       formData,
     );
   }
 
   speech(payload: SpeechPayload): Observable<ChatAudioResponse> {
     return this.httpClient.post<ChatAudioResponse>(
-      `${environment.apiUrl}/chat/speech`,
+      `${environment.apiUrl}/assistant/ai/speech`,
       payload,
     );
   }
@@ -65,7 +65,7 @@ export class ChatService {
     payload.files.forEach((file) => formData.append('files', file));
 
     return await lastValueFrom(this.httpClient.post<UploadFileResponse>(
-      `${environment.apiUrl}/chat/files`,
+      `${environment.apiUrl}/assistant/files`,
       formData,
     ));
   }

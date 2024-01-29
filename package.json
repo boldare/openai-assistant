@@ -10,7 +10,8 @@
     "build:api": "nx build --prod api",
     "build:assistant-ai": "nx build --prod assistant-ai",
     "build": "npm run build:spa && npm run build:api",
-    "start": "node dist/apps/api/main.js"
+    "start": "node dist/apps/api/main.js",
+    "publish": "npm run build && cd dist/libs/assistant-ai/ && npm publish --access=public && cd ../../.."
   },
   "private": true,
   "dependencies": {

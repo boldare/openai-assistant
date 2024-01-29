@@ -1,15 +1,6 @@
 import { FormControl } from '@angular/forms';
 import { ThreadCreateParams } from 'openai/resources/beta';
-
-export enum SpeechVoice {
-  alloy = 'alloy',
-  echo = 'echo',
-  fable = 'fable',
-  onyx = 'onyx',
-  nova = 'nova',
-  shimmer = 'shimmer',
-}
-
+import { SpeechVoice } from '@boldare/assistant-ai';
 
 export interface AudioResponse {
   content: string;

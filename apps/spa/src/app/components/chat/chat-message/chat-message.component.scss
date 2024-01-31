@@ -1,0 +1,29 @@
+@import 'settings';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.chat-message {
+  position: relative;
+  background: var(--color-grey-200);
+  border-radius: var(--border-radius-medium);
+  display: inline-flex;
+  flex-direction: column;
+  padding: $size-3 $size-4;
+  width: fit-content;
+  max-width: 80%;
+  z-index: 1;
+}
+
+.chat-message--assistant {
+  border-bottom-left-radius: 0;
+}
+
+.chat-message--user {
+  background: var(--color-primary-200);
+  border-bottom-right-radius: 0;
+  align-self: flex-end;
+}

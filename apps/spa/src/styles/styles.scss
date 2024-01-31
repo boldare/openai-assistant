@@ -1,0 +1,21 @@
+@import 'settings';
+
+@import '_settings/colors';
+@import '_settings/animations';
+@import '_settings/shadow';
+@import '_settings/borders';
+
+@import "_extends/material";
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-grey-300);
+  color: var(--color-grey-900);
+  font-size: 12px;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

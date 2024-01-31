@@ -1,0 +1,7 @@
+<div
+  class="chat-message"
+  [ngClass]="'chat-message--' + message.role"
+>
+  <span markdown [data]="message.content"></span>
+  <ai-chat-audio [message]="message"></ai-chat-audio>
+</div>

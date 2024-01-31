@@ -1,0 +1,8 @@
+@import 'settings';
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $size-2;
+}

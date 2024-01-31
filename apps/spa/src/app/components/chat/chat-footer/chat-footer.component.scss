@@ -1,0 +1,8 @@
+@import "settings";
+
+:host {
+  display: block;
+  width: 100%;
+  padding: $size-3;
+  box-sizing: border-box;
+}

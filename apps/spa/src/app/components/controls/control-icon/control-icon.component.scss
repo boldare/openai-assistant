@@ -1,0 +1,14 @@
+@import 'settings';
+
+:host {
+  display: flex;
+}
+
+.control-icon {
+  position: relative;
+  width: auto;
+  height: auto;
+  font-size: 20px;
+  color: inherit;
+  z-index: 1;
+}

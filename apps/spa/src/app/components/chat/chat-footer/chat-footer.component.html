@@ -1,0 +1,17 @@
+<ai-card-footer>
+
+  <ai-controls>
+    @if (isTranscriptionEnabled) {
+      <ai-recorder (send$)="sendAudio$.emit($event)" />
+    }
+    @if (isAttachmentEnabled) {
+      <ai-files />
+    }
+  </ai-controls>
+
+  <ai-input
+    [isDisabled]="isDisabled"
+    (send$)="sendMessage$.emit($event)"
+  />
+
+</ai-card-footer>

@@ -1,0 +1,43 @@
+@import 'settings';
+
+.chatbot {
+  --mat-form-field-container-vertical-padding: 12px;
+  --mat-form-field-container-height: 48px;
+  --mdc-filled-text-field-input-text-color: var(--color-grey-900);
+  --mdc-filled-text-field-container-color: var(--color-grey-200);
+
+  mat-form-field {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  .mdc-text-field--filled,
+  .mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
+    border-radius: var(--border-radius-default);
+  }
+
+  .mdc-line-ripple {
+    display: none;
+  }
+
+  .mat-mdc-form-field-icon-suffix .mat-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    color: var(--color-grey-500);
+  }
+
+  .mat-mdc-icon-button:hover {
+    .mat-icon {
+      color: var(--color-grey-900);
+    }
+  }
+
+  &.mat-typography p {
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,40 @@
+@import 'settings';
+
+.is-active {
+  .recorder__circle {
+    display: block;
+    background-color: var(--color-red-500);
+    animation: ease pulse 1.5s infinite;
+  }
+
+  .recorder__icon {
+    color: var(--color-white);
+  }
+}
+
+
+
+.recorder__circle {
+  display: none;
+  position: absolute;
+  z-index: 0;
+  background-color: #e83333;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: red;
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    background-color: red;
+    transform: scale(1);
+  }
+}

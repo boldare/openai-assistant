@@ -1,25 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { ThreadConfig, ThreadResponse } from './chat.model';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class ThreadService {
-  initialThreadId = environment.isThreadMemorized ? localStorage.getItem('threadId') || '' : '';
+  key = 'threadId';
+  initialThreadId = environment.isThreadMemorized ? localStorage.getItem(this.key) || '' : '';
   threadId$ = new BehaviorSubject<string>(this.initialThreadId);
+  clear$ = new Subject();
 
-  constructor(private readonly httpClient: HttpClient) {}
+  constructor(private readonly router: Router) {
+    this.threadId$.subscribe((id) => this.router.navigate([id ? '/chat' : '/']));
+  }
 
-  saveThreadId(id: string): void {
-    localStorage.setItem('threadId', id);
+  saveId(id: string): void {
+    localStorage.setItem(this.key, id);
     this.threadId$.next(id);
   }
 
-  postThread(payload: ThreadConfig): Observable<ThreadResponse> {
-    return this.httpClient.post<ThreadResponse>(
-      `${environment.apiUrl}/assistant/threads`,
-      payload,
-    );
+  clear(): void {
+    this.threadId$.next('');
+    this.clear$.next(true);
+
+    localStorage.removeItem(this.key);
   }
 }

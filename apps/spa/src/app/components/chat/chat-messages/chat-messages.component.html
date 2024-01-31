@@ -1,0 +1,10 @@
+<div class="messages">
+  @for (message of messages; track message) {
+    <span #item>
+      <ai-chat-message [message]="message"></ai-chat-message>
+    </span>
+  } @empty {
+    <div>//TODO: Implement predefined messages here</div>
+  }
+  <ai-chat-typing [isLoading]="isLoading"></ai-chat-typing>
+</div>

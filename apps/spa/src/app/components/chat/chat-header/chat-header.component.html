@@ -1,0 +1,10 @@
+<header class="chat-header">
+  <img
+    [src]="'/assets/boldare.svg'"
+    alt="logo"
+    class="chat-header__img"
+  />
+  <button mat-icon-button (click)="close$.emit()">
+    <mat-icon>close</mat-icon>
+  </button>
+</header>

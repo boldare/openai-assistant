@@ -1,0 +1,27 @@
+<ai-control-item
+  aiFiles
+  (click)="input.click()"
+  (drop$)="addFiles($event)"
+  [files]="files()"
+>
+  <ai-control-icon>attach_file</ai-control-icon>
+
+  @if (files().length) {
+    <span class="files__counter" (click)="clear($event)">
+      <span class="files__number">
+        {{ files().length }}
+      </span>
+      <mat-icon class="files__clear">
+        close
+      </mat-icon>
+    </span>
+  }
+
+  <input
+    class="files__input"
+    type="file"
+    (change)="onFileChange($event)"
+    multiple
+    #input
+  >
+</ai-control-item>

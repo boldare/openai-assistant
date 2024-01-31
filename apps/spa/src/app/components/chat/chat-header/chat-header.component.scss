@@ -1,0 +1,27 @@
+@import "settings";
+
+:host {
+  position: relative;
+  display: block;
+  width: 100%;
+  z-index: 5;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  box-shadow: var(--shadow-default);
+  padding: $size-2 $size-1 $size-2 $size-6;
+  border-radius: var(--border-radius-medium) var(--border-radius-medium) 0 0;
+  box-sizing: border-box;
+}
+
+.chat-header__img {
+  display: block;
+  max-height: 100px;
+  height: 16px;
+}

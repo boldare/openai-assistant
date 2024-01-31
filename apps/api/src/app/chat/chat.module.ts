@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { AssistantAiModule } from '@boldare/assistant-ai';
-import { chatConfig } from './chat.config';
+import { assistantConfig } from './chat.config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ load: [chatConfig] }),
-    AssistantAiModule.forRoot(chatConfig()),
+    AssistantAiModule.forRoot(assistantConfig),
   ],
 })
 export class ChatModule {}

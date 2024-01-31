@@ -1,73 +1,11 @@
 :host {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
   display: flex;
-  gap: 20px;
-  flex-direction: column;
-  max-width: 600px;
-  padding: 40px;
+  max-width: 480px;
+  width: 100%;
+  padding: 20px;
   margin: auto;
-}
-
-.card {
-  border-radius: 10px;
-}
-
-.messages {
-  position: relative;
-  display: flex;
-  gap: 20px;
-  flex-direction: column;
-  margin: 0 auto 20px;
-  height: calc(100vh - 400px);
-  min-height: 300px;
-  overflow-y: auto;
-}
-
-.message {
-  position: relative;
-  background: #f1f1ef;
-  border-radius: 12px;
-  display: inline-flex;
-  flex-direction: column;
-  padding: 8px 12px;
-  width: fit-content;
-
-  ::ng-deep p {
-    margin-bottom: 0;
-  }
-}
-
-.message-bot {
-  border-top-left-radius: 0;
-}
-
-.message-user {
-  background: #cedde7;
-  border-bottom-right-radius: 0;
-  align-self: flex-end;
-}
-
-.close {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.chat__controls {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  justify-content: center;
-
-  ::ng-deep {
-    .mat-mdc-form-field-subscript-wrapper {
-      display: none;
-    }
-
-    .mdc-text-field--filled {
-      border-radius: 8px;
-    }
-
-    .mdc-line-ripple {
-      display: none;
-    }
-  }
+  box-sizing: border-box;
 }

@@ -1,72 +1,114 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { lastValueFrom, Observable } from 'rxjs';
-import { environment } from '../../../../environments/environment';
-import {
-  AudioResponse,
-  ChatEvents,
-} from './chat.model';
-import io from 'socket.io-client';
-import {
-  ChatAudio,
-  ChatAudioResponse,
-  ChatCall,
-  ChatCallResponse,
-  SpeechPayload,
-  UploadFileResponse, UploadFilesPayload,
-} from '@boldare/assistant-ai';
+import { BehaviorSubject, Subscription, take } from 'rxjs';
+import { ChatRole, Message } from './chat.model';
+import { ChatGatewayService } from './chat-gateway.service';
+import { ChatClientService } from './chat-client.service';
+import { ThreadService } from './thread.service';
+import { ChatFilesService } from './chat-files.service';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-  private socket = io(environment.websocketUrl);
+  isLoading$ = new BehaviorSubject<boolean>(false);
+  messages$ = new BehaviorSubject<Message[]>([
+    {
+      content: 'Hello',
+      role: ChatRole.User,
+    },
+    {
+      content: 'Hi! I\'m your assistant. How can I help you?',
+      role: ChatRole.Assistant,
+    },
+    {
+      content: 'Hello',
+      role: ChatRole.User,
+    },
+    {
+      content: 'Hi! I\'m your assistant. How can I help you?',
+      role: ChatRole.Assistant,
+    },
+    {
+      content: 'Hello',
+      role: ChatRole.User,
+    },
+    {
+      content: 'Hi! I\'m your assistant. How can I help you?',
+      role: ChatRole.Assistant,
+    },
+    {
+      content: 'Hello',
+      role: ChatRole.User,
+    },
+    {
+      content: 'Hi! I\'m your assistant. How can I help you?',
+      role: ChatRole.Assistant,
+    },
+    {
+      content: 'Hello',
+      role: ChatRole.User,
+    },
+    {
+      content: 'Hi! I\'m your assistant. How can I help you?',
+      role: ChatRole.Assistant,
+    },
+    {
+      content: 'Hello',
+      role: ChatRole.User,
+    },
+    {
+      content: 'Hi! I\'m your assistant. How can I help you?',
+      role: ChatRole.Assistant,
+    },
+  ]);
 
-  constructor(private readonly httpClient: HttpClient) {}
+  constructor(
+    private readonly chatGatewayService: ChatGatewayService,
+    private readonly chatClientService: ChatClientService,
+    private readonly threadService: ThreadService,
+    private readonly chatFilesService: ChatFilesService,
+  ) {
+    this.watchMessages();
+  }
 
-  postMessage(content: string): Observable<ChatCallResponse> {
-    return this.httpClient.post<ChatCallResponse>(`${environment.apiUrl}/assistant/chat`, {
+  clear(): void {
+    this.threadService.clear();
+    this.messages$.next([]);
+  }
+
+  addMessage(message: Message): void {
+    this.messages$.next([...this.messages$.value, message]);
+  }
+
+  async sendMessage(content: string, role = ChatRole.User): Promise<void> {
+    this.isLoading$.next(true);
+    this.addMessage({ content, role });
+
+    this.chatGatewayService.sendMessage({
       content,
+      threadId: this.threadService.threadId$.value,
+      file_ids: await this.chatFilesService.sendFiles(),
     });
   }
 
-  sendMessage(payload: ChatCall): void {
-    this.socket.emit(ChatEvents.SendMessage, payload);
+  watchMessages(): Subscription {
+    return this.chatGatewayService.getMessages()
+      .subscribe(data => {
+        this.addMessage({
+          content: data.content,
+          role: ChatRole.Assistant,
+        });
+        this.isLoading$.next(false);
+      });
   }
 
-  transcription(payload: ChatAudio): Observable<AudioResponse> {
-    const formData = new FormData();
-    // @ts-ignore
-    Object.keys(payload).forEach(key => formData.append(key, payload[key]));
+  sendAudio(file: Blob): void {
+    this.isLoading$.next(true);
 
-    return this.httpClient.post<AudioResponse>(
-      `${environment.apiUrl}/assistant/ai/transcription`,
-      formData,
-    );
-  }
-
-  speech(payload: SpeechPayload): Observable<ChatAudioResponse> {
-    return this.httpClient.post<ChatAudioResponse>(
-      `${environment.apiUrl}/assistant/ai/speech`,
-      payload,
-    );
-  }
-
-  getMessages() {
-    return new Observable<ChatCall>(observer => {
-      this.socket.on(ChatEvents.MessageReceived, data => observer.next(data));
-      return () => {
-        this.socket.disconnect();
-      };
-    });
-  }
-
-  async uploadFiles(payload: UploadFilesPayload): Promise<UploadFileResponse> {
-    const formData = new FormData();
-
-    payload.files.forEach((file) => formData.append('files', file));
-
-    return await lastValueFrom(this.httpClient.post<UploadFileResponse>(
-      `${environment.apiUrl}/assistant/files`,
-      formData,
-    ));
+    this.chatClientService
+      .transcription({
+        threadId: this.threadService.threadId$.value,
+        file: file as File,
+      })
+      .pipe(take(1))
+      .subscribe(response => this.sendMessage(response.content));
   }
 }

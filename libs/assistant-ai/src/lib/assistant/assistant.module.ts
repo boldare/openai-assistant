@@ -1,44 +1,40 @@
-import { DynamicModule, Module, OnModuleInit } from '@nestjs/common';
-import { AssistantService } from './assistant.service';
-import { ChatbotService } from '../chatbot/chatbot.service';
-import { AiService } from '../ai/ai.service';
-import { RunService } from '../run/run.service';
-import { AssistantConfig } from './assistant.model';
-import { AssistantFilesService } from './assistant-files.service';
-import { AssistantMemoryService } from './assistant-memory.service';
-import { AgentModule } from '../agent/agent.module';
+import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
+import { AssistantService, AssistantFilesService, AssistantMemoryService, AssistantConfig } from '../assistant';
+import { RunModule } from '../run';
+import { AgentModule } from '../agent';
+import { AiModule } from '../ai';
+import { FilesModule } from '../files';
+import { ThreadsModule } from '../threads';
+import { ChatModule } from '../chat/chat.module';
 
 const sharedServices = [
-  AiService,
+  AssistantConfig,
   AssistantService,
   AssistantFilesService,
   AssistantMemoryService,
-  ChatbotService,
-  RunService,
+];
+
+const sharedModules = [
+  AiModule,
+  AgentModule,
+  RunModule,
+  FilesModule,
+  ThreadsModule,
+  ChatModule,
 ];
 
 @Module({
-  imports: [HttpModule, AgentModule],
-  providers: [...sharedServices],
-  exports: [...sharedServices],
+  imports: [
+    HttpModule,
+    ...sharedModules
+  ],
+  providers: [
+    ...sharedServices,
+  ],
+  exports: [
+    ...sharedServices,
+    ...sharedModules,
+  ],
 })
-export class AssistantModule implements OnModuleInit {
-  constructor(private readonly assistantService: AssistantService) {}
-
-  async onModuleInit(): Promise<void> {
-    await this.assistantService.init();
-  }
-
-  static forRoot(config: AssistantConfig): DynamicModule {
-    return {
-      module: AssistantModule,
-      providers: [
-        {
-          provide: 'config',
-          useValue: config,
-        },
-      ],
-    };
-  }
-}
+export class AssistantModule {}

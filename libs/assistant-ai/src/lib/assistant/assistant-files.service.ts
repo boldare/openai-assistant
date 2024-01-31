@@ -1,19 +1,19 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { FileObject } from 'openai/resources';
 import { createReadStream } from 'fs';
-import { AiService } from '../ai/ai.service';
-import { AssistantConfig } from './assistant.model';
+import { AiService } from '../ai';
+import { AssistantConfig } from './assistant.config';
 
 @Injectable()
 export class AssistantFilesService {
   constructor(
-    @Inject('config') private config: AssistantConfig,
+    private readonly assistantConfig: AssistantConfig,
     private readonly aiService: AiService,
   ) {}
 
   async create(
     fileNames: string[],
-    fileDir = this.config.filesDir,
+    fileDir = this.assistantConfig.get().filesDir,
   ): Promise<string[]> {
     const files: FileObject[] = [];
 

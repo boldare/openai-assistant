@@ -2,10 +2,13 @@
 
   <ai-controls>
     @if (isTranscriptionEnabled) {
-      <ai-recorder (send$)="sendAudio$.emit($event)" />
+      <ai-recorder
+        (send$)="sendAudio$.emit($event)"
+        matTooltip="Record audio"
+      />
     }
     @if (isAttachmentEnabled) {
-      <ai-files />
+      <ai-files matTooltip="Add files" />
     }
   </ai-controls>
 

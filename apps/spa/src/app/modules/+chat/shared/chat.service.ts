@@ -5,60 +5,13 @@ import { ChatGatewayService } from './chat-gateway.service';
 import { ChatClientService } from './chat-client.service';
 import { ThreadService } from './thread.service';
 import { ChatFilesService } from './chat-files.service';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
+  isVisible$ = new BehaviorSubject<boolean>(environment.isAutoOpen);
   isLoading$ = new BehaviorSubject<boolean>(false);
-  messages$ = new BehaviorSubject<Message[]>([
-    {
-      content: 'Hello',
-      role: ChatRole.User,
-    },
-    {
-      content: 'Hi! I\'m your assistant. How can I help you?',
-      role: ChatRole.Assistant,
-    },
-    {
-      content: 'Hello',
-      role: ChatRole.User,
-    },
-    {
-      content: 'Hi! I\'m your assistant. How can I help you?',
-      role: ChatRole.Assistant,
-    },
-    {
-      content: 'Hello',
-      role: ChatRole.User,
-    },
-    {
-      content: 'Hi! I\'m your assistant. How can I help you?',
-      role: ChatRole.Assistant,
-    },
-    {
-      content: 'Hello',
-      role: ChatRole.User,
-    },
-    {
-      content: 'Hi! I\'m your assistant. How can I help you?',
-      role: ChatRole.Assistant,
-    },
-    {
-      content: 'Hello',
-      role: ChatRole.User,
-    },
-    {
-      content: 'Hi! I\'m your assistant. How can I help you?',
-      role: ChatRole.Assistant,
-    },
-    {
-      content: 'Hello',
-      role: ChatRole.User,
-    },
-    {
-      content: 'Hi! I\'m your assistant. How can I help you?',
-      role: ChatRole.Assistant,
-    },
-  ]);
+  messages$ = new BehaviorSubject<Message[]>([]);
 
   constructor(
     private readonly chatGatewayService: ChatGatewayService,
@@ -68,6 +21,15 @@ export class ChatService {
   ) {
     this.watchMessages();
   }
+
+  toggle(): void {
+    this.isVisible$.next(!this.isVisible$.value);
+  }
+
+  refresh(): void {
+    this.messages$.next([]);
+    this.threadService.start().subscribe();
+   }
 
   clear(): void {
     this.threadService.clear();

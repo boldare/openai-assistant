@@ -2,8 +2,25 @@
 
 :host {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: $size-2;
+  align-items: flex-end;
   width: 100%;
+
+  &.is-user {
+    justify-content: flex-end;
+  }
+
+  &.is-user .chat-message {
+    border-bottom-left-radius: 0;
+    background: var(--color-primary-200);
+    border-bottom-right-radius: 0;
+    align-self: flex-end;
+  }
+
+  &.is-assistant .chat-message {
+    border-bottom-left-radius: 0;
+  }
 }
 
 .chat-message {
@@ -16,14 +33,4 @@
   width: fit-content;
   max-width: 80%;
   z-index: 1;
-}
-
-.chat-message--assistant {
-  border-bottom-left-radius: 0;
-}
-
-.chat-message--user {
-  background: var(--color-primary-200);
-  border-bottom-right-radius: 0;
-  align-self: flex-end;
 }

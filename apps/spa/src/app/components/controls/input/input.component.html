@@ -8,9 +8,10 @@
     (keydown.enter)="send(content)"
   />
   <button
+    class="input__suffix"
     mat-icon-button
     matSuffix
-    [disabled]="isDisabled"
+    [disabled]="!content || isDisabled"
     (click)="send(content)"
   >
     <mat-icon>send</mat-icon>

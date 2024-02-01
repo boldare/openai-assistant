@@ -1,0 +1,12 @@
+@import 'settings';
+
+.chat-avatar {
+  position: relative;
+  box-shadow: var(--shadow-default);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  background-image: url('/assets/avatar.jpeg');
+  background-size: cover;
+  background-position: center;
+}

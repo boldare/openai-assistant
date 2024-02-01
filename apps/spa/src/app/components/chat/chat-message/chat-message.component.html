@@ -1,7 +1,8 @@
-<div
-  class="chat-message"
-  [ngClass]="'chat-message--' + message.role"
->
+@if (message.role === 'assistant') {
+  <ai-chat-avatar></ai-chat-avatar>
+}
+
+<div class="chat-message">
   <span markdown [data]="message.content"></span>
   <ai-chat-audio [message]="message"></ai-chat-audio>
 </div>

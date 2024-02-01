@@ -4,7 +4,10 @@
       <ai-chat-message [message]="message"></ai-chat-message>
     </span>
   } @empty {
-    <div>//TODO: Implement predefined messages here</div>
+    <ai-chat-tips
+      [tips]="tips"
+      (tipSelected$)="tipSelected$.emit($event)"
+    />
   }
   <ai-chat-typing [isLoading]="isLoading"></ai-chat-typing>
 </div>

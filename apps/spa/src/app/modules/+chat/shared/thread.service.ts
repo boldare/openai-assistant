@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, take, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { Router } from '@angular/router';
+import { ThreadClientService } from './thread-client.service';
+import { ThreadResponse } from './chat.model';
+import { ConfigurationFormService } from '../../+configuration/shared/configuration-form.service';
 
 @Injectable({ providedIn: 'root' })
 export class ThreadService {
@@ -10,8 +12,20 @@ export class ThreadService {
   threadId$ = new BehaviorSubject<string>(this.initialThreadId);
   clear$ = new Subject();
 
-  constructor(private readonly router: Router) {
-    this.threadId$.subscribe((id) => this.router.navigate([id ? '/chat' : '/']));
+  constructor(
+    private readonly threadClientService: ThreadClientService,
+    private readonly configurationFormService: ConfigurationFormService,
+  ) {}
+
+  start(): Observable<ThreadResponse> {
+    const messages = this.configurationFormService.getInitialThreadMessages();
+
+    return this.threadClientService
+      .postThread(environment.isConfigEnabled ? messages : {})
+      .pipe(
+        take(1),
+        tap(({ id }) => this.saveId(id)),
+      );
   }
 
   saveId(id: string): void {

@@ -1,9 +1,9 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
+  ElementRef, EventEmitter,
   Input,
-  OnChanges,
+  OnChanges, Output,
   QueryList,
   SimpleChanges,
   ViewChildren,
@@ -12,6 +12,7 @@ import { Message } from '../../../modules/+chat/shared/chat.model';
 import { ChatMessageComponent } from '../chat-message/chat-message.component';
 import { ChatTypingComponent } from '../chat-typing/chat-typing.component';
 import { ChatContentComponent } from '../chat-content/chat-content.component';
+import { ChatTipsComponent } from '../chat-tips/chat-tips.component';
 
 @Component({
   selector: 'ai-chat-messages',
@@ -22,11 +23,14 @@ import { ChatContentComponent } from '../chat-content/chat-content.component';
     ChatMessageComponent,
     ChatTypingComponent,
     ChatContentComponent,
+    ChatTipsComponent,
   ],
 })
 export class ChatMessagesComponent implements AfterViewInit, OnChanges {
   @Input() messages: Message[] = [];
   @Input() isLoading = false;
+  @Input() tips: string[] = [];
+  @Output() tipSelected$ = new EventEmitter<string>();
   @ViewChildren('item') item?: QueryList<ElementRef>;
 
   ngAfterViewInit() {

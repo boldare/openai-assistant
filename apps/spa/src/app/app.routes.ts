@@ -7,12 +7,7 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: '/config',
-      },
-      {
-        path: 'config',
-        loadChildren: () =>
-          import('./modules/+configuration/configuration.routes').then((m) => m.routes),
+        redirectTo: '/chat',
       },
       {
         path: 'chat',

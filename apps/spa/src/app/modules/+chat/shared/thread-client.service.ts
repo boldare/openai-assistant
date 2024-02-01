@@ -8,7 +8,7 @@ import { ThreadConfig, ThreadResponse } from './chat.model';
 export class ThreadClientService {
   constructor(private readonly httpClient: HttpClient) {}
 
-  postThread(payload: ThreadConfig): Observable<ThreadResponse> {
+  postThread(payload: ThreadConfig = {}): Observable<ThreadResponse> {
     return this.httpClient.post<ThreadResponse>(
       `${environment.apiUrl}/assistant/threads`,
       payload,

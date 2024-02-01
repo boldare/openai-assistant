@@ -5,6 +5,17 @@
   --mat-form-field-container-height: 48px;
   --mdc-filled-text-field-input-text-color: var(--color-grey-900);
   --mdc-filled-text-field-container-color: var(--color-grey-200);
+  --mdc-icon-button-state-layer-size: 16px;
+  --mdc-icon-button-icon-size: 16px;
+  --mdc-theme-primary: var(--color-primary-500);
+  --mdc-theme-on-primary: var(--color-white);
+  --mdc-filled-text-field-focus-label-text-color: var(--color-grey-500);
+  --mat-option-selected-state-label-text-color: var(--color-primary-500);
+  --mat-select-focused-arrow-color: var(--color-primary-500);
+
+  .mat-primary {
+    --mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--color-primary-500);
+  }
 
   mat-form-field {
     width: 100%;
@@ -39,5 +50,25 @@
 
   &.mat-typography p {
     margin-bottom: 0;
+  }
+
+  .mat-mdc-icon-button.mat-mdc-button-base {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .mat-mdc-icon-button.mat-mdc-button-base {
+    --mdc-icon-button-state-layer-size: 32px;
+  }
+
+  .mat-mdc-raised-button.mat-primary {
+    --mdc-protected-button-container-color: var(--color-primary-500);
+  }
+
+  .mdc-button {
+    width: 100%;
+    min-height: 42px;
   }
 }

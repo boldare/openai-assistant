@@ -24,6 +24,10 @@ export class InputComponent {
   content = '';
 
   send(content: string): void {
+    if (!content?.trim()) {
+      return;
+    }
+
     this.send$.emit(content);
     this.content = '';
   }

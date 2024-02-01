@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardFooterComponent } from '../../cards';
 import { ControlsComponent, FilesComponent, InputComponent, RecorderComponent } from '../../controls';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'ai-chat-footer',
@@ -13,6 +14,7 @@ import { ControlsComponent, FilesComponent, InputComponent, RecorderComponent } 
     InputComponent,
     RecorderComponent,
     FilesComponent,
+    MatTooltip,
   ],
 })
 export class ChatFooterComponent {

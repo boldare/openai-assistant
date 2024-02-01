@@ -15,7 +15,7 @@
   gap: 10px;
   width: 100%;
   box-shadow: var(--shadow-default);
-  padding: $size-2 $size-1 $size-2 $size-6;
+  padding: $size-4 $size-2 $size-4 $size-6;
   border-radius: var(--border-radius-medium) var(--border-radius-medium) 0 0;
   box-sizing: border-box;
 }
@@ -24,4 +24,19 @@
   display: block;
   max-height: 100px;
   height: 16px;
+}
+
+.char-header__icon {
+  height: 18px;
+  width: 18px;
+  font-size: 18px;
+  color: var(--color-grey-500);
+}
+
+.chat-header__controls {
+  display: flex;
+}
+
+.chat-header__logo {
+  position: relative;
 }

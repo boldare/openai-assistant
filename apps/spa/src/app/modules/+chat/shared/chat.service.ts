@@ -19,7 +19,10 @@ export class ChatService {
     private readonly threadService: ThreadService,
     private readonly chatFilesService: ChatFilesService,
   ) {
+    document.body.classList.add('ai-chat');
+
     this.watchMessages();
+    this.watchVisibility();
   }
 
   toggle(): void {
@@ -72,5 +75,15 @@ export class ChatService {
       })
       .pipe(take(1))
       .subscribe(response => this.sendMessage(response.content));
+  }
+
+  watchVisibility(): Subscription {
+    return this.isVisible$.subscribe(isVisible => {
+      if (isVisible) {
+        document.body.classList.add('ai-chat-open');
+      } else {
+        document.body.classList.remove('ai-chat-open');
+      }
+    });
   }
 }

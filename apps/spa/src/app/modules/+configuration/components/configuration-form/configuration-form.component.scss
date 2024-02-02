@@ -3,18 +3,18 @@
 .chat-form__content {
   position: relative;
   display: flex;
+  flex: 1 1 100%;
   gap: $size-5;
   flex-direction: column;
   padding: $size-4 $size-4 $size-0;
   box-sizing: border-box;
-  height: calc(100vh - 400px);
-  min-height: 300px;
+  max-height: calc(100vh - 136px);
   overflow-y: auto;
   width: 100%;
 }
 
-.chat-form,
-.chat-form__checkboxes {
+.chat-form {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }

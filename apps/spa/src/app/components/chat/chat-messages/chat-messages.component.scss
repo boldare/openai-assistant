@@ -5,10 +5,9 @@
   display: flex;
   gap: $size-5;
   flex-direction: column;
+  max-height: calc(100vh - 136px);
   padding: $size-6 $size-4 $size-0;
   box-sizing: border-box;
-  height: calc(100vh - 400px);
-  min-height: 300px;
   overflow-y: auto;
   width: 100%;
 }

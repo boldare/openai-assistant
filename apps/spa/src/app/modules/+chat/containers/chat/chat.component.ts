@@ -11,7 +11,6 @@ import {
   ConfigurationFormComponent
 } from '../../../+configuration/components/configuration-form/configuration-form.component';
 import { take } from 'rxjs';
-import { ChatTriggerComponent } from '../../../../components/chat/chat-trigger/chat-trigger.component';
 
 @Component({
   selector: 'ai-chat',
@@ -22,14 +21,12 @@ import { ChatTriggerComponent } from '../../../../components/chat/chat-trigger/c
     ChatMessagesComponent,
     ChatFooterComponent,
     ConfigurationFormComponent,
-    ChatTriggerComponent,
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
 export class ChatComponent implements OnInit {
   messages = toSignal(this.chatService.messages$, { initialValue: [] });
-  isVisible = toSignal(this.chatService.isVisible$, { initialValue: true });
   isLoading = toSignal(this.chatService.isLoading$, { initialValue: false });
   threadId = toSignal(this.threadService.threadId$, { initialValue: '' });
   isTranscriptionEnabled = environment.isTranscriptionEnabled;

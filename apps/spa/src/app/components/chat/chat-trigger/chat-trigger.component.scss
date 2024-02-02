@@ -16,7 +16,6 @@
   background-position: center;
   transition: var(--animation-fast);
   cursor: pointer;
-  z-index: -1;
 
   &:hover {
     box-shadow: var(--shadow-default-hover);

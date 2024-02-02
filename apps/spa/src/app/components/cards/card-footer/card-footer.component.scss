@@ -1,0 +1,11 @@
+@import 'settings';
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $size-2;
+  min-height: 72px;
+  padding: $size-3;
+  box-sizing: border-box;
+}

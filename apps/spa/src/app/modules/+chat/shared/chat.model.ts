@@ -1,6 +1,4 @@
-import { FormControl } from '@angular/forms';
 import { ThreadCreateParams } from 'openai/resources/beta';
-import { SpeechVoice } from '@boldare/assistant-ai';
 
 export interface AudioResponse {
   content: string;
@@ -11,7 +9,7 @@ export enum ChatRole {
   Assistant = 'assistant',
 }
 
-export interface MessageHistory {
+export interface Message {
   content: string;
   role: ChatRole;
 }
@@ -27,9 +25,4 @@ export interface ThreadConfig {
 export enum ChatEvents {
   SendMessage = 'send_message',
   MessageReceived = 'message_received',
-}
-
-export interface ChatConfigForm {
-  firstName: FormControl<string | null>;
-  voice: FormControl<SpeechVoice>;
 }

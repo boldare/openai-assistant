@@ -1,58 +1,28 @@
-<ai-chat-header (click)="clearChat()"></ai-chat-header>
+<ai-card class="chat">
+  <ai-chat-header
+    [isRefreshEnabled]="isRefreshEnabled && !!threadId()"
+    [isConfigEnabled]="isConfigEnabled && !!threadId()"
+    (refresh$)="chatService.refresh()"
+    (close$)="chatService.toggle()"
+    (config$)="chatService.clear()"
+  ></ai-chat-header>
 
-<mat-card class="card">
-  <mat-card-content>
-    @if (threadId()) {
-      <div class="close">
-        <button mat-icon-button (click)="clearChat()">
-          <mat-icon>close</mat-icon>
-        </button>
-      </div>
-
-      <div class="messages">
-        @for (message of messages; track message) {
-          <div
-            class="message"
-            [ngClass]="'message-' + message.role"
-          >
-          <span markdown [data]="message.content" #item></span>
-          <ai-message-audio [message]="message"></ai-message-audio>
-        </div>
-        } @empty {
-        <div>Start the conversation...</div>
-        }
-        <ai-message-typing [isLoading]="isLoading"></ai-message-typing>
-      </div>
-
-      <div class="chat__controls">
-        @if (isAudioEnabled) {
-          <ai-chat-recorder (send$)="sendAudio($event)"></ai-chat-recorder>
-        }
-        @if (isAudioEnabled) {
-          <ai-chat-files></ai-chat-files>
-        }
-        <mat-form-field appearance="fill">
-          <mat-label>
-            Your message...
-          </mat-label>
-          <input
-            matInput
-            [(ngModel)]="content"
-            (keydown.enter)="sendMessage(content)"
-            [disabled]="isLoading"
-          />
-          <button
-            mat-icon-button
-            matSuffix
-            (click)="sendMessage(content)"
-            [disabled]="isLoading"
-          >
-            <mat-icon>send</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-    } @else {
-      <ai-chat-form (initMessage$)="sendMessage($event)"></ai-chat-form>
-    }
-  </mat-card-content>
-</mat-card>
+  @if (isConfigEnabled && !threadId()) {
+    <ai-configuration-form class="chat__content" />
+  } @else {
+    <ai-chat-messages
+      [messages]="messages()"
+      [isLoading]="isLoading()"
+      [tips]="tips"
+      (tipSelected$)="chatService.sendMessage($event)"
+      class="chat__content"
+    />
+    <ai-chat-footer
+      [isDisabled]="isLoading()"
+      [isTranscriptionEnabled]="isTranscriptionEnabled"
+      [isAttachmentEnabled]="isAttachmentEnabled"
+      (sendMessage$)="chatService.sendMessage($event)"
+      (sendAudio$)="chatService.sendAudio($event)"
+    />
+  }
+</ai-card>

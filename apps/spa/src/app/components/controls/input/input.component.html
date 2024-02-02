@@ -1,0 +1,19 @@
+<mat-form-field>
+  <input
+    matInput
+    placeholder="Aa"
+    autocomplete="off"
+    [(ngModel)]="content"
+    [disabled]="isDisabled"
+    (keydown.enter)="send(content)"
+  />
+  <button
+    class="input__suffix"
+    mat-icon-button
+    matSuffix
+    [disabled]="!content || isDisabled"
+    (click)="send(content)"
+  >
+    <mat-icon>send</mat-icon>
+  </button>
+</mat-form-field>

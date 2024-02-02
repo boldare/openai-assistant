@@ -1,0 +1,9 @@
+@import 'settings';
+
+:host {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: $size-6 $size-3;
+  box-sizing: border-box;
+}

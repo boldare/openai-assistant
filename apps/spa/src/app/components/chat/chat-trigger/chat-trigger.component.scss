@@ -1,0 +1,42 @@
+@import "settings";
+
+:host {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: $size-6;
+  width: 60px;
+  height: 60px;
+  border: 6px solid var(--color-white);
+  border-radius: 50%;
+  box-shadow: var(--shadow-default);
+  background-color: var(--color-grey-900);
+  background-image: url('/assets/trigger.jpeg');
+  background-size: cover;
+  background-position: center;
+  transition: var(--animation-fast);
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: var(--shadow-default-hover);
+    transform: scale(1.05);
+  }
+
+  &.is-animated {
+    animation: trigger 1.5s infinite;
+    animation-fill-mode: both;
+  }
+}
+
+@keyframes trigger {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 export const routes: Routes = [
   {
     path: '',
@@ -11,7 +12,7 @@ export const routes: Routes = [
       {
         path: 'chat',
         loadChildren: () =>
-          import('./modules/+chat/chat.routes').then((mod) => mod.routes),
+          import('./modules/+chat/chat.routes').then((m) => m.routes),
       },
     ],
   },

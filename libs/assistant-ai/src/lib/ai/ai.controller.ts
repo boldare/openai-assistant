@@ -8,8 +8,6 @@ import {
 import { AiService } from './ai.service';
 import { SpeechPayload } from './ai.model';
 import { FileInterceptor } from '@nestjs/platform-express';
-// @ts-ignore
-import { multer } from 'multer';
 import { toFile } from 'openai/uploads';
 
 @Controller('assistant/ai')

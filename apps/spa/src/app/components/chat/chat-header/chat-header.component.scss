@@ -1,0 +1,42 @@
+@import "settings";
+
+:host {
+  position: relative;
+  display: block;
+  width: 100%;
+  z-index: 5;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  box-shadow: var(--shadow-default);
+  padding: $size-4 $size-2 $size-4 $size-6;
+  border-radius: var(--border-radius-medium) var(--border-radius-medium) 0 0;
+  box-sizing: border-box;
+}
+
+.chat-header__img {
+  display: block;
+  max-height: 100px;
+  height: 16px;
+}
+
+.char-header__icon {
+  height: 18px;
+  width: 18px;
+  font-size: 18px;
+  color: var(--color-grey-500);
+}
+
+.chat-header__controls {
+  display: flex;
+}
+
+.chat-header__logo {
+  position: relative;
+}

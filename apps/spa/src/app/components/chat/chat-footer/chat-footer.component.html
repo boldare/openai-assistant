@@ -1,0 +1,20 @@
+<ai-card-footer>
+
+  <ai-controls>
+    @if (isTranscriptionEnabled) {
+      <ai-recorder
+        (send$)="sendAudio$.emit($event)"
+        matTooltip="Record audio"
+      />
+    }
+    @if (isAttachmentEnabled) {
+      <ai-files matTooltip="Add files" />
+    }
+  </ai-controls>
+
+  <ai-input
+    [isDisabled]="isDisabled"
+    (send$)="sendMessage$.emit($event)"
+  />
+
+</ai-card-footer>

@@ -1,0 +1,7 @@
+@import "settings";
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $size-4 $size-2;
+}

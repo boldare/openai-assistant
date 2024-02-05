@@ -2,12 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { FileObject } from 'openai/resources';
 import { createReadStream } from 'fs';
 import { AiService } from '../ai';
-import { AssistantConfig } from './assistant.config';
+import { ConfigService } from '../config';
 
 @Injectable()
 export class AssistantFilesService {
   constructor(
-    private readonly assistantConfig: AssistantConfig,
+    private readonly assistantConfig: ConfigService,
     private readonly aiService: AiService,
   ) {}
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { AssistantConfigParams } from './assistant.model';
+import { AssistantConfigParams } from '../assistant';
 
 @Injectable()
-export class AssistantConfig {
+export class ConfigService {
   private params!: AssistantConfigParams;
 
   set(params: AssistantConfigParams): void {

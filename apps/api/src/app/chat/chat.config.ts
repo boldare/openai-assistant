@@ -1,5 +1,6 @@
 import { AssistantCreateParams } from 'openai/resources/beta';
 import { AssistantConfigParams } from '@boldare/assistant-ai';
+import 'dotenv/config';
 
 export const assistantParams: AssistantCreateParams = {
   name: '@boldare/assistant-ai',

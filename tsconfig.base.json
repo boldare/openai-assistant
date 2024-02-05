@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@boldare/assistant-iframe": ["libs/assistant-iframe/src/index.ts"],
       "@boldare/assistant-ai": ["libs/assistant-ai/src/index.ts"]
     }
   },

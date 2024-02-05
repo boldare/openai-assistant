@@ -1,7 +1,7 @@
 export const environment = {
-  apiUrl: 'https://ai-voice-assistant-141aa5f30cb5.herokuapp.com/api',
-  websocketUrl: 'https://ai-voice-assistant-141aa5f30cb5.herokuapp.com',
-  isThreadMemorized: false,
+  apiUrl: 'http://localhost:3000/api',
+  websocketUrl: 'http://localhost:3000',
+  isThreadMemorized: true,
   isAudioEnabled: true,
   isTranscriptionEnabled: true,
   isAttachmentEnabled: true,

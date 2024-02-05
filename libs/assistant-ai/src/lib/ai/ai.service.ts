@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import OpenAI from 'openai';
 import { Uploadable } from 'openai/uploads';
 import { AiTranscription, SpeechPayload, SpeechVoice } from './ai.model';
+import 'dotenv/config';
 
 @Injectable()
 export class AiService {

@@ -2,10 +2,9 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Assistant, AssistantCreateParams } from 'openai/resources/beta';
 import { AiService } from '../ai';
 import { AgentService } from '../agent';
-import { AssistantConfigParams } from './assistant.model';
 import { AssistantFilesService } from './assistant-files.service';
 import { AssistantMemoryService } from './assistant-memory.service';
-import { AssistantConfig } from './assistant.config';
+import { ConfigService } from '../config';
 
 @Injectable()
 export class AssistantService {
@@ -17,7 +16,7 @@ export class AssistantService {
     private readonly aiService: AiService,
     private readonly assistantFilesService: AssistantFilesService,
     private readonly assistantMemoryService: AssistantMemoryService,
-    private readonly assistantConfig: AssistantConfig,
+    private readonly assistantConfig: ConfigService,
     private readonly agentService: AgentService,
   ) {}
 
@@ -28,9 +27,8 @@ export class AssistantService {
     };
   }
 
-  async init(config: AssistantConfigParams): Promise<void> {
-    this.assistantConfig.set(config);
-    const { id, options } = config;
+  async init(): Promise<void> {
+    const { id, options } = this.assistantConfig.get();
 
     if (!id) {
       return await this.create();

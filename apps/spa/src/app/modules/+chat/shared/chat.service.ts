@@ -80,9 +80,9 @@ export class ChatService {
   watchVisibility(): Subscription {
     return this.isVisible$.subscribe(isVisible => {
       if (isVisible) {
-        document.body.classList.add('ai-chat-open');
+        document.body.classList.add('ai-assistant-open');
       } else {
-        document.body.classList.remove('ai-chat-open');
+        document.body.classList.remove('ai-assistant-open');
       }
     });
   }

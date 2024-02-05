@@ -7,5 +7,6 @@ import { Component, HostBinding, Input } from '@angular/core';
   styleUrl: './chat-trigger.component.scss',
 })
 export class ChatTriggerComponent {
+  @HostBinding('class.ai-assistant-toggle') isTrigger = true;
   @HostBinding('class.is-animated') @Input() isAnimated = true;
 }

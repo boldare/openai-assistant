@@ -45,3 +45,4 @@ Thumbs.db
 .env.*
 !.env.dist
 /apps/spa/src/assets/uploads
+/apps/spa/src/assets/js

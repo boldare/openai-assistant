@@ -86,4 +86,16 @@ export class ChatService {
       }
     });
   }
+
+  loadScript(): void {
+    const body: HTMLDivElement = document.body as HTMLDivElement;
+    const script = document.createElement('script') as HTMLScriptElement;
+
+    script.innerHTML = '';
+    script.src = '/assets/js/ai-embedded.js';
+    script.async = true;
+    script.defer = true;
+    script.type = 'module';
+    body.appendChild(script);
+  }
 }

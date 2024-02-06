@@ -19,12 +19,16 @@
         "assets": ["apps/spa/src/assets"],
         "styles": [
           "@angular/material/prebuilt-themes/indigo-pink.css",
+          "node_modules/prismjs/themes/prism-tomorrow.css",
           "apps/spa/src/styles/styles.scss"
         ],
         "stylePreprocessorOptions": {
           "includePaths": ["apps/spa/src/styles"]
         },
-        "scripts": [],
+        "scripts": [
+          "node_modules/prismjs/prism.js",
+          "node_modules/prismjs/components/prism-javascript.min.js"
+        ],
         "allowedCommonJsDependencies": ["recordrtc"]
       },
       "configurations": {

@@ -7,8 +7,11 @@ export class AssistantIframe {
   trigger!: HTMLElement;
 
   constructor(config: Partial<AssistantIframeConfig> = {}) {
+    // @TODO: set URL as an env variable
+    const url = 'https://ai-assistant-c8b469d88808.herokuapp.com';
+
     this.config = {
-      url: config.url || '',
+      url: `${url}/chat/iframe`,
       elementId: config.elementId || '',
       iframeId: config.elementId || 'ai-assistant-iframe',
       iframeClass: 'ai-assistant-iframe',
@@ -16,7 +19,6 @@ export class AssistantIframe {
       bodyOpenClass: 'ai-assistant-open',
       toggleIsAnimated: config.toggleIsAnimated || true,
     };
-
     this.init();
   }
 
@@ -56,7 +58,7 @@ export class AssistantIframe {
     const iframe = document.createElement('iframe');
     iframe.src = this.config.url;
     iframe.classList.add(this.config.iframeClass);
-    iframe.id = this.config.elementId;
+    iframe.id = this.config.iframeId;
 
     return iframe;
   }
@@ -64,6 +66,7 @@ export class AssistantIframe {
   appendElement(element: HTMLElement): void {
     if (!this.config.elementId) {
       document.body.appendChild(element);
+      return;
     }
 
     const wrapper = document.getElementById(this.config.elementId);
@@ -84,6 +87,7 @@ export class AssistantIframe {
         this.iframe?.contentDocument?.body.classList.contains(
           this.config.bodyOpenClass,
         );
+
       this.toggleModal(!currentState);
       this.watchToggleButton();
     });

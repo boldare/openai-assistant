@@ -1,96 +1,56 @@
-import {
-  AfterViewInit,
-  Component,
-  OnInit,
-  QueryList,
-  ViewChildren,
-} from '@angular/core';
-import { ChatService } from '../../shared/chat.service';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { ChatRole, MessageHistory } from '../../shared/chat.model';
-import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
-import { ThreadService } from '../../shared/thread.service';
-import { MarkdownComponent, MarkdownModule } from 'ngx-markdown';
-import { MessageTypingComponent } from '../../components/message-typing/message-typing.component';
-import { ChatFormComponent } from '../../components/chat-form/chat-form.component';
+import { Component, OnInit } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Subscription } from 'rxjs';
-import { ChatHeaderComponent } from '../../components/chat-header/chat-header.component';
+import { environment } from '../../../../../environments/environment';
+import { ChatService } from '../../shared/chat.service';
+import { ThreadService } from '../../shared/thread.service';
+import { CardComponent } from '../../../../components/cards';
+import { ChatHeaderComponent } from '../../../../components/chat/chat-header/chat-header.component';
+import { ChatMessagesComponent } from '../../../../components/chat/chat-messages/chat-messages.component';
+import { ChatFooterComponent } from '../../../../components/chat/chat-footer/chat-footer.component';
+import {
+  ConfigurationFormComponent
+} from '../../../+configuration/components/configuration-form/configuration-form.component';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'ai-chat',
   standalone: true,
   imports: [
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    FormsModule,
-    NgClass,
-    MarkdownModule,
-    MessageTypingComponent,
-    ChatFormComponent,
+    CardComponent,
     ChatHeaderComponent,
+    ChatMessagesComponent,
+    ChatFooterComponent,
+    ConfigurationFormComponent,
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
-export class ChatComponent implements OnInit, AfterViewInit {
-  @ViewChildren('item') item?: QueryList<MarkdownComponent>;
-  messages: MessageHistory[] = [];
-  content: string = '';
-  isLoading = false;
+export class ChatComponent implements OnInit {
+  messages = toSignal(this.chatService.messages$, { initialValue: [] });
+  isLoading = toSignal(this.chatService.isLoading$, { initialValue: false });
   threadId = toSignal(this.threadService.threadId$, { initialValue: '' });
-  subscription: Subscription = new Subscription();
+  isTranscriptionEnabled = environment.isTranscriptionEnabled;
+  isAttachmentEnabled = environment.isAttachmentEnabled;
+  isRefreshEnabled = environment.isRefreshEnabled;
+  isConfigEnabled = environment.isConfigEnabled;
+  tips = [
+    'Hello there! 👋',
+    'Could you please tell me your name?',
+    'Hello! How can you help me?',
+    'Hello! 👋 How are you?',
+  ];
 
   constructor(
-    private readonly chatService: ChatService,
     private readonly threadService: ThreadService,
+    public readonly chatService: ChatService,
   ) {}
 
-  ngAfterViewInit() {
-    this.scrollDown();
-  }
-
-  ngOnInit(): void {
-    this.subscription.add(this.watchMessages());
-  }
-
-  scrollDown(): void {
-    setTimeout(() => {
-      const lastChildElement = this.item?.last?.element.nativeElement;
-      lastChildElement?.scrollIntoView({ behavior: 'smooth' });
-    }, 0);
-  }
-
-  watchMessages(): Subscription {
-    return this.chatService.getMessages().subscribe(data => {
-      this.isLoading = false;
-      this.messages.push({
-        content: data.content,
-        role: ChatRole.Assistant,
-      });
-      this.scrollDown();
-    });
-  }
-
-  clearChat(): void {
-    this.messages = [];
-    this.threadService.saveThreadId('');
-  }
-
-  sendMessage(content: string) {
-    this.isLoading = true;
-    this.messages.push({ role: ChatRole.User, content });
-    this.chatService.sendMessage({
-      content,
-      threadId: this.threadId(),
-    });
-    this.content = '';
-    this.scrollDown();
+  ngOnInit() {
+    if (!this.isConfigEnabled) {
+      this.threadService
+        .start()
+        .pipe(take(1))
+        .subscribe();
+    }
   }
 }

@@ -1,0 +1,8 @@
+@import 'settings';
+
+:host {
+  width: 100%;
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-default);
+  border-radius: var(--border-radius-medium);
+}

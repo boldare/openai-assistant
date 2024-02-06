@@ -1,13 +1,7 @@
-import { FormControl } from '@angular/forms';
 import { ThreadCreateParams } from 'openai/resources/beta';
 
-export interface MessageResponse {
+export interface AudioResponse {
   content: string;
-}
-
-export interface MessagePayload {
-  content: string;
-  threadId: string;
 }
 
 export enum ChatRole {
@@ -15,7 +9,7 @@ export enum ChatRole {
   Assistant = 'assistant',
 }
 
-export interface MessageHistory {
+export interface Message {
   content: string;
   role: ChatRole;
 }
@@ -31,8 +25,4 @@ export interface ThreadConfig {
 export enum ChatEvents {
   SendMessage = 'send_message',
   MessageReceived = 'message_received',
-}
-
-export interface ChatConfigForm {
-  firstName: FormControl<string | null>;
 }

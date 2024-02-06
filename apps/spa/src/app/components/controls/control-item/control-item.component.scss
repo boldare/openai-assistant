@@ -1,0 +1,25 @@
+@import 'settings';
+
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: $size-2;
+  background-color: var(--color-grey-200);
+  transition: var(--animation-fast);
+  border-radius: var(--border-radius-default);
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: var(--color-grey-500);
+
+  &.has-files,
+  &.is-active,
+  &:hover {
+    background-color: var(--color-grey-300);
+    color: var(--color-grey-900);
+  }
+}

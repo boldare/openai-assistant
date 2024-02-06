@@ -1,51 +1,16 @@
 :host {
   display: flex;
-  gap: 20px;
-  flex-direction: column;
-  max-width: 600px;
-  padding: 40px;
-  margin: auto;
+  height: 100vh;
+  max-height: 600px;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-medium);
 }
 
-.card {
-  border-radius: 10px;
-}
-
-.messages {
-  position: relative;
+.chat {
   display: flex;
-  gap: 20px;
   flex-direction: column;
-  margin: 0 auto 20px;
-  height: calc(100vh - 400px);
-  min-height: 300px;
-  overflow-y: auto;
 }
 
-.message {
-  background: #f1f1ef;
-  border-radius: 12px;
-  display: inline-flex;
-  flex-direction: column;
-  padding: 8px 12px;
-  width: fit-content;
-
-  ::ng-deep p {
-    margin-bottom: 0;
-  }
-}
-
-.message-bot {
-  border-top-left-radius: 0;
-}
-
-.message-user {
-  background: #cedde7;
-  border-bottom-right-radius: 0;
-  align-self: flex-end;
-}
-
-.close {
-  display: flex;
-  justify-content: flex-end;
+.chat__content {
+  flex: 1 1 100%;
 }

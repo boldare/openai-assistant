@@ -1,0 +1,21 @@
+<form class="chat-form" [formGroup]="form">
+  <div class="chat-form__content">
+    <mat-form-field appearance="fill">
+      <mat-label>
+        First name
+      </mat-label>
+      <input formControlName="firstName" matInput />
+    </mat-form-field>
+  </div>
+
+  <ai-card-footer>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="form.invalid"
+      (click)="startChat()"
+    >
+      Start conversation
+    </button>
+  </ai-card-footer>
+</form>

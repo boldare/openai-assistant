@@ -1,0 +1,15 @@
+@import 'settings';
+
+:host {
+  display: block;
+  position: absolute;
+  right: -2px;
+  bottom: 0;
+}
+
+.chat-status {
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-green-500);
+}

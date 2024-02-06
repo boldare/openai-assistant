@@ -1,0 +1,157 @@
+$size-container: 1200px;
+
+// Size
+// The size controls the increment of the property in 4px intervals
+// ------------------------------------------
+$size-unit: 4px;
+$size-0: 0px;
+
+$size-1: 1 * $size-unit;
+$size-2: 2 * $size-unit;
+$size-3: 3 * $size-unit;
+$size-4: 4 * $size-unit;
+$size-5: 5 * $size-unit;
+$size-6: 6 * $size-unit;
+$size-7: 7 * $size-unit;
+$size-8: 8 * $size-unit;
+$size-9: 9 * $size-unit;
+$size-10: 10 * $size-unit;
+$size-11: 11 * $size-unit;
+$size-12: 12 * $size-unit;
+$size-13: 13 * $size-unit;
+$size-14: 14 * $size-unit;
+$size-15: 15 * $size-unit;
+$size-16: 16 * $size-unit;
+
+$sizes: (
+  'none': ($mobile: $size-0),
+  'mini': ($mobile: $size-1),
+  'small': ($mobile: $size-4),
+  'medium': ($mobile: $size-10),
+  'big': ($mobile: $size-14),
+);
+
+// Mixins
+// ------------------------------------------
+@mixin size-rwd($breakpointName: 'medium') {
+  @each $size-breakpoint, $value in map-get($sizes, $breakpointName) {
+    @if ($mobile == $size-breakpoint) {
+      @content($value);
+    } @else {
+      @include min-screen($size-breakpoint) {
+        @content($value);
+      }
+    }
+  }
+}
+
+@mixin size-space-rwd($prefix: 'size', $type: 'padding') {
+  @each $name, $size-props in $sizes {
+    @each $size-breakpoint, $value in $size-props {
+      @if ($mobile == $size-breakpoint) {
+        @content($name, $value);
+      } @else {
+        @include min-screen($size-breakpoint) {
+          @content($name, $value);
+        }
+      }
+    }
+  }
+}
+
+@mixin size-space-vertical($prefix: 'size', $type: 'padding') {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+    &.#{$prefix}-vertical--#{$name} {
+      #{$type}-top: #{$value};
+      #{$type}-bottom: #{$value};
+    }
+  }
+}
+
+@mixin size-space-horizontal($prefix: 'size', $type: 'padding') {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+    &.#{$prefix}-horizontal--#{$name} {
+      #{$type}-right: #{$value};
+      #{$type}-left: #{$value};
+    }
+  }
+}
+
+@mixin size-space-all($prefix: 'size', $type: 'padding') {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+    &.#{$prefix}--#{$name} {
+      #{$type}: #{$value};
+    }
+  }
+}
+
+@mixin size-space-bottom($prefix: 'size', $type: 'padding') {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+    &.#{$prefix}-bottom--#{$name} {
+      #{$type}-bottom: #{$value};
+    }
+  }
+}
+
+@mixin size-space-top($prefix: 'size', $type: 'padding') {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+    &.#{$prefix}-top--#{$name} {
+      #{$type}-top: #{$value};
+    }
+  }
+}
+
+@mixin size-space-right($prefix: 'size', $type: 'padding') {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+    &.#{$prefix}-right--#{$name} {
+      #{$type}-right: #{$value};
+    }
+  }
+}
+
+@mixin size-space-left($prefix: 'size', $type: 'padding') {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+    &.#{$prefix}-left--#{$name} {
+      #{$type}-left: #{$value};
+    }
+  }
+}
+
+@mixin size-space($prefix: 'size', $type: 'padding') {
+  @include size-space-all($prefix, $type);
+  @include size-space-vertical($prefix, $type);
+  @include size-space-horizontal($prefix, $type);
+  @include size-space-bottom($prefix, $type);
+  @include size-space-top($prefix, $type);
+  @include size-space-right($prefix, $type);
+  @include size-space-left($prefix, $type);
+}
+
+@mixin size-gap($prefix: 'size') {
+  @each $name, $value in $sizes {
+    @include size-space-rwd($prefix: 'size') using ($name, $value) {
+      &.#{$prefix}-gap--#{$name} {
+        display: flex;
+        gap: #{$value};
+      }
+    }
+  }
+
+  @each $name, $value in $sizes {
+    @include size-space-rwd($prefix: 'size') using ($name, $value) {
+      &.#{$prefix}-column-gap--#{$name} {
+        display: flex;
+        column-gap: #{$value};
+      }
+    }
+  }
+
+  @each $name, $value in $sizes {
+    @include size-space-rwd($prefix: 'size') using ($name, $value) {
+      &.#{$prefix}-row-gap--#{$name} {
+        display: flex;
+        row-gap: #{$value};
+      }
+    }
+  }
+}

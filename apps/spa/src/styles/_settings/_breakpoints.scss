@@ -1,0 +1,36 @@
+// Breakpoints
+// ------------------------------------------
+// * device
+// * device-small
+// * device-medium
+// * device-big
+// ------------------------------------------
+$mobile: 320px;
+$mobile-big: 560px;
+$tablet: 768px;
+$tablet-big: 1024px;
+$desktop: 1280px;
+$desktop-big: 1440px;
+
+// Breakpoints report
+// ------------------------------------------
+$breakpoints: (
+  'mobile': $mobile,
+  'tablet': $tablet,
+  'desktop': $desktop,
+  'desktop-big': $desktop-big
+);
+
+// Breakpoints mixins
+// ------------------------------------------
+@mixin min-screen($resolution) {
+  @media screen and (min-width: $resolution) {
+    @content;
+  }
+}
+
+@mixin max-screen($resolution) {
+  @media screen and (max-width: $resolution - 1) {
+    @content;
+  }
+}

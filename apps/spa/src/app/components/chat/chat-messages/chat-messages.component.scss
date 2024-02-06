@@ -1,0 +1,13 @@
+@import 'settings';
+
+.messages {
+  position: relative;
+  display: flex;
+  gap: $size-5;
+  flex-direction: column;
+  max-height: calc(100vh - 136px);
+  padding: $size-6 $size-4 $size-0;
+  box-sizing: border-box;
+  overflow-y: auto;
+  width: 100%;
+}

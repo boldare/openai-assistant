@@ -1,32 +1,89 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Subscription, take } from 'rxjs';
+import { ChatRole, Message } from './chat.model';
+import { ChatGatewayService } from './chat-gateway.service';
+import { ChatClientService } from './chat-client.service';
+import { ThreadService } from './thread.service';
+import { ChatFilesService } from './chat-files.service';
 import { environment } from '../../../../environments/environment';
-import { ChatEvents, MessagePayload, MessageResponse } from './chat.model';
-import io from 'socket.io-client';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-  private socket = io(environment.websocketUrl);
+  isVisible$ = new BehaviorSubject<boolean>(environment.isAutoOpen);
+  isLoading$ = new BehaviorSubject<boolean>(false);
+  messages$ = new BehaviorSubject<Message[]>([]);
 
-  constructor(private readonly httpClient: HttpClient) {}
+  constructor(
+    private readonly chatGatewayService: ChatGatewayService,
+    private readonly chatClientService: ChatClientService,
+    private readonly threadService: ThreadService,
+    private readonly chatFilesService: ChatFilesService,
+  ) {
+    document.body.classList.add('ai-chat');
 
-  postMessage(content: string): Observable<MessageResponse> {
-    return this.httpClient.post<MessageResponse>(`${environment.apiUrl}/chat`, {
+    this.watchMessages();
+    this.watchVisibility();
+  }
+
+  toggle(): void {
+    this.isVisible$.next(!this.isVisible$.value);
+  }
+
+  refresh(): void {
+    this.messages$.next([]);
+    this.threadService.start().subscribe();
+   }
+
+  clear(): void {
+    this.threadService.clear();
+    this.messages$.next([]);
+  }
+
+  addMessage(message: Message): void {
+    this.messages$.next([...this.messages$.value, message]);
+  }
+
+  async sendMessage(content: string, role = ChatRole.User): Promise<void> {
+    this.isLoading$.next(true);
+    this.addMessage({ content, role });
+
+    this.chatGatewayService.sendMessage({
       content,
+      threadId: this.threadService.threadId$.value,
+      file_ids: await this.chatFilesService.sendFiles(),
     });
   }
 
-  sendMessage(payload: MessagePayload): void {
-    this.socket.emit(ChatEvents.SendMessage, payload);
+  watchMessages(): Subscription {
+    return this.chatGatewayService.getMessages()
+      .subscribe(data => {
+        this.addMessage({
+          content: data.content,
+          role: ChatRole.Assistant,
+        });
+        this.isLoading$.next(false);
+      });
   }
 
-  getMessages() {
-    return new Observable<MessagePayload>((observer) => {
-      this.socket.on(ChatEvents.MessageReceived, (data) => observer.next(data));
-      return () => {
-        this.socket.disconnect();
-      };
+  sendAudio(file: Blob): void {
+    this.isLoading$.next(true);
+
+    this.chatClientService
+      .transcription({
+        threadId: this.threadService.threadId$.value,
+        file: file as File,
+      })
+      .pipe(take(1))
+      .subscribe(response => this.sendMessage(response.content));
+  }
+
+  watchVisibility(): Subscription {
+    return this.isVisible$.subscribe(isVisible => {
+      if (isVisible) {
+        document.body.classList.add('ai-assistant-open');
+      } else {
+        document.body.classList.remove('ai-assistant-open');
+      }
     });
   }
 }

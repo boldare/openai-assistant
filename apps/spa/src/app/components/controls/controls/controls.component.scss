@@ -1,0 +1,10 @@
+@import 'settings';
+
+:host {
+  display: flex;
+  gap: $size-1;
+
+  &:empty {
+    display: none;
+  }
+}

@@ -1,4 +1,4 @@
-# Assistant AI
+# AI Assistant
 
 Install the dependencies:
 ```bash

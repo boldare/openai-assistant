@@ -1,0 +1,14 @@
+@import "settings";
+
+:host {
+  padding: $size-2 $size-4;
+  box-shadow: var(--shadow-light);
+  background-color: var(--color-primary-200);
+  border-radius: var(--border-radius-medium);
+  transition: var(--animation-fast);
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: var(--shadow-default);
+  }
+}

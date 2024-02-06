@@ -1,0 +1,22 @@
+.chat-audio {
+  position: absolute;
+  top: 100%;
+  right: -8px;
+  margin-top: -16px;
+
+  mat-icon {
+    color: var(--color-grey-500);
+    transition: var(--animation-fast);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-grey-900);
+    }
+  }
+}
+
+.chat-audio--user {
+  margin-top: -16px;
+  left: -8px;
+  right: auto;
+}

@@ -1,11 +1,12 @@
 export const environment = {
-  apiUrl: 'http://localhost:3000/api',
-  websocketUrl: 'http://localhost:3000',
-  isThreadMemorized: true,
+  appUrl: 'https://ai-assistant-c8b469d88808.herokuapp.com',
+  apiUrl: 'https://ai-assistant-c8b469d88808.herokuapp.com/api',
+  websocketUrl: 'https://ai-assistant-c8b469d88808.herokuapp.com',
+  isThreadMemorized: false,
   isAudioEnabled: true,
   isTranscriptionEnabled: true,
   isAttachmentEnabled: true,
   isRefreshEnabled: true,
   isConfigEnabled: true,
-  isAutoOpen: true,
+  isAutoOpen: false,
 };

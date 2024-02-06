@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { SpeechVoice } from '@boldare/assistant-ai';
+import { SpeechVoice } from '@boldare/ai-assistant';
 
 export interface ConfigurationForm {
   firstName: FormControl<string | null>;

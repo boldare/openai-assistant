@@ -1,5 +1,5 @@
 import { AssistantCreateParams } from 'openai/resources/beta';
-import { AssistantConfigParams } from '@boldare/assistant-ai';
+import { AssistantConfigParams } from '@boldare/ai-assistant';
 import 'dotenv/config';
 
 export const assistantParams: AssistantCreateParams = {
@@ -15,4 +15,4 @@ export const assistantConfig: AssistantConfigParams = {
   params: assistantParams,
   filesDir: './apps/api/src/app/knowledge',
   files: [],
-}
+};

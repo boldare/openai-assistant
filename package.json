@@ -1,19 +1,18 @@
 {
-  "name": "@assistant-ai/source",
+  "name": "@boldare/source",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "start:dev": "nx run-many --parallel --target=serve --projects=api,spa ",
     "start:spa": "nx serve spa",
     "start:api": "nx serve api",
-    "start:assistant-iframe": "nx serve assistant-iframe",
     "build:spa": "nx build --prod spa",
     "build:api": "nx build --prod api",
-    "build:assistant-ai": "nx build --prod assistant-ai",
-    "build:assistant-iframe": "nx build --prod assistant-iframe",
+    "build:ai-assistant": "nx build --prod ai-assistant",
+    "build:ai-iframe": "nx build --prod ai-iframe",
     "build": "npm run build:spa && npm run build:api",
     "start": "node dist/apps/api/main.js",
-    "publish": "npm run build && cd dist/libs/assistant-ai/ && npm publish --access=public && cd ../../.."
+    "publish": "npm run build && cd dist/libs/ai-assistant/ && npm publish --access=public && cd ../../.."
   },
   "private": true,
   "dependencies": {

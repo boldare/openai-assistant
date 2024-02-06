@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { SpeechVoice } from '@boldare/assistant-ai';
+import { SpeechVoice } from '@boldare/ai-assistant';
 import { ConfigurationForm } from './configuration.model';
 import { ThreadConfig } from '../../+chat/shared/chat.model';
 
@@ -23,5 +23,4 @@ export class ConfigurationFormService {
       ],
     };
   }
-
 }

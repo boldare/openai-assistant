@@ -1,4 +1,5 @@
 export const environment = {
+  appUrl: 'http://localhost:4200',
   apiUrl: 'http://localhost:3000/api',
   websocketUrl: 'http://localhost:3000',
   isThreadMemorized: true,

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AssistantIframe } from '@boldare/assistant-iframe';
+import { AssistantIframe } from '@boldare/ai-iframe';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'ai-chat-example',
@@ -8,7 +9,5 @@ import { AssistantIframe } from '@boldare/assistant-iframe';
   styleUrl: './chat-example.component.scss',
 })
 export class ChatExampleComponent {
-  iframe = new AssistantIframe({ url: 'http://localhost:4200/chat/iframe' });
+  iframe = new AssistantIframe({ url: `${environment.appUrl}/chat/iframe` });
 }
-
-

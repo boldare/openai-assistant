@@ -4,7 +4,11 @@ import { Message } from '../../../modules/+chat/shared/chat.model';
 import { environment } from '../../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon';
 import { delay } from 'rxjs';
-import { ChatAudioResponse, SpeechPayload, SpeechVoice } from '@boldare/assistant-ai';
+import {
+  ChatAudioResponse,
+  SpeechPayload,
+  SpeechVoice,
+} from '@boldare/ai-assistant';
 import { NgClass } from '@angular/common';
 
 @Component({

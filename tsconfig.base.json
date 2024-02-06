@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@boldare/assistant-iframe": ["libs/assistant-iframe/src/index.ts"],
-      "@boldare/assistant-ai": ["libs/assistant-ai/src/index.ts"]
+      "@boldare/ai-assistant": ["libs/ai-assistant/src/index.ts"],
+      "@boldare/ai-iframe": ["libs/ai-iframe/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

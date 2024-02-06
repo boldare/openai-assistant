@@ -1,4 +1,4 @@
-import { SpeechVoice } from '@boldare/assistant-ai';
+import { SpeechVoice } from '@boldare/ai-assistant';
 
 export const voices: SpeechVoice[] = [
   SpeechVoice.Alloy,

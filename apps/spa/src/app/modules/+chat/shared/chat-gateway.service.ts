@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ChatEvents } from './chat.model';
 import io from 'socket.io-client';
-import { ChatCall } from '@boldare/assistant-ai';
+import { ChatCall } from '@boldare/ai-assistant';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 

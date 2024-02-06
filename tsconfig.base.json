@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@boldare/ai-assistant": ["libs/ai-assistant/src/index.ts"],
-      "@boldare/ai-iframe": ["libs/ai-iframe/src/index.ts"]
+      "@boldare/ai-embedded": ["libs/ai-embedded/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,0 +1,12 @@
+@import 'settings';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: $size-2;
+  max-width: 600px;
+  font-size: 16px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: var(--color-grey-600);
+}

@@ -1,7 +1,7 @@
 {
-  "name": "@boldare/ai-iframe",
+  "name": "@boldare/ai-embedded",
   "version": "0.0.1",
   "dependencies": {},
   "type": "commonjs",
-  "main": "./index.cjs"
+  "main": "./index.js"
 }

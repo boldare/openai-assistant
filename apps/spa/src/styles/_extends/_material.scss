@@ -12,6 +12,7 @@
   --mdc-filled-text-field-focus-label-text-color: var(--color-grey-500);
   --mat-option-selected-state-label-text-color: var(--color-primary-500);
   --mat-select-focused-arrow-color: var(--color-primary-500);
+  --mdc-filled-text-field-label-text-size: 14px;
 
   .mat-primary {
     --mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--color-primary-500);
@@ -70,5 +71,9 @@
   .mdc-button {
     width: 100%;
     min-height: 42px;
+  }
+
+  .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+    top: 28px;
   }
 }

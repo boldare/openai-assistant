@@ -16,4 +16,9 @@ export class ChatHeaderComponent {
   @Output() config$ = new EventEmitter();
   @Input() isRefreshEnabled = true;
   @Input() isConfigEnabled = true;
+
+  close(): void {
+    this.close$.emit();
+    parent.postMessage({ type: 'chatbot.close' }, '*');
+  }
 }

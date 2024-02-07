@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { toFile } from 'openai/uploads';
 import { FileObject } from 'openai/resources';
 import { AiService } from '../ai';
-// @ts-ignore
+// @ts-expect-error multer is necessary
+// eslint-disable-next-line
 import { multer } from 'multer';
 
 @Injectable()

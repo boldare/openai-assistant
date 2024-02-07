@@ -9,13 +9,25 @@
 
   &.is-user {
     justify-content: flex-end;
+
+    .chat-message {
+      border-bottom-left-radius: 0;
+      background: var(--color-primary-200);
+      border-bottom-right-radius: 0;
+      align-self: flex-end;
+    }
   }
 
-  &.is-user .chat-message {
-    border-bottom-left-radius: 0;
-    background: var(--color-primary-200);
-    border-bottom-right-radius: 0;
-    align-self: flex-end;
+  &.is-system {
+    justify-content: center;
+    font-size: 12px;
+
+    .chat-message {
+      background-color: var(--color-transparent);
+      color: var(--color-grey-400);
+      align-self: center;
+      text-align: center;
+    }
   }
 
   &.is-assistant .chat-message {

@@ -4,5 +4,8 @@
 
 <div class="chat-message">
   <span markdown [data]="message.content"></span>
-  <ai-chat-audio [message]="message"></ai-chat-audio>
+
+  @if (message.role !== chatRole.System) {
+    <ai-chat-audio [message]="message"></ai-chat-audio>
+  }
 </div>

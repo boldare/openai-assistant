@@ -7,6 +7,7 @@ export interface AudioResponse {
 export enum ChatRole {
   User = 'user',
   Assistant = 'assistant',
+  System = 'system',
 }
 
 export interface Message {

@@ -6,6 +6,7 @@ import { ChatClientService } from './chat-client.service';
 import { ThreadService } from './thread.service';
 import { ChatFilesService } from './chat-files.service';
 import { environment } from '../../../../environments/environment';
+import { OpenAiFile } from '@boldare/ai-assistant';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -43,14 +44,28 @@ export class ChatService {
     this.messages$.next([...this.messages$.value, message]);
   }
 
+  addFileMessage(files: OpenAiFile[]): void {
+    if (!files?.length) {
+      return;
+    }
+
+    this.addMessage({
+      content: `The user has attached files to the message: ${files.map(file => file.filename).join(', ')}`,
+      role: ChatRole.System,
+    });
+  }
+
   async sendMessage(content: string, role = ChatRole.User): Promise<void> {
     this.isLoading$.next(true);
     this.addMessage({ content, role });
 
+    const files = await this.chatFilesService.sendFiles();
+    this.addFileMessage(files);
+
     this.chatGatewayService.sendMessage({
       content,
       threadId: this.threadService.threadId$.value,
-      file_ids: await this.chatFilesService.sendFiles(),
+      file_ids: files.map(file => file.id) || [],
     });
   }
 

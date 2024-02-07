@@ -4,15 +4,23 @@
   display: flex;
   flex-direction: column;
   gap: $size-2;
-  max-width: 650px;
+  max-width: 680px;
   font-size: 15px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 40px 10px;
   color: var(--color-grey-500);
 }
 
-p.paragraph {
+.section {
   margin-bottom: 20px;
+}
+
+p.paragraph {
+  margin-bottom: 12px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 h1 {

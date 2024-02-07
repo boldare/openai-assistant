@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FilesService } from '../../../components/controls';
 import { ChatClientService } from './chat-client.service';
+import OpenAI from 'openai';
+import { OpenAiFile } from '@boldare/ai-assistant';
 
 @Injectable({ providedIn: 'root' })
 export class ChatFilesService {
@@ -10,7 +12,7 @@ export class ChatFilesService {
     private readonly filesService: FilesService,
   ) {}
 
-  async sendFiles(): Promise<string[]> {
+  async sendFiles(): Promise<OpenAiFile[]> {
     const files = this.filesService.files$.value;
 
     if (!files.length) {
@@ -20,6 +22,6 @@ export class ChatFilesService {
     const uploadedFiles = await this.chatClientService.uploadFiles({ files });
     this.filesService.clear();
 
-    return uploadedFiles?.map(file => file.id) || [];
+    return uploadedFiles || [];
   }
 }

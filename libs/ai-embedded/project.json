@@ -1,19 +1,38 @@
 {
   "name": "ai-embedded",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
   "sourceRoot": "libs/ai-embedded/src",
-  "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/esbuild:esbuild",
+      "executor": "@nx/webpack:webpack",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
+        "target": "web",
         "outputPath": "dist/libs/ai-embedded",
+        "compiler": "swc",
         "main": "libs/ai-embedded/src/index.ts",
-        "tsConfig": "libs/ai-embedded/tsconfig.lib.json",
-        "assets": ["libs/ai-embedded/*.md"],
-        "generatePackageJson": false,
-        "format": ["esm"]
+        "tsConfig": "libs/ai-embedded/tsconfig.app.json",
+        "webpackConfig": "libs/ai-embedded/webpack.config.js",
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "outputHashing": "none",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": false,
+          "vendorChunk": false,
+          "fileReplacements": [
+            {
+              "replace": "libs/ai-embedded/src/environments/environment.ts",
+              "with": "libs/ai-embedded/src/environments/environment.prod.ts"
+            }
+          ]
+        }
       }
     },
     "lint": {
@@ -27,6 +46,5 @@
         "jestConfig": "libs/ai-embedded/jest.config.ts"
       }
     }
-  },
-  "tags": []
+  }
 }

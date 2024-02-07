@@ -17,20 +17,31 @@ import { AssistantIframe } from '@boldare/ai-embedded';
   ],
 })
 export class ChatExampleComponent {
-  markdown = `\`\`\`html
+  scriptMarkdown = `\`\`\`html
 <script
   src="${environment.appUrl}/assets/js/ai-embedded.js"
   data-chat-initial="true"
-  type="module"
   defer
 ></script>
 \`\`\``;
 
+  scriptDataAttrMarkdown = `\`\`\`javascript
+data-chat-initial="true"
+\`\`\``;
+
+  manualInitialization = `\`\`\`javascript
+new AssistantIframe({
+  url: \`${environment.appUrl}/chat/iframe\`
+}).init();
+\`\`\``;
+
   constructor(private readonly chatService: ChatService) {
+    this.chatService.loadScript();
+
     if (environment.env === 'prod') {
       this.chatService.loadScript();
     } else {
-      new AssistantIframe({ url: `${environment.appUrl}/chat/iframe` }).init();
+      new AssistantIframe().init();
     }
   }
 }

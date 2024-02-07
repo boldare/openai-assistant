@@ -95,7 +95,6 @@ export class ChatService {
     script.src = '/assets/js/ai-embedded.js';
     script.async = true;
     script.defer = true;
-    script.type = 'module';
     script.dataset['chatInitial'] = 'true';
     body.appendChild(script);
   }

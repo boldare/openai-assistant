@@ -1,5 +1,6 @@
 import { AssistantIframeConfig } from './assistant-iframe.model';
 import { addIframeClass, addTriggerClass } from './assistant-iframe.styles';
+import { environment } from '../environments/environment';
 
 export class AssistantIframe {
   config: AssistantIframeConfig;
@@ -7,7 +8,7 @@ export class AssistantIframe {
   trigger!: HTMLElement;
 
   constructor(config: Partial<AssistantIframeConfig> = {}) {
-    const url = 'https://ai-assistant-c8b469d88808.herokuapp.com/chat/iframe';
+    const url = `${environment.appUrl}/chat/iframe`;
 
     this.config = {
       url: config.url || url,

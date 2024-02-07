@@ -21,7 +21,6 @@ export class ChatExampleComponent {
 <script
   src="${environment.appUrl}/assets/js/ai-embedded.js"
   data-chat-initial="true"
-  type="module"
   defer
 ></script>
 \`\`\``;
@@ -37,10 +36,12 @@ new AssistantIframe({
 \`\`\``;
 
   constructor(private readonly chatService: ChatService) {
+    this.chatService.loadScript();
+
     if (environment.env === 'prod') {
       this.chatService.loadScript();
     } else {
-      new AssistantIframe({ url: `${environment.appUrl}/chat/iframe` }).init();
+      new AssistantIframe().init();
     }
   }
 }

@@ -98,14 +98,14 @@ export class AssistantIframe {
           this.config.bodyOpenClass,
         );
 
-      this.toggleModal(!currentState);
+      this.changeModalState(!currentState);
       this.watchToggleButton();
       this.watchCloseButton();
     });
   }
 
-  toggleModal(state: boolean): void {
-    if (!state) {
+  changeModalState(currentState: boolean): void {
+    if (!currentState) {
       document.body.classList.add(this.config.bodyOpenClass);
       this.iframe.style.display = 'block';
     } else {
@@ -119,7 +119,7 @@ export class AssistantIframe {
 
     appButtons[0].addEventListener('click', () => {
       const isVisible = document.body.classList.contains(this.config.bodyOpenClass);
-      this.toggleModal(isVisible);
+      this.changeModalState(isVisible);
     });
   }
 
@@ -127,7 +127,7 @@ export class AssistantIframe {
     window.addEventListener('message', (message) => {
       if (message.data.type === 'chatbot.close') {
         const isVisible = document.body.classList.contains(this.config.bodyOpenClass);
-        this.toggleModal(isVisible);
+        this.changeModalState(isVisible);
       }
     });
   }

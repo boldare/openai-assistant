@@ -36,8 +36,6 @@ new AssistantIframe({
 \`\`\``;
 
   constructor(private readonly chatService: ChatService) {
-    this.chatService.loadScript();
-
     if (environment.env === 'prod') {
       this.chatService.loadScript();
     } else {

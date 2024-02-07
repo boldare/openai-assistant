@@ -96,6 +96,7 @@ export class ChatService {
     script.async = true;
     script.defer = true;
     script.type = 'module';
+    script.dataset['chatInitial'] = 'true';
     body.appendChild(script);
   }
 }

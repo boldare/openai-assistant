@@ -7,11 +7,10 @@ export class AssistantIframe {
   trigger!: HTMLElement;
 
   constructor(config: Partial<AssistantIframeConfig> = {}) {
-    // @TODO: set URL as an env variable
-    const url = 'https://ai-assistant-c8b469d88808.herokuapp.com';
+    const url = 'https://ai-assistant-c8b469d88808.herokuapp.com/chat/iframe';
 
     this.config = {
-      url: `${url}/chat/iframe`,
+      url: config.url || url,
       elementId: config.elementId || '',
       iframeId: config.elementId || 'ai-assistant-iframe',
       iframeClass: 'ai-assistant-iframe',
@@ -19,7 +18,10 @@ export class AssistantIframe {
       bodyOpenClass: 'ai-assistant-open',
       toggleIsAnimated: config.toggleIsAnimated || true,
     };
-    this.init();
+
+    if (this.getChatInitialValue()) {
+      this.init();
+    }
   }
 
   addStyles(): void {
@@ -30,6 +32,14 @@ export class AssistantIframe {
       ${addTriggerClass(this.config.toggleClass)}
     </style>`,
     );
+  }
+
+  getChatInitialValue(): boolean {
+    const dataChatInitialKey = 'data-chat-initial';
+    const element = document.querySelector(`[${dataChatInitialKey}]`);
+    const chatInitialData = element?.getAttribute(dataChatInitialKey);
+
+    return chatInitialData ? JSON.parse(chatInitialData) : false;
   }
 
   init(): void {
@@ -90,6 +100,7 @@ export class AssistantIframe {
 
       this.toggleModal(!currentState);
       this.watchToggleButton();
+      this.watchCloseButton();
     });
   }
 
@@ -104,20 +115,19 @@ export class AssistantIframe {
   }
 
   watchToggleButton(): void {
-    const iframeButtons = this.iframe?.contentDocument?.getElementsByClassName(
-      this.config.toggleClass,
-    );
     const appButtons = document.getElementsByClassName(this.config.toggleClass);
-    const buttons = [iframeButtons, appButtons];
 
-    buttons.map(elements => {
-      if (elements?.length) {
-        elements[0].addEventListener('click', () => {
-          const isVisible = document.body.classList.contains(
-            this.config.bodyOpenClass,
-          );
-          this.toggleModal(isVisible);
-        });
+    appButtons[0].addEventListener('click', () => {
+      const isVisible = document.body.classList.contains(this.config.bodyOpenClass);
+      this.toggleModal(isVisible);
+    });
+  }
+
+  watchCloseButton(): void {
+    window.addEventListener('message', (message) => {
+      if (message.data.type === 'chatbot.close') {
+        const isVisible = document.body.classList.contains(this.config.bodyOpenClass);
+        this.toggleModal(isVisible);
       }
     });
   }

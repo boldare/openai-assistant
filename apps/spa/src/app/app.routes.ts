@@ -15,9 +15,5 @@ export const routes: Routes = [
           import('./modules/+chat/chat.routes').then((m) => m.routes),
       },
     ],
-  },
-  {
-    path: '**',
-    redirectTo: '/404',
-  },
+  }
 ];

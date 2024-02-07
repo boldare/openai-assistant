@@ -14,7 +14,18 @@ export const addIframeClass = (className: string) => `.${className} {
   border: 0;
   box-shadow: rgba(17, 17, 26, 0.1) 0 4px 16px, rgba(17, 17, 26, 0.1) 0 8px 32px;
   z-index: 50;
-}`;
+}
+
+@media (max-width: 460px) {
+  .${className} {
+    width: calc(100% - 20px);
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    height: calc(100% - 20px);
+  }
+}
+`;
 
 export const addTriggerClass = (className: string) => `
 @keyframes trigger {
@@ -46,6 +57,12 @@ export const addTriggerClass = (className: string) => `
   background-position: center;
   transition: 0.2s all ease-in-out;
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+  }
 }
 
 .${className}:hover {

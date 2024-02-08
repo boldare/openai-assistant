@@ -1,23 +1,22 @@
 <header class="chat-header">
   <div class="chat-header__logo">
-    <img
-      [src]="'/assets/boldare.svg'"
-      alt="logo"
-      class="chat-header__img"
-    />
+    <img [src]="'/assets/boldare.svg'" alt="logo" class="chat-header__img" />
   </div>
   <div class="chat-header__controls">
     @if (isConfigEnabled) {
-      <button mat-icon-button (click)="config$.emit()" matTooltip="Settings">
-        <mat-icon class="char-header__icon">settings</mat-icon>
-      </button>
+    <button mat-icon-button (click)="config$.emit()" matTooltip="Settings">
+      <mat-icon class="char-header__icon">settings</mat-icon>
+    </button>
+    } @if (isRefreshEnabled) {
+    <button mat-icon-button (click)="refresh$.emit()" matTooltip="Refresh">
+      <mat-icon class="char-header__icon">refresh</mat-icon>
+    </button>
     }
-    @if (isRefreshEnabled) {
-      <button mat-icon-button (click)="refresh$.emit()" matTooltip="Refresh">
-        <mat-icon class="char-header__icon">refresh</mat-icon>
-      </button>
-    }
-    <button class="ai-assistant-toggle" mat-icon-button (click)="close()" matTooltip="Close">
+    <button
+      class="ai-assistant-toggle"
+      mat-icon-button
+      (click)="close()"
+      matTooltip="Close">
       <mat-icon class="char-header__icon">close</mat-icon>
     </button>
   </div>

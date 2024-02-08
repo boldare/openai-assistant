@@ -1,20 +1,30 @@
-import { Directive, HostListener, HostBinding, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Directive,
+  HostListener,
+  HostBinding,
+  Output,
+  EventEmitter,
+  Input,
+} from '@angular/core';
 
 @Directive({
   standalone: true,
   selector: '[aiFiles]',
 })
-
 export class AiFilesDirective {
-  @Output() drop$ : EventEmitter<FileList> = new EventEmitter();
+  @Output() drop$: EventEmitter<FileList> = new EventEmitter();
   @Input() files: File[] = [];
   event = 'init';
 
   @HostBinding('class') get getClasses(): string {
-    return `drag-drop--${this.event} ${this.files.length ? 'has-files' : 'no-files'}`;
+    return `drag-drop--${this.event} ${
+      this.files.length ? 'has-files' : 'no-files'
+    }`;
   }
 
-  @HostListener('dragover', ['$event']) public onDragOver(event: DragEvent): void {
+  @HostListener('dragover', ['$event']) public onDragOver(
+    event: DragEvent,
+  ): void {
     event.preventDefault();
     event.stopPropagation();
     this.event = 'dragleave';
@@ -24,7 +34,9 @@ export class AiFilesDirective {
     this.initEvent(event);
   }
 
-  @HostListener('dragleave', ['$event']) public onDragLeave(event: DragEvent): void {
+  @HostListener('dragleave', ['$event']) public onDragLeave(
+    event: DragEvent,
+  ): void {
     this.initEvent(event);
   }
 

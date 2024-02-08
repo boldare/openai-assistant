@@ -1,9 +1,11 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef, EventEmitter,
+  ElementRef,
+  EventEmitter,
   Input,
-  OnChanges, Output,
+  OnChanges,
+  Output,
   QueryList,
   SimpleChanges,
   ViewChildren,

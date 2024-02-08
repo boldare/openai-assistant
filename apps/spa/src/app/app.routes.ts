@@ -12,7 +12,7 @@ export const routes: Routes = [
       {
         path: 'chat',
         loadChildren: () =>
-          import('./modules/+chat/chat.routes').then((m) => m.routes),
+          import('./modules/+chat/chat.routes').then(m => m.routes),
       },
     ],
   },

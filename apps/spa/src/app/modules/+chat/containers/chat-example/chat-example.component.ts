@@ -10,11 +10,7 @@ import { MarkdownComponent, MarkdownPipe } from 'ngx-markdown';
   standalone: true,
   templateUrl: './chat-example.component.html',
   styleUrl: './chat-example.component.scss',
-  imports: [
-    MarkdownComponent,
-    MarkdownPipe,
-    AsyncPipe,
-  ],
+  imports: [MarkdownComponent, MarkdownPipe, AsyncPipe],
 })
 export class ChatExampleComponent {
   scriptMarkdown = `\`\`\`html

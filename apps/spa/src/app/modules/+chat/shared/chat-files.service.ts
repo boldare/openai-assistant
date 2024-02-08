@@ -5,7 +5,6 @@ import { OpenAiFile } from '@boldare/ai-assistant';
 
 @Injectable({ providedIn: 'root' })
 export class ChatFilesService {
-
   constructor(
     private readonly chatClientService: ChatClientService,
     private readonly filesService: FilesService,

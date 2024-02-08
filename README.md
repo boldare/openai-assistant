@@ -1,6 +1,7 @@
 # AI Assistant
 
 Install the dependencies:
+
 ```bash
 $ npm install
 ```
@@ -25,11 +26,11 @@ $ npm run start:spa
 ```
 
 Open your browser and navigate to:
-  * http://localhost:4200/ - spa
-  * http://localhost:3000/api/ - api
+
+- http://localhost:4200/ - spa
+- http://localhost:3000/api/ - api
 
 Happy coding!
-
 
 ## Ready to deploy?
 

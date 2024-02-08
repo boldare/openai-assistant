@@ -8,7 +8,9 @@ import { ConfigurationFormService } from '../../+configuration/shared/configurat
 @Injectable({ providedIn: 'root' })
 export class ThreadService {
   key = 'threadId';
-  initialThreadId = environment.isThreadMemorized ? localStorage.getItem(this.key) || '' : '';
+  initialThreadId = environment.isThreadMemorized
+    ? localStorage.getItem(this.key) || ''
+    : '';
   threadId$ = new BehaviorSubject<string>(this.initialThreadId);
   clear$ = new Subject();
 

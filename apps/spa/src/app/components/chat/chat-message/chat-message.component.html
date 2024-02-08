@@ -1,11 +1,12 @@
-@if (message.role === 'assistant') {
-  <ai-chat-avatar></ai-chat-avatar>
+@if (message) { @if (message.role === 'assistant') {
+<ai-chat-avatar></ai-chat-avatar>
 }
 
 <div class="chat-message">
   <span markdown [data]="message.content"></span>
 
   @if (message.role !== chatRole.System) {
-    <ai-chat-audio [message]="message"></ai-chat-audio>
+  <ai-chat-audio [message]="message"></ai-chat-audio>
   }
 </div>
+}

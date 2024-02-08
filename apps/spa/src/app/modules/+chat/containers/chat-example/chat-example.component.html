@@ -1,46 +1,55 @@
-<h1>
-  Integrating Chatbot into Your Website
-</h1>
+<h1>Integrating Chatbot into Your Website</h1>
 
 <section class="section">
-  Enhance your website's interactivity and user engagement by seamlessly integrating our chatbot. Follow the simple steps below to implement the chatbot into your website:
+  Enhance your website's interactivity and user engagement by seamlessly
+  integrating our chatbot. Follow the simple steps below to implement the
+  chatbot into your website:
 </section>
 
 <section class="section">
-  <h2>
-    Step 1: Locate Your HTML File
-  </h2>
+  <h2>Step 1: Locate Your HTML File</h2>
 
   <p class="paragraph">
-  Identify the HTML file where you wish to add the chatbot. This will typically be in the root directory of your website or within a specific subdirectory if you aim to integrate the chatbot on a particular page.
+    Identify the HTML file where you wish to add the chatbot. This will
+    typically be in the root directory of your website or within a specific
+    subdirectory if you aim to integrate the chatbot on a particular page.
   </p>
 </section>
 
 <section class="section">
-  <h2>
-    Step 2 (a): Copy the Chatbot Integration Code
-  </h2>
+  <h2>Step 2 (a): Copy the Chatbot Integration Code</h2>
 
   <p class="paragraph">
-    Below is the chatbot integration code snippet. This piece of code is designed to be lightweight and compatible with most web environments, ensuring a smooth integration process.
+    Below is the chatbot integration code snippet. This piece of code is
+    designed to be lightweight and compatible with most web environments,
+    ensuring a smooth integration process.
     <markdown [data]="scriptMarkdown"></markdown>
-    We highly recommend inserting the code snippet just before the closing body tag of your HTML file. This placement ensures that the chatbot will load only after all other content on your page has fully loaded, optimizing your page's load time for a better user experience.
+    We highly recommend inserting the code snippet just before the closing body
+    tag of your HTML file. This placement ensures that the chatbot will load
+    only after all other content on your page has fully loaded, optimizing your
+    page's load time for a better user experience.
   </p>
 </section>
 
 <section class="section">
-  <h2>
-    Step 2 (b): Customizing Chatbot Initialization
-  </h2>
+  <h2>Step 2 (b): Customizing Chatbot Initialization</h2>
   <p class="paragraph">
-    For a tailored interaction experience, you may prefer to manually initialize the chatbot rather than opting for automatic activation. This approach gives you greater control over the chatbot's initialization timing and its configuration, ensuring the chatbot seamlessly integrates with the flow of your website.
-    <br><br>
-    To prevent the chatbot from automatically initializing, locate and remove the following attribute from the chatbot integration code snippet:
+    For a tailored interaction experience, you may prefer to manually initialize
+    the chatbot rather than opting for automatic activation. This approach gives
+    you greater control over the chatbot's initialization timing and its
+    configuration, ensuring the chatbot seamlessly integrates with the flow of
+    your website.
+    <br /><br />
+    To prevent the chatbot from automatically initializing, locate and remove
+    the following attribute from the chatbot integration code snippet:
     <markdown [data]="scriptDataAttrMarkdown"></markdown>
   </p>
 
   <p class="paragraph">
-    For manual chatbot initialization, incorporate the following JavaScript code snippet into your website's JavaScript file. This script lets you dictate exactly when and how the chatbot becomes active on your site, offering the opportunity to customize its configuration further.
+    For manual chatbot initialization, incorporate the following JavaScript code
+    snippet into your website's JavaScript file. This script lets you dictate
+    exactly when and how the chatbot becomes active on your site, offering the
+    opportunity to customize its configuration further.
     <markdown [data]="manualInitialization"></markdown>
   </p>
 </section>

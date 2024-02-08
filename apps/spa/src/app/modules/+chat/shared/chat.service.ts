@@ -33,7 +33,7 @@ export class ChatService {
   refresh(): void {
     this.messages$.next([]);
     this.threadService.start().subscribe();
-   }
+  }
 
   clear(): void {
     this.threadService.clear();
@@ -50,7 +50,9 @@ export class ChatService {
     }
 
     this.addMessage({
-      content: `The user has attached files to the message: ${files.map(file => file.filename).join(', ')}`,
+      content: `The user has attached files to the message: ${files
+        .map(file => file.filename)
+        .join(', ')}`,
       role: ChatRole.System,
     });
   }
@@ -70,14 +72,13 @@ export class ChatService {
   }
 
   watchMessages(): Subscription {
-    return this.chatGatewayService.getMessages()
-      .subscribe(data => {
-        this.addMessage({
-          content: data.content,
-          role: ChatRole.Assistant,
-        });
-        this.isLoading$.next(false);
+    return this.chatGatewayService.getMessages().subscribe(data => {
+      this.addMessage({
+        content: data.content,
+        role: ChatRole.Assistant,
       });
+      this.isLoading$.next(false);
+    });
   }
 
   sendAudio(file: Blob): void {

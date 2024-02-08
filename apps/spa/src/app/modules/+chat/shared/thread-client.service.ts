@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ThreadConfig, ThreadResponse } from '@boldare/ai-assistant';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { ThreadConfig, ThreadResponse } from './chat.model';
 
 @Injectable({ providedIn: 'root' })
 export class ThreadClientService {
@@ -12,6 +12,12 @@ export class ThreadClientService {
     return this.httpClient.post<ThreadResponse>(
       `${environment.apiUrl}/assistant/threads`,
       payload,
+    );
+  }
+
+  getThread(id: string): Observable<ThreadResponse> {
+    return this.httpClient.get<ThreadResponse>(
+      `${environment.apiUrl}/assistant/threads/${id}`,
     );
   }
 }

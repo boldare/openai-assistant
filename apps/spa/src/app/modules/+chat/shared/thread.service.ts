@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, take, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ThreadClientService } from './thread-client.service';
-import { ThreadResponse } from './chat.model';
 import { ConfigurationFormService } from '../../+configuration/shared/configuration-form.service';
+import { ThreadResponse } from '@boldare/ai-assistant';
 
 @Injectable({ providedIn: 'root' })
 export class ThreadService {
@@ -40,5 +40,9 @@ export class ThreadService {
     this.clear$.next(true);
 
     localStorage.removeItem(this.key);
+  }
+
+  getThread(id: string): Observable<ThreadResponse> {
+    return this.threadClientService.getThread(id).pipe(take(1));
   }
 }

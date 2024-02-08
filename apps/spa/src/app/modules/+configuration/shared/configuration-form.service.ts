@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { SpeechVoice } from '@boldare/ai-assistant';
+import { SpeechVoice, ThreadConfig } from '@boldare/ai-assistant';
 import { ConfigurationForm } from './configuration.model';
-import { ThreadConfig } from '../../+chat/shared/chat.model';
+import { MessageStatus } from '../../+chat/shared/chat.model';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigurationFormService {
@@ -19,6 +19,9 @@ export class ConfigurationFormService {
           content: `Below you can find my details:
             * first name: ${this.form.controls.firstName.value || '-'}
           `,
+          metadata: {
+            status: MessageStatus.Invisible,
+          },
         },
       ],
     };

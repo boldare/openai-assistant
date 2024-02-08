@@ -1,5 +1,5 @@
-@if (isAudioEnabled) {
-<span class="chat-audio" [ngClass]="'chat-audio--' + message?.role">
+@if (isAudioEnabled && message) {
+<span class="chat-audio" [ngClass]="'chat-audio--' + message.role">
   @if(!isStarted) {
   <mat-icon (click)="speech()">play_circle</mat-icon>
   } @else {

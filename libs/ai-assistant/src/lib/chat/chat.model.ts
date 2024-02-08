@@ -2,6 +2,7 @@ export interface ChatCall {
   content: string;
   threadId: string;
   file_ids?: string[];
+  metadata?: Record<string, unknown>;
 }
 
 export interface ChatAudio {
@@ -24,4 +25,8 @@ export enum ChatEvents {
   MessageReceived = 'message_received',
   SendAudio = 'send_audio',
   AudioReceived = 'audio_received',
+}
+
+export enum MessageStatus {
+  Invisible = 'invisible',
 }

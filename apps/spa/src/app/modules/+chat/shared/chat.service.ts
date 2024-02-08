@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subscription, take } from 'rxjs';
-import { ChatRole, Message } from './chat.model';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  mergeMap,
+  Subscription,
+  take,
+} from 'rxjs';
+import { ChatRole, Message, MessageStatus } from './chat.model';
 import { ChatGatewayService } from './chat-gateway.service';
 import { ChatClientService } from './chat-client.service';
 import { ThreadService } from './thread.service';
 import { ChatFilesService } from './chat-files.service';
 import { environment } from '../../../../environments/environment';
-import { OpenAiFile } from '@boldare/ai-assistant';
+import { OpenAiFile, ThreadResponse } from '@boldare/ai-assistant';
+import { Threads } from 'openai/resources/beta';
+import MessageContentText = Threads.MessageContentText;
+import { ThreadMessage } from 'openai/resources/beta/threads';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -22,8 +32,41 @@ export class ChatService {
   ) {
     document.body.classList.add('ai-chat');
 
+    this.setInitialValues();
     this.watchMessages();
     this.watchVisibility();
+  }
+
+  isMessageInvisible(message: ThreadMessage): boolean {
+    const metadata = message.metadata as Record<string, unknown>;
+    return metadata?.['status'] === MessageStatus.Invisible;
+  }
+
+  isTextMessage(message: ThreadMessage): boolean {
+    return message.content[0].type === 'text';
+  }
+
+  parseMessages(thread: ThreadResponse): Message[] {
+    return thread.messages
+      .reverse()
+      .filter(
+        message =>
+          this.isTextMessage(message) && !this.isMessageInvisible(message),
+      )
+      .map(message => ({
+        content: (message.content[0] as MessageContentText).text.value,
+        role: message.role as ChatRole,
+      }));
+  }
+
+  setInitialValues(): void {
+    this.threadService.threadId$
+      .pipe(
+        distinctUntilChanged(),
+        mergeMap(threadId => this.threadService.getThread(threadId)),
+        map((response: ThreadResponse) => this.parseMessages(response)),
+      )
+      .subscribe(data => this.messages$.next(data));
   }
 
   toggle(): void {

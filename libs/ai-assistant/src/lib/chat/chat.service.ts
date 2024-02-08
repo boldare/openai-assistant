@@ -17,11 +17,12 @@ export class ChatService {
   ) {}
 
   async call(payload: ChatCall): Promise<ChatCallResponse> {
-    const { threadId, content, file_ids } = payload;
+    const { threadId, content, file_ids, metadata } = payload;
     const message: MessageCreateParams = {
       role: 'user',
       content,
       file_ids,
+      metadata,
     };
 
     await this.threads.messages.create(threadId, message);

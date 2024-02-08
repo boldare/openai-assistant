@@ -11,7 +11,7 @@ export const assistantParams: AssistantCreateParams = {
 };
 
 export const assistantConfig: AssistantConfigParams = {
-  id: process.env.ASSISTANT_ID || '',
+  id: process.env['ASSISTANT_ID'] || '',
   params: assistantParams,
   filesDir: './apps/api/src/app/knowledge',
   files: [],

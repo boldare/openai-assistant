@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FilesService } from '../../../components/controls';
 import { ChatClientService } from './chat-client.service';
-import OpenAI from 'openai';
 import { OpenAiFile } from '@boldare/ai-assistant';
 
 @Injectable({ providedIn: 'root' })
 export class ChatFilesService {
-
   constructor(
     private readonly chatClientService: ChatClientService,
     private readonly filesService: FilesService,

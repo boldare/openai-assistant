@@ -2,19 +2,16 @@
   aiFiles
   (click)="input.click()"
   (drop$)="addFiles($event)"
-  [files]="files()"
->
+  [files]="files()">
   <ai-control-icon>attach_file</ai-control-icon>
 
   @if (files().length) {
-    <span class="files__counter" (click)="clear($event)">
-      <span class="files__number">
-        {{ files().length }}
-      </span>
-      <mat-icon class="files__clear">
-        close
-      </mat-icon>
+  <span class="files__counter" (click)="clear($event)">
+    <span class="files__number">
+      {{ files().length }}
     </span>
+    <mat-icon class="files__clear"> close </mat-icon>
+  </span>
   }
 
   <input
@@ -22,6 +19,5 @@
     type="file"
     (change)="onFileChange($event)"
     multiple
-    #input
-  >
+    #input />
 </ai-control-item>

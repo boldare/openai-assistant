@@ -9,7 +9,12 @@ import { ControlIconComponent } from '../control-icon/control-icon.component';
 @Component({
   selector: 'ai-files',
   standalone: true,
-  imports: [MatIcon, AiFilesDirective, ControlItemComponent, ControlIconComponent],
+  imports: [
+    MatIcon,
+    AiFilesDirective,
+    ControlItemComponent,
+    ControlIconComponent,
+  ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss',
 })
@@ -19,11 +24,11 @@ export class FilesComponent {
 
   constructor(private readonly fileService: FilesService) {}
 
-  addFiles(files: FileList){
+  addFiles(files: FileList) {
     this.fileService.add(files);
   }
 
-  onFileChange(event: Event){
+  onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
     this.addFiles(input.files as FileList);
   }

@@ -4,25 +4,22 @@
     [isConfigEnabled]="isConfigEnabled && !!threadId()"
     (refresh$)="chatService.refresh()"
     (close$)="chatService.toggle()"
-    (config$)="chatService.clear()"
-  ></ai-chat-header>
+    (config$)="chatService.clear()"></ai-chat-header>
 
   @if (isConfigEnabled && !threadId()) {
-    <ai-configuration-form class="chat__content" />
+  <ai-configuration-form class="chat__content" />
   } @else {
-    <ai-chat-messages
-      [messages]="messages()"
-      [isLoading]="isLoading()"
-      [tips]="tips"
-      (tipSelected$)="chatService.sendMessage($event)"
-      class="chat__content"
-    />
-    <ai-chat-footer
-      [isDisabled]="isLoading()"
-      [isTranscriptionEnabled]="isTranscriptionEnabled"
-      [isAttachmentEnabled]="isAttachmentEnabled"
-      (sendMessage$)="chatService.sendMessage($event)"
-      (sendAudio$)="chatService.sendAudio($event)"
-    />
+  <ai-chat-messages
+    [messages]="messages()"
+    [isLoading]="isLoading()"
+    [tips]="tips"
+    (tipSelected$)="chatService.sendMessage($event)"
+    class="chat__content" />
+  <ai-chat-footer
+    [isDisabled]="isLoading()"
+    [isTranscriptionEnabled]="isTranscriptionEnabled"
+    [isAttachmentEnabled]="isAttachmentEnabled"
+    (sendMessage$)="chatService.sendMessage($event)"
+    (sendAudio$)="chatService.sendAudio($event)" />
   }
 </ai-card>

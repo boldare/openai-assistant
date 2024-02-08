@@ -6,9 +6,7 @@ import { ChatTipComponent } from '../chat-tip/chat-tip.component';
   standalone: true,
   templateUrl: './chat-tips.component.html',
   styleUrl: './chat-tips.component.scss',
-  imports: [
-    ChatTipComponent,
-  ],
+  imports: [ChatTipComponent],
 })
 export class ChatTipsComponent {
   @Input() tips: string[] = [];

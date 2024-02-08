@@ -1,6 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardFooterComponent } from '../../cards';
-import { ControlsComponent, FilesComponent, InputComponent, RecorderComponent } from '../../controls';
+import {
+  ControlsComponent,
+  FilesComponent,
+  InputComponent,
+  RecorderComponent,
+} from '../../controls';
 import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({

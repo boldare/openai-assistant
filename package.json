@@ -3,17 +3,20 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "start": "node dist/apps/api/main.js",
     "start:dev": "nx run-many --parallel --target=serve --projects=api,spa ",
     "start:spa": "nx serve spa",
     "start:api": "nx serve api",
+    "build": "npm run build:ai-embedded && npm run build:spa && npm run build:api",
     "build:spa": "nx build --prod --skip-nx-cache spa",
     "build:api": "nx build --prod api",
     "build:ai-assistant": "nx build --prod ai-assistant",
     "build:ai-embedded": "nx build --prod ai-embedded --no-cache && npm run cp:ai-embedded",
-    "build": "npm run build:ai-embedded && npm run build:spa && npm run build:api",
-    "start": "node dist/apps/api/main.js",
     "publish": "npm run build && cd dist/libs/ai-assistant/ && npm publish --access=public && cd ../../..",
-    "cp:ai-embedded": "cp ./dist/libs/ai-embedded/main.js ./apps/spa/src/assets/js/ai-embedded.js"
+    "cp:ai-embedded": "cp ./dist/libs/ai-embedded/main.js ./apps/spa/src/assets/js/ai-embedded.js",
+    "lint": "nx run-many --parallel --target=lint --all",
+    "test": "nx run-many --parallel --target=test --all",
+    "format": "nx format:write"
   },
   "private": true,
   "dependencies": {

@@ -1,14 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChatAudioComponent } from './chat-audio.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('ChatComponent', () => {
+describe('ChatAudioComponent', () => {
   let component: ChatAudioComponent;
   let fixture: ComponentFixture<ChatAudioComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChatAudioComponent],
+      imports: [HttpClientTestingModule, ChatAudioComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChatAudioComponent);

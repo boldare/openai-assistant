@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InputComponent } from './input.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CardComponent', () => {
   let component: InputComponent;
@@ -8,7 +9,7 @@ describe('CardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InputComponent],
+      imports: [InputComponent, BrowserAnimationsModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(InputComponent);

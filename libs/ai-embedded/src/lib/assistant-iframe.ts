@@ -119,15 +119,19 @@ export class AssistantIframe {
     const appButtons = document.getElementsByClassName(this.config.toggleClass);
 
     appButtons[0].addEventListener('click', () => {
-      const isVisible = document.body.classList.contains(this.config.bodyOpenClass);
+      const isVisible = document.body.classList.contains(
+        this.config.bodyOpenClass,
+      );
       this.changeModalState(isVisible);
     });
   }
 
   watchCloseButton(): void {
-    window.addEventListener('message', (message) => {
+    window.addEventListener('message', message => {
       if (message.data.type === 'chatbot.close') {
-        const isVisible = document.body.classList.contains(this.config.bodyOpenClass);
+        const isVisible = document.body.classList.contains(
+          this.config.bodyOpenClass,
+        );
         this.changeModalState(isVisible);
       }
     });

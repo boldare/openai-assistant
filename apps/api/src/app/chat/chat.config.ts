@@ -5,10 +5,7 @@ import 'dotenv/config';
 export const assistantParams: AssistantCreateParams = {
   name: '@boldare/ai-assistant',
   instructions: `You are a chatbot assistant. Use the general knowledge to answer questions. Speak briefly and clearly.`,
-  tools: [
-    { type: 'code_interpreter' },
-    { type: 'retrieval' },
-  ],
+  tools: [{ type: 'code_interpreter' }, { type: 'retrieval' }],
   model: 'gpt-4-1106-preview',
   metadata: {},
 };

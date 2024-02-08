@@ -1,14 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChatMessageComponent } from './chat-message.component';
+import { MarkdownModule } from 'ngx-markdown';
 
-describe('CardContentComponent', () => {
+describe('ChatMessageComponent', () => {
   let component: ChatMessageComponent;
   let fixture: ComponentFixture<ChatMessageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChatMessageComponent],
+      imports: [ChatMessageComponent, MarkdownModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChatMessageComponent);

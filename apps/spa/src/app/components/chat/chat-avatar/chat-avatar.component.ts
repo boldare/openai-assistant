@@ -6,8 +6,6 @@ import { ChatStatusComponent } from '../chat-status/chat-status.component';
   standalone: true,
   templateUrl: './chat-avatar.component.html',
   styleUrl: './chat-avatar.component.scss',
-  imports: [
-    ChatStatusComponent,
-  ],
+  imports: [ChatStatusComponent],
 })
 export class ChatAvatarComponent {}

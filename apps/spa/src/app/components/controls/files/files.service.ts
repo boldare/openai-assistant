@@ -5,10 +5,10 @@ import { BehaviorSubject } from 'rxjs';
 export class FilesService {
   files$ = new BehaviorSubject<File[]>([]);
 
-  add(files: FileList){
+  add(files: FileList) {
     const updatedFiles = [
       ...this.files$.value,
-      ...Object.keys(files).map(key => files[key as unknown as number])
+      ...Object.keys(files).map(key => files[key as unknown as number]),
     ];
 
     this.files$.next(updatedFiles);

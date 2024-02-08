@@ -16,9 +16,10 @@
 
   line-height: 1.5;
 
-
   .mat-primary {
-    --mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--color-primary-500);
+    --mat-minimal-pseudo-checkbox-selected-checkmark-color: var(
+      --color-primary-500
+    );
   }
 
   mat-form-field {

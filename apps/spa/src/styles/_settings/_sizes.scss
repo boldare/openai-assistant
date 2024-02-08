@@ -24,11 +24,21 @@ $size-15: 15 * $size-unit;
 $size-16: 16 * $size-unit;
 
 $sizes: (
-  'none': ($mobile: $size-0),
-  'mini': ($mobile: $size-1),
-  'small': ($mobile: $size-4),
-  'medium': ($mobile: $size-10),
-  'big': ($mobile: $size-14),
+  'none': (
+    $mobile: $size-0,
+  ),
+  'mini': (
+    $mobile: $size-1,
+  ),
+  'small': (
+    $mobile: $size-4,
+  ),
+  'medium': (
+    $mobile: $size-10,
+  ),
+  'big': (
+    $mobile: $size-14,
+  ),
 );
 
 // Mixins
@@ -36,10 +46,10 @@ $sizes: (
 @mixin size-rwd($breakpointName: 'medium') {
   @each $size-breakpoint, $value in map-get($sizes, $breakpointName) {
     @if ($mobile == $size-breakpoint) {
-      @content($value);
+      @content ($value);
     } @else {
       @include min-screen($size-breakpoint) {
-        @content($value);
+        @content ($value);
       }
     }
   }
@@ -49,10 +59,10 @@ $sizes: (
   @each $name, $size-props in $sizes {
     @each $size-breakpoint, $value in $size-props {
       @if ($mobile == $size-breakpoint) {
-        @content($name, $value);
+        @content ($name, $value);
       } @else {
         @include min-screen($size-breakpoint) {
-          @content($name, $value);
+          @content ($name, $value);
         }
       }
     }
@@ -60,7 +70,8 @@ $sizes: (
 }
 
 @mixin size-space-vertical($prefix: 'size', $type: 'padding') {
-  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using
+    ($name, $value) {
     &.#{$prefix}-vertical--#{$name} {
       #{$type}-top: #{$value};
       #{$type}-bottom: #{$value};
@@ -69,7 +80,8 @@ $sizes: (
 }
 
 @mixin size-space-horizontal($prefix: 'size', $type: 'padding') {
-  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using
+    ($name, $value) {
     &.#{$prefix}-horizontal--#{$name} {
       #{$type}-right: #{$value};
       #{$type}-left: #{$value};
@@ -78,7 +90,8 @@ $sizes: (
 }
 
 @mixin size-space-all($prefix: 'size', $type: 'padding') {
-  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using
+    ($name, $value) {
     &.#{$prefix}--#{$name} {
       #{$type}: #{$value};
     }
@@ -86,7 +99,8 @@ $sizes: (
 }
 
 @mixin size-space-bottom($prefix: 'size', $type: 'padding') {
-  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using
+    ($name, $value) {
     &.#{$prefix}-bottom--#{$name} {
       #{$type}-bottom: #{$value};
     }
@@ -94,7 +108,8 @@ $sizes: (
 }
 
 @mixin size-space-top($prefix: 'size', $type: 'padding') {
-  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using
+    ($name, $value) {
     &.#{$prefix}-top--#{$name} {
       #{$type}-top: #{$value};
     }
@@ -102,7 +117,8 @@ $sizes: (
 }
 
 @mixin size-space-right($prefix: 'size', $type: 'padding') {
-  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using
+    ($name, $value) {
     &.#{$prefix}-right--#{$name} {
       #{$type}-right: #{$value};
     }
@@ -110,7 +126,8 @@ $sizes: (
 }
 
 @mixin size-space-left($prefix: 'size', $type: 'padding') {
-  @include size-space-rwd($prefix: 'size', $type: 'padding') using ($name, $value) {
+  @include size-space-rwd($prefix: 'size', $type: 'padding') using
+    ($name, $value) {
     &.#{$prefix}-left--#{$name} {
       #{$type}-left: #{$value};
     }

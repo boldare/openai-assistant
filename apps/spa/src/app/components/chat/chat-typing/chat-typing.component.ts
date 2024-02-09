@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrl: './chat-typing.component.scss',
 })
 export class ChatTypingComponent {
-  @Input() isLoading = false;
+  @Input() isTyping = false;
 }

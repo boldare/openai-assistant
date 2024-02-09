@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   distinctUntilChanged,
+  filter,
   map,
   mergeMap,
   Subscription,
   take,
+  tap,
 } from 'rxjs';
 import { ChatRole, Message, MessageStatus } from './chat.model';
 import { ChatGatewayService } from './chat-gateway.service';
@@ -20,8 +22,9 @@ import { ThreadMessage } from 'openai/resources/beta/threads';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-  isVisible$ = new BehaviorSubject<boolean>(environment.isAutoOpen);
   isLoading$ = new BehaviorSubject<boolean>(false);
+  isVisible$ = new BehaviorSubject<boolean>(environment.isAutoOpen);
+  isTyping$ = new BehaviorSubject<boolean>(false);
   messages$ = new BehaviorSubject<Message[]>([]);
 
   constructor(
@@ -63,10 +66,15 @@ export class ChatService {
     this.threadService.threadId$
       .pipe(
         distinctUntilChanged(),
+        filter(threadId => !!threadId),
+        tap(() => this.isLoading$.next(true)),
         mergeMap(threadId => this.threadService.getThread(threadId)),
         map((response: ThreadResponse) => this.parseMessages(response)),
       )
-      .subscribe(data => this.messages$.next(data));
+      .subscribe(data => {
+        this.messages$.next(data);
+        this.isLoading$.next(false);
+      });
   }
 
   toggle(): void {
@@ -74,6 +82,7 @@ export class ChatService {
   }
 
   refresh(): void {
+    this.isLoading$.next(true);
     this.messages$.next([]);
     this.threadService.start().subscribe();
   }
@@ -101,7 +110,7 @@ export class ChatService {
   }
 
   async sendMessage(content: string, role = ChatRole.User): Promise<void> {
-    this.isLoading$.next(true);
+    this.isTyping$.next(true);
     this.addMessage({ content, role });
 
     const files = await this.chatFilesService.sendFiles();
@@ -120,12 +129,12 @@ export class ChatService {
         content: data.content,
         role: ChatRole.Assistant,
       });
-      this.isLoading$.next(false);
+      this.isTyping$.next(false);
     });
   }
 
   sendAudio(file: Blob): void {
-    this.isLoading$.next(true);
+    this.isTyping$.next(true);
 
     this.chatClientService
       .transcription({

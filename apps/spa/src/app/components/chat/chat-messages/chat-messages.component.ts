@@ -30,7 +30,7 @@ import { ChatTipsComponent } from '../chat-tips/chat-tips.component';
 })
 export class ChatMessagesComponent implements AfterViewInit, OnChanges {
   @Input() messages: Message[] = [];
-  @Input() isLoading = false;
+  @Input() isTyping = false;
   @Input() tips: string[] = [];
   @Output() tipSelected$ = new EventEmitter<string>();
   @ViewChildren('item') item?: QueryList<ElementRef>;

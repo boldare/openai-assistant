@@ -9,6 +9,7 @@ import { ChatMessagesComponent } from '../../../../components/chat/chat-messages
 import { ChatFooterComponent } from '../../../../components/chat/chat-footer/chat-footer.component';
 import { ConfigurationFormComponent } from '../../../+configuration/components/configuration-form/configuration-form.component';
 import { take } from 'rxjs';
+import { SpinnerComponent } from '../../../../components/spinner/spinner.component';
 
 @Component({
   selector: 'ai-chat',
@@ -19,12 +20,14 @@ import { take } from 'rxjs';
     ChatMessagesComponent,
     ChatFooterComponent,
     ConfigurationFormComponent,
+    SpinnerComponent,
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
 export class ChatComponent implements OnInit {
   messages = toSignal(this.chatService.messages$, { initialValue: [] });
+  isTyping = toSignal(this.chatService.isTyping$, { initialValue: false });
   isLoading = toSignal(this.chatService.isLoading$, { initialValue: false });
   threadId = toSignal(this.threadService.threadId$, { initialValue: '' });
   isTranscriptionEnabled = environment.isTranscriptionEnabled;
@@ -44,7 +47,7 @@ export class ChatComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!this.isConfigEnabled) {
+    if (!this.isConfigEnabled && !this.threadService.threadId$.value) {
       this.threadService.start().pipe(take(1)).subscribe();
     }
   }

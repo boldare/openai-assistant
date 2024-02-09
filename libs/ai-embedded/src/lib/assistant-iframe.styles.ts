@@ -14,6 +14,18 @@ export const addIframeClass = (className: string) => `.${className} {
   border: 0;
   box-shadow: rgba(17, 17, 26, 0.1) 0 4px 16px, rgba(17, 17, 26, 0.1) 0 8px 32px;
   z-index: 150;
+  animation: iframeAnimation 0.2s;
+}
+
+@keyframes iframeAnimation {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 460px) {
@@ -40,6 +52,15 @@ export const addTriggerClass = (className: string) => `
   }
 }
 
+@keyframes triggerFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .${className} {
   display: block;
   position: fixed;
@@ -58,6 +79,9 @@ export const addTriggerClass = (className: string) => `
   transition: 0.2s all ease-in-out;
   cursor: pointer;
   z-index: 100;
+  opacity: 0;
+  animation: triggerFadeIn 0.2s ease-in;
+  animation-delay: 2s;
 
   @media (max-width: 460px) {
     width: 40px;
@@ -72,6 +96,7 @@ export const addTriggerClass = (className: string) => `
 }
 
 .${className}.is-animated {
-  animation: trigger 1.5s infinite;
+  animation: trigger 1.5s infinite, triggerFadeIn 1s;
+  animation-delay: 2s;
   animation-fill-mode: both;
 }`;

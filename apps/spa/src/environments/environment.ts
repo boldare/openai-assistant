@@ -3,7 +3,7 @@ export const environment = {
   appUrl: 'https://ai-assistant-c8b469d88808.herokuapp.com',
   apiUrl: 'https://ai-assistant-c8b469d88808.herokuapp.com/api',
   websocketUrl: 'https://ai-assistant-c8b469d88808.herokuapp.com',
-  isThreadMemorized: false,
+  isThreadMemorized: true,
   isAudioEnabled: true,
   isTranscriptionEnabled: true,
   isAttachmentEnabled: true,

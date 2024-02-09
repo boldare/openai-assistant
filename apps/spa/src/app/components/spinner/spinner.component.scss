@@ -1,0 +1,44 @@
+@import 'settings';
+
+:host {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-white);
+  z-index: 2;
+  opacity: 0;
+  transition: ease-out opacity 0.3s;
+  pointer-events: none;
+
+  &.is-active {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.spinner {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 10px solid;
+  border-color: rgba(168, 135, 92, 0.15) rgba(168, 135, 92, 0.25)
+    rgba(168, 135, 92, 0.35) rgba(168, 135, 92, 0.5);
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -41,4 +41,20 @@ describe('AssistantFilesService', () => {
       purpose: 'assistants',
     });
   });
+
+  it('should create files without file directory', async () => {
+    const fileNames = ['file1', 'file2'];
+    const create = jest.fn().mockResolvedValue({ id: 'id' });
+    aiService.provider = { files: { create } } as unknown as OpenAI;
+    configService.get = jest.fn().mockReturnValue({});
+
+    const result = await assistantFilesService.create(fileNames);
+
+    expect(result).toEqual(['id', 'id']);
+    expect(create).toHaveBeenCalledTimes(2);
+    expect(create).toHaveBeenCalledWith({
+      file: 'file',
+      purpose: 'assistants',
+    });
+  });
 });

@@ -7,6 +7,8 @@ describe('AssistantMemoryService', () => {
 
   beforeEach(() => {
     assistantMemoryService = new AssistantMemoryService();
+
+    jest.spyOn(fs.promises, 'writeFile').mockResolvedValue();
   });
 
   afterEach(() => {

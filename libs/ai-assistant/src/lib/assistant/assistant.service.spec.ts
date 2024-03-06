@@ -8,6 +8,7 @@ import { ConfigService } from '../config';
 import { AgentService } from '../agent';
 import { definitionMock } from '../agent/agent.mock';
 import { AssistantConfigParams } from './assistant.model';
+import * as fs from 'fs';
 
 jest.mock('../config', () => ({
   ConfigService: jest.fn().mockReturnValue({
@@ -40,6 +41,8 @@ describe('AssistantService', () => {
     jest
       .spyOn(aiService.provider.beta.assistants, 'create')
       .mockResolvedValue({} as Assistant);
+
+    jest.spyOn(fs.promises, 'writeFile').mockResolvedValue();
   });
 
   afterEach(() => {

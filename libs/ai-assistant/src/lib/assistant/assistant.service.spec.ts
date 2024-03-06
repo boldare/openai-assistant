@@ -136,12 +136,10 @@ describe('AssistantService', () => {
     });
 
     it('should upload files', async () => {
-      jest
-        .spyOn(configService, 'get')
-        .mockReturnValue({
-          ...assistantConfigMock,
-          files: ['file1', 'file2'],
-        } as AssistantConfigParams);
+      jest.spyOn(configService, 'get').mockReturnValue({
+        ...assistantConfigMock,
+        files: ['file1', 'file2'],
+      } as AssistantConfigParams);
 
       jest
         .spyOn(assistantService, 'updateFiles')

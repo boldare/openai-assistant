@@ -3,10 +3,12 @@ import { Run } from 'openai/resources/beta/threads';
 import { RunService } from './run.service';
 import { RunModule } from './run.module';
 import { AiService } from '../ai';
+import { AgentService } from '../agent';
 
 describe('RunService', () => {
   let runService: RunService;
   let aiService: AiService;
+  let agentsService: AgentService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -15,6 +17,7 @@ describe('RunService', () => {
 
     runService = moduleRef.get<RunService>(RunService);
     aiService = moduleRef.get<AiService>(AiService);
+    agentsService = moduleRef.get<AgentService>(AgentService);
 
     jest
       .spyOn(aiService.provider.beta.threads.runs, 'retrieve')
@@ -74,6 +77,52 @@ describe('RunService', () => {
       await runService.resolve(run, false);
 
       expect(spyOnSubmitAction).toHaveBeenCalled();
+    });
+
+    it('should call default', async () => {
+      const spyOnContinueRun = jest
+        .spyOn(runService, 'continueRun')
+        .mockResolvedValue({} as Run);
+      const run = { status: 'unknown' } as unknown as Run;
+
+      await runService.resolve(run, false);
+
+      expect(spyOnContinueRun).toHaveBeenCalled();
+    });
+
+    it('should not invoke action when status is cancelling', async () => {
+      const spyOnContinueRun = jest
+        .spyOn(runService, 'continueRun')
+        .mockResolvedValue({} as Run);
+      const run = { status: 'cancelling' } as unknown as Run;
+
+      await runService.resolve(run, false);
+
+      expect(spyOnContinueRun).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('submitAction', () => {
+    it('should call submitToolOutputs', async () => {
+      const spyOnSubmitToolOutputs = jest
+        .spyOn(aiService.provider.beta.threads.runs, 'submitToolOutputs')
+        .mockResolvedValue({} as Run);
+      jest.spyOn(agentsService, 'get').mockReturnValue(jest.fn());
+
+      const run = {
+        thread_id: '1',
+        id: '123',
+        required_action: {
+          type: 'submit_tool_outputs',
+          submit_tool_outputs: {
+            tool_calls: [{ function: { name: 'agent' } }],
+          },
+        },
+      } as Run;
+
+      await runService.submitAction(run);
+
+      expect(spyOnSubmitToolOutputs).toHaveBeenCalled();
     });
   });
 

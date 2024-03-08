@@ -13,7 +13,7 @@ export class ThreadsService {
     );
     return {
       id,
-      messages: messages.data || [],
+      messages: messages?.data || [],
     };
   }
 

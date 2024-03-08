@@ -20,7 +20,6 @@ export class RunService {
   }
 
   async resolve(run: Run, runningStatus = true): Promise<void> {
-    // eslint-disable-next-line no-constant-condition
     while (this.isRunning)
       switch (run.status) {
         case 'cancelling':

@@ -3,7 +3,7 @@ import { ThreadsController } from './threads.controller';
 import { Thread } from 'openai/resources/beta';
 import { ThreadsModule } from './threads.module';
 import { ThreadsService } from './threads.service';
-import { ThreadResponse } from './threads.model';
+import { GetThreadResponseDto } from './threads.model';
 
 describe('ThreadsController', () => {
   let threadsController: ThreadsController;
@@ -27,7 +27,7 @@ describe('ThreadsController', () => {
     it('should call threadsService.getThread', async () => {
       const spyOnGetThread = jest
         .spyOn(threadsService, 'getThread')
-        .mockResolvedValue({} as ThreadResponse);
+        .mockResolvedValue({} as GetThreadResponseDto);
 
       await threadsController.getThread({ id: '1' });
 

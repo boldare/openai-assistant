@@ -4,16 +4,14 @@ import { Run, ThreadMessage } from 'openai/resources/beta/threads';
 import { AiModule } from './../ai/ai.module';
 import { ChatModule } from './chat.module';
 import { ChatService } from './chat.service';
-import { ChatAudio, ChatCall } from './chat.model';
 import { ChatHelpers } from './chat.helpers';
 import { RunService } from '../run';
-import { AiService } from '../ai';
+import { ChatCallDto } from './chat.model';
 
 describe('ChatService', () => {
   let chatService: ChatService;
   let chatbotHelpers: ChatHelpers;
   let runService: RunService;
-  let aiService: AiService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -23,7 +21,6 @@ describe('ChatService', () => {
     chatService = moduleRef.get<ChatService>(ChatService);
     chatbotHelpers = moduleRef.get<ChatHelpers>(ChatHelpers);
     runService = moduleRef.get<RunService>(RunService);
-    aiService = moduleRef.get<AiService>(AiService);
 
     jest
       .spyOn(chatbotHelpers, 'getAnswer')
@@ -42,7 +39,7 @@ describe('ChatService', () => {
 
   describe('call', () => {
     it('should create "thread run"', async () => {
-      const payload = { content: 'Hello', threadId: '1' } as ChatCall;
+      const payload = { content: 'Hello', threadId: '1' } as ChatCallDto;
       const spyOnThreadRunsCreate = jest
         .spyOn(chatService.threads.runs, 'create')
         .mockResolvedValue({} as Run);
@@ -53,7 +50,7 @@ describe('ChatService', () => {
     });
 
     it('should return ChatCallResponse', async () => {
-      const payload = { content: 'Hello', threadId: '1' } as ChatCall;
+      const payload = { content: 'Hello', threadId: '1' } as ChatCallDto;
       jest
         .spyOn(chatService.threads.runs, 'create')
         .mockResolvedValue({} as Run);
@@ -61,24 +58,6 @@ describe('ChatService', () => {
       const result = await chatService.call(payload);
 
       expect(result).toEqual({ content: 'Hello response', threadId: '1' });
-    });
-  });
-
-  describe('transcription', () => {
-    it('should trigger call and transcription', async () => {
-      const payload = { file: 'file', threadId: '1' } as unknown as ChatAudio;
-      const spyOnTranscription = jest
-        .spyOn(aiService, 'transcription')
-        .mockResolvedValue({ text: 'Hello' });
-      const spyOnCall = jest.spyOn(chatService, 'call').mockReturnThis();
-
-      await chatService.transcription(payload);
-
-      expect(spyOnTranscription).toHaveBeenCalledWith(payload.file);
-      expect(spyOnCall).toHaveBeenCalledWith({
-        threadId: payload.threadId,
-        content: 'Hello',
-      });
     });
   });
 

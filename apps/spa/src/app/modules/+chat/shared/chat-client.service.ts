@@ -6,9 +6,9 @@ import { AudioResponse } from './chat.model';
 import {
   ChatAudio,
   ChatAudioResponse,
-  SpeechPayload,
-  UploadFileResponse,
+  PostSpeechDto,
   UploadFilesPayload,
+  UploadFilesResponseDto,
 } from '@boldare/ai-assistant';
 
 @Injectable({ providedIn: 'root' })
@@ -21,7 +21,6 @@ export class ChatClientService {
     const formData = new FormData();
 
     formData.append('file', payload.file);
-    formData.append('threadId', payload.threadId);
 
     return this.httpClient.post<AudioResponse>(
       `${this.apiUrl}/ai/transcription`,
@@ -29,20 +28,22 @@ export class ChatClientService {
     );
   }
 
-  speech(payload: SpeechPayload): Observable<ChatAudioResponse> {
+  speech(payload: PostSpeechDto): Observable<ChatAudioResponse> {
     return this.httpClient.post<ChatAudioResponse>(
       `${this.apiUrl}/ai/speech`,
       payload,
     );
   }
 
-  async uploadFiles(payload: UploadFilesPayload): Promise<UploadFileResponse> {
+  async uploadFiles(
+    payload: UploadFilesPayload,
+  ): Promise<UploadFilesResponseDto> {
     const formData = new FormData();
 
     payload.files.forEach(file => formData.append('files', file));
 
     return await lastValueFrom(
-      this.httpClient.post<UploadFileResponse>(
+      this.httpClient.post<UploadFilesResponseDto>(
         `${this.apiUrl}/files`,
         formData,
       ),

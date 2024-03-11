@@ -3,7 +3,8 @@ import { ChatController } from './chat.controller';
 import { AiModule } from './../ai/ai.module';
 import { ChatModule } from './chat.module';
 import { ChatService } from './chat.service';
-import { ChatCall, ChatCallResponse } from './chat.model';
+import { ChatCallDto, ChatCallResponseDto } from './chat.model';
+
 describe('ChatController', () => {
   let chatController: ChatController;
   let chatService: ChatService;
@@ -24,8 +25,10 @@ describe('ChatController', () => {
 
   describe('call', () => {
     it('should call chatService.call', async () => {
-      jest.spyOn(chatService, 'call').mockResolvedValue({} as ChatCallResponse);
-      const payload = { content: 'Hello' } as ChatCall;
+      jest
+        .spyOn(chatService, 'call')
+        .mockResolvedValue({} as ChatCallResponseDto);
+      const payload = { content: 'Hello' } as ChatCallDto;
 
       await chatController.call(payload);
 

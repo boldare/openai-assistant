@@ -1,4 +1,4 @@
-import { SpeechVoice } from '@boldare/ai-assistant';
+import { SpeechVoice } from '../../+chat/shared/chat.model';
 
 export const voices: SpeechVoice[] = [
   SpeechVoice.Alloy,

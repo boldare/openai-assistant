@@ -4,7 +4,6 @@ import { ChatGateway } from './chat.gateway';
 import { AiModule } from './../ai/ai.module';
 import { ChatModule } from './chat.module';
 import { ChatService } from './chat.service';
-import { ChatAudio } from './chat.model';
 
 describe('ChatGateway', () => {
   let chatGateway: ChatGateway;
@@ -31,17 +30,6 @@ describe('ChatGateway', () => {
       await chatGateway.listenForMessages(request, {} as Socket);
 
       expect(chatService.call).toHaveBeenCalledWith(request);
-    });
-  });
-
-  describe('listenForAudio', () => {
-    it('should call chatService.transcription', async () => {
-      jest.spyOn(chatService, 'transcription').mockReturnThis();
-      const request = { threadId: '123' } as ChatAudio;
-
-      await chatGateway.listenForAudio(request, {} as Socket);
-
-      expect(chatService.transcription).toHaveBeenCalledWith(request);
     });
   });
 

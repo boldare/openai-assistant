@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ThreadConfig, ThreadResponse } from '@boldare/ai-assistant';
+import { CreateThreadDto, GetThreadResponseDto } from '@boldare/ai-assistant';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
@@ -8,15 +8,15 @@ import { environment } from '../../../../environments/environment';
 export class ThreadClientService {
   constructor(private readonly httpClient: HttpClient) {}
 
-  postThread(payload: ThreadConfig = {}): Observable<ThreadResponse> {
-    return this.httpClient.post<ThreadResponse>(
+  postThread(payload: CreateThreadDto = {}): Observable<GetThreadResponseDto> {
+    return this.httpClient.post<GetThreadResponseDto>(
       `${environment.apiUrl}/assistant/threads`,
       payload,
     );
   }
 
-  getThread(id: string): Observable<ThreadResponse> {
-    return this.httpClient.get<ThreadResponse>(
+  getThread(id: string): Observable<GetThreadResponseDto> {
+    return this.httpClient.get<GetThreadResponseDto>(
       `${environment.apiUrl}/assistant/threads/${id}`,
     );
   }

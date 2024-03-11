@@ -29,6 +29,7 @@ Open your browser and navigate to:
 
 - http://localhost:4200/ - spa
 - http://localhost:3000/api/ - api
+- http://localhost:3000/api/docs - api documentation
 
 Happy coding!
 
@@ -49,3 +50,49 @@ Nx comes with local caching already built-in (check your `nx.json`). On CI you m
 - [Join the community](https://nx.dev/community)
 - [Subscribe to the Nx Youtube Channel](https://www.youtube.com/@nxdevtools)
 - [Follow us on Twitter](https://twitter.com/nxdevtools)
+
+## First steps
+
+```bash
+$ nest new project-name
+```
+
+```bash
+$ npm i @boldare/ai-assistant --save
+```
+
+Create environment variables in the `.env` file:
+
+```bash
+OPENAI_API_KEY=
+ASSISTANT_ID=
+```
+
+Set up the configuration:
+
+```js
+import { AssistantCreateParams } from 'openai/resources/beta';
+import { AssistantConfigParams } from '@boldare/ai-assistant';
+import 'dotenv/config';
+
+export const assistantParams: AssistantCreateParams = {
+  name: '@boldare/ai-assistant',
+  instructions: `You are a chatbot assistant. Use the general knowledge to answer questions. Speak briefly and clearly.`,
+  tools: [{ type: 'code_interpreter' }, { type: 'retrieval' }],
+  model: 'gpt-4-1106-preview',
+  metadata: {},
+};
+
+export const assistantConfig: AssistantConfigParams = {
+  id: process.env['ASSISTANT_ID'] || '',
+  params: assistantParams,
+  filesDir: './apps/api/src/app/knowledge',
+  files: [],
+};
+```
+
+Set up the configuration in the `app.module.ts` file:
+
+```js
+AssistantModule.forRoot(assistantConfig);
+```

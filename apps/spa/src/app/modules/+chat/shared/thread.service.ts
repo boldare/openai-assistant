@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, Subject, take, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ThreadClientService } from './thread-client.service';
 import { ConfigurationFormService } from '../../+configuration/shared/configuration-form.service';
-import { ThreadResponse } from '@boldare/ai-assistant';
+import { GetThreadResponseDto } from '@boldare/ai-assistant';
 
 @Injectable({ providedIn: 'root' })
 export class ThreadService {
@@ -19,7 +19,7 @@ export class ThreadService {
     private readonly configurationFormService: ConfigurationFormService,
   ) {}
 
-  start(): Observable<ThreadResponse> {
+  start(): Observable<GetThreadResponseDto> {
     const messages = this.configurationFormService.getInitialThreadMessages();
 
     return this.threadClientService
@@ -42,7 +42,7 @@ export class ThreadService {
     localStorage.removeItem(this.key);
   }
 
-  getThread(id: string): Observable<ThreadResponse> {
+  getThread(id: string): Observable<GetThreadResponseDto> {
     return this.threadClientService.getThread(id).pipe(take(1));
   }
 }

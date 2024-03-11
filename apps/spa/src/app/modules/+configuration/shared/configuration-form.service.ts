@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { SpeechVoice, ThreadConfig } from '@boldare/ai-assistant';
+import { CreateThreadDto } from '@boldare/ai-assistant';
 import { ConfigurationForm } from './configuration.model';
-import { MessageStatus } from '../../+chat/shared/chat.model';
+import { MessageStatus, SpeechVoice } from '../../+chat/shared/chat.model';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigurationFormService {
@@ -11,7 +11,7 @@ export class ConfigurationFormService {
     voice: new FormControl(SpeechVoice.Alloy, { nonNullable: true }),
   });
 
-  getInitialThreadMessages(): ThreadConfig {
+  getInitialThreadMessages(): CreateThreadDto {
     return {
       messages: [
         {

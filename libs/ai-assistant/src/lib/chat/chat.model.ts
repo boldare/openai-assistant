@@ -1,18 +1,7 @@
-export interface ChatCall {
-  content: string;
-  threadId: string;
-  file_ids?: string[];
-  metadata?: Record<string, unknown>;
-}
+import { ApiProperty } from '@nestjs/swagger';
 
 export interface ChatAudio {
   file: File;
-  threadId: string;
-}
-
-export interface ChatCallResponse {
-  content: string;
-  threadId: string;
 }
 
 export interface ChatAudioResponse {
@@ -23,10 +12,30 @@ export interface ChatAudioResponse {
 export enum ChatEvents {
   SendMessage = 'send_message',
   MessageReceived = 'message_received',
-  SendAudio = 'send_audio',
-  AudioReceived = 'audio_received',
 }
 
 export enum MessageStatus {
   Invisible = 'invisible',
+}
+
+export class ChatCallResponseDto {
+  @ApiProperty()
+  threadId: string;
+
+  @ApiProperty()
+  content: string;
+}
+
+export class ChatCallDto {
+  @ApiProperty()
+  threadId: string;
+
+  @ApiProperty()
+  content: string;
+
+  @ApiProperty({ required: false })
+  file_ids?: string[];
+
+  @ApiProperty({ required: false })
+  metadata?: unknown | null;
 }

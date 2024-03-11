@@ -17,9 +17,11 @@ export class ChatFilesService {
       return [];
     }
 
-    const uploadedFiles = await this.chatClientService.uploadFiles({ files });
+    const uploadedFilesResponse = await this.chatClientService.uploadFiles({
+      files,
+    });
     this.filesService.clear();
 
-    return uploadedFiles || [];
+    return uploadedFilesResponse.files || [];
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { MessageCreateParams } from 'openai/resources/beta/threads';
 import { AiService } from '../ai';
 import { RunService } from '../run';
-import { ChatAudio, ChatCall, ChatCallResponse } from './chat.model';
+import { ChatCallDto, ChatCallResponseDto } from './chat.model';
 import { ChatHelpers } from './chat.helpers';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class ChatService {
     private readonly chatbotHelpers: ChatHelpers,
   ) {}
 
-  async call(payload: ChatCall): Promise<ChatCallResponse> {
+  async call(payload: ChatCallDto): Promise<ChatCallResponseDto> {
     const { threadId, content, file_ids, metadata } = payload;
     const message: MessageCreateParams = {
       role: 'user',
@@ -37,13 +37,5 @@ export class ChatService {
       content: await this.chatbotHelpers.getAnswer(run),
       threadId,
     };
-  }
-
-  async transcription(payload: ChatAudio): Promise<ChatCall> {
-    const transcription = await this.aiService.transcription(payload.file);
-    return await this.call({
-      threadId: payload.threadId,
-      content: transcription.text,
-    });
   }
 }

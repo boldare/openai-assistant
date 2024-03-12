@@ -7,8 +7,8 @@ import { ChatHelpers } from './chat.helpers';
 
 @Injectable()
 export class ChatService {
-  private readonly provider = this.aiService.provider;
-  private readonly threads = this.provider.beta.threads;
+  provider = this.aiService.provider;
+  threads = this.provider.beta.threads;
 
   constructor(
     private readonly aiService: AiService,

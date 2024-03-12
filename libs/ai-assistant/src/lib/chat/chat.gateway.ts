@@ -19,7 +19,7 @@ import { ChatService } from './chat.service';
   },
 })
 export class ChatGateway implements OnGatewayConnection {
-  @WebSocketServer() private readonly server!: Server;
+  @WebSocketServer() server!: Server;
   private readonly logger: Logger;
 
   constructor(private readonly chatsService: ChatService) {
@@ -40,7 +40,7 @@ export class ChatGateway implements OnGatewayConnection {
 
     const message = await this.chatsService.call(request);
 
-    this.server.to(socket.id).emit(ChatEvents.MessageReceived, message);
+    this.server?.to(socket.id).emit(ChatEvents.MessageReceived, message);
     this.logger.log(`Socket "${ChatEvents.MessageReceived}" (${socket.id}):
     * thread: ${message.threadId}
     * content: ${message.content}`);
@@ -57,7 +57,7 @@ export class ChatGateway implements OnGatewayConnection {
 
     const message = await this.chatsService.transcription(request);
 
-    this.server.to(socket.id).emit(ChatEvents.MessageReceived, message);
+    this.server?.to(socket.id).emit(ChatEvents.MessageReceived, message);
     this.logger.log(`Socket "${ChatEvents.AudioReceived}" (${socket.id}):
     * thread: ${message.threadId}
     * file: ${message.content}`);

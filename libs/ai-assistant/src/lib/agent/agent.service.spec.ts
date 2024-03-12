@@ -1,17 +1,21 @@
 import { AgentService } from './agent.service';
-import { AssistantCreateParams } from 'openai/resources/beta';
+import { agentMock, agentNameMock, definitionMock } from './agent.mock';
 
 describe('AgentService', () => {
   let agentService: AgentService;
-  const agentNameMock = 'agent-name';
-  const agentMock = async () => 'agent-result';
-  const definitionMock: AssistantCreateParams.AssistantToolsFunction = {
-    type: 'function',
-    function: { name: agentNameMock },
-  };
 
   beforeEach(() => {
     agentService = new AgentService();
+  });
+
+  it('should be defined', () => {
+    expect(agentService).toBeDefined();
+  });
+
+  it('agentMock should be return value', async () => {
+    const result = await agentMock();
+
+    expect(result).toEqual('agent-result');
   });
 
   describe('add', () => {

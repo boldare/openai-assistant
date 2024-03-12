@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'ai-assistant',
   preset: '../../jest.preset.js',

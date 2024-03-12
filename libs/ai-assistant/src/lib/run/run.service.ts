@@ -6,7 +6,8 @@ import { AgentService } from '../agent';
 @Injectable()
 export class RunService {
   private readonly threads = this.aiService.provider.beta.threads;
-  public timeout = 2000;
+  timeout = 2000;
+  isRunning = true;
 
   constructor(
     private readonly aiService: AiService,
@@ -18,9 +19,8 @@ export class RunService {
     return this.threads.runs.retrieve(run.thread_id, run.id);
   }
 
-  async resolve(run: Run): Promise<void> {
-    // eslint-disable-next-line no-constant-condition
-    while (true)
+  async resolve(run: Run, runningStatus = true): Promise<void> {
+    while (this.isRunning)
       switch (run.status) {
         case 'cancelling':
         case 'cancelled':
@@ -31,9 +31,11 @@ export class RunService {
         case 'requires_action':
           await this.submitAction(run);
           run = await this.continueRun(run);
+          this.isRunning = runningStatus;
           continue;
         default:
           run = await this.continueRun(run);
+          this.isRunning = runningStatus;
       }
   }
 

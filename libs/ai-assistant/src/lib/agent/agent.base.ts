@@ -12,8 +12,7 @@ export class AgentBase implements OnModuleInit {
 
   constructor(protected readonly agentService: AgentService) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async output(data: AgentData): Promise<string> {
-    return '';
+    return data.params || '';
   }
 }

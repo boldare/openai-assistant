@@ -1,6 +1,6 @@
 {
   "name": "@boldare/ai-assistant",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "dependencies": {
     "tslib": "^2.3.0",
     "openai": "^4.26.1",
@@ -10,6 +10,7 @@
     "envfile": "^7.1.0",
     "@nestjs/axios": "^3.0.1",
     "@nestjs/websockets": "^10.3.0",
+    "@nestjs/platform-socket.io": "^10.3.0",
     "socket.io": "^4.7.3",
     "multer": "^1.4.4-lts.1"
   },

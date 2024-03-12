@@ -4,13 +4,11 @@
   </a>
 </p>
 
-# AI Assistant
+# 🤖 AI Assistant
 
 Introducing the NestJS library, designed to harness the power of OpenAI's Assistant, enabling developers to create highly efficient, scalable, and rapid AI assistants and chatbots. This library is tailored for seamless integration into the NestJS ecosystem, offering an intuitive API, WebSockets, and tools that streamline the development of AI-driven interactions. Whether you're building a customer service bot, a virtual assistant, or an interactive chatbot for engaging user experiences, our library empowers you to leverage cutting-edge AI capabilities with minimal effort.
 
-## First steps
-
-### Prerequiring
+### Step 0: Prerequiring
 
 Before you start, you will need to have an account on the OpenAI platform and an API key. You can create an account [here](https://platform.openai.com/).
 
@@ -70,10 +68,10 @@ export const assistantParams: AssistantCreateParams = {
 
 // Additional configuration for our assistant
 export const assistantConfig: AssistantConfigParams = {
-  id: process.env['ASSISTANT_ID'], // OpenAI API Key
-  params: assistantParams, // AssistantCreateParams
+  id: process.env['ASSISTANT_ID'],          // OpenAI API Key
+  params: assistantParams,                  // AssistantCreateParams
   filesDir: './apps/api/src/app/knowledge', // Path to the directory with files (the final path is "fileDir" + "single file")
-  files: [], // List of file names (or paths if you didn't fill in the above parameter)
+  files: ['file1.txt', 'file2.json'],       // List of file names (or paths if you didn't fill in the above parameter)
 };
 ```
 
@@ -86,12 +84,80 @@ Import the AI Assistant module with your configuration into the module file wher
 export class ChatbotModule {}
 ```
 
-# Repository
+### Step 4: Function calling
+
+Create a new service that extends the `AgentBase` class, fill the definition and implement the `output` method. 
+* The `output` method is the main method that will be called when the function is invoked. 
+* The `definition` property is an object that describes the function and its parameters. 
+
+For more information about function calling, you can refer to the [OpenAI documentation](https://platform.openai.com/docs/assistants/tools/defining-functions).
+Below is an example of a service that extends the `AgentBase` class:
+```js
+@Injectable()
+export class GetNicknameAgent extends AgentBase {
+  definition: AssistantCreateParams.AssistantToolsFunction = {
+    type: 'function',
+    function: {
+      name: this.constructor.name,
+      description: `Get the nickname of a city`,
+      parameters: {
+        type: 'object',
+        properties: {
+          location: {
+            type: 'string',
+            description: 'The city and state e.g. San Francisco, CA',
+          },
+        },
+        required: ['location'],
+      },
+    },
+  };
+
+  constructor(protected readonly agentService: AgentService) {
+    super(agentService);
+  }
+  
+  async output(data: AgentData): Promise<string> {
+    // TODO: Your logic here
+    return 'Your string value';
+  }
+}
+```
+
+Import the service into the module file where you intend to use it:
+
+```js
+import { Module } from '@nestjs/common';
+import { AgentModule } from '@boldare/ai-assistant';
+import { GetNicknameAgent } from './get-nickname.agent';
+
+@Module({
+  imports: [AgentModule],
+  providers: [GetNicknameAgent],
+})
+export class AgentsModule {}
+```
+
+and remember to add the `AgentsModule` above the `AssistantModule` in your main module file (e.g. `chat.module.ts`):
+
+```js
+@Module({
+  imports: [
+    AgentsModule,
+    AssistantModule.forRoot(assistantConfig),
+  ],
+})
+export class ChatModule {}
+```
+
+---
+
+# 👨‍💻 Repository
 
 The repository includes a library with an AI assistant as well as other useful parts:
 
 | Name                    | Type          | Description                                                                                                                     |
-| ----------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| ----------------------- | ------------- |---------------------------------------------------------------------------------------------------------------------------------|
 | `@boldare/ai-assistant` | `library`     | A NestJS library based on the OpenAI Assistant for building efficient, scalable, and quick solutions for AI assistants/chatbots |
 | `@boldare/ai-embedded`  | `library`     | The code enables embedding the chatbot on various websites through JavaScript scripts.                                          |
 | `api`                   | `application` | Example usage of the `@boldare/ai-assistant` library.                                                                           |

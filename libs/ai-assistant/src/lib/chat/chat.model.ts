@@ -20,18 +20,18 @@ export enum MessageStatus {
 
 export class ChatCallResponseDto {
   @ApiProperty()
-  threadId: string;
+  threadId!: string;
 
   @ApiProperty()
-  content: string;
+  content!: string;
 }
 
 export class ChatCallDto {
   @ApiProperty()
-  threadId: string;
+  threadId!: string;
 
   @ApiProperty()
-  content: string;
+  content!: string;
 
   @ApiProperty({ required: false })
   file_ids?: string[];

@@ -9,29 +9,29 @@ export interface UploadFilesPayload {
 
 export class UploadFile {
   @ApiProperty({ description: 'Unique identifier of the file' })
-  id: string;
+  id!: string;
 
   @ApiProperty()
-  bytes: number;
+  bytes!: number;
 
   @ApiProperty({ description: 'Datetime the file was created.' })
-  created_at: number;
+  created_at!: number;
 
   @ApiProperty({ description: 'Name of the file' })
-  filename: string;
+  filename!: string;
 
   @ApiProperty()
-  object: 'file';
+  object!: 'file';
 
   @ApiProperty()
-  purpose:
+  purpose!:
     | 'fine-tune'
     | 'fine-tune-results'
     | 'assistants'
     | 'assistants_output';
 
   @ApiProperty()
-  status: 'uploaded' | 'processed' | 'error';
+  status!: 'uploaded' | 'processed' | 'error';
 
   @ApiProperty()
   status_details?: string;
@@ -42,10 +42,10 @@ export class UploadFilesResponseDto {
     isArray: true,
     type: UploadFile,
   })
-  files: UploadFile[];
+  files!: UploadFile[];
 }
 
 export class UploadFilesDto {
   @ApiProperty({ type: 'string', isArray: true, format: 'binary' })
-  files: File[];
+  files!: File[];
 }

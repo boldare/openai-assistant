@@ -12,7 +12,7 @@ export enum SpeechVoice {
 
 export class PostSpeechDto {
   @ApiProperty({ description: 'Content of the message' })
-  content: string;
+  content!: string;
 
   @ApiProperty({
     description: 'Voice of the message author.',
@@ -24,20 +24,20 @@ export class PostSpeechDto {
 
 export class PostSpeechResponseDto {
   @ApiProperty()
-  type: 'buffer';
+  type!: 'buffer';
 
   @ApiProperty({ type: 'number', isArray: true })
-  data: number[];
+  data!: number[];
 }
 
 export class PostTranscriptionDto {
-  @ApiProperty({ type: 'string', format: 'binary' })
-  file: File;
+  @ApiProperty({type: 'string', format: 'binary'})
+  file!: File;
 }
 
 export class PostTranscriptionResponseDto {
   @ApiProperty({ description: 'Transcription of the audio file' })
-  content: string;
+  content!: string;
 }
 
 export type AiTranscription = Transcription;

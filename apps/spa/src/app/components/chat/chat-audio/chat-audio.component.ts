@@ -1,14 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChatClientService } from '../../../modules/+chat/shared/chat-client.service';
-import { Message } from '../../../modules/+chat/shared/chat.model';
+import { Message, SpeechVoice } from '../../../modules/+chat/shared/chat.model';
 import { environment } from '../../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon';
 import { delay } from 'rxjs';
-import {
-  ChatAudioResponse,
-  SpeechPayload,
-  SpeechVoice,
-} from '@boldare/ai-assistant';
+import { ChatAudioResponse, PostSpeechDto } from '@boldare/ai-assistant';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -50,7 +46,7 @@ export class ChatAudioComponent implements OnInit {
       return;
     }
 
-    const payload: SpeechPayload = {
+    const payload: PostSpeechDto = {
       content: this.message.content,
       voice: SpeechVoice.Onyx,
     };

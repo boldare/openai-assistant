@@ -22,3 +22,12 @@ export enum ChatEvents {
 export enum MessageStatus {
   Invisible = 'invisible',
 }
+
+export enum SpeechVoice {
+  Alloy = 'alloy',
+  Echo = 'echo',
+  Fable = 'fable',
+  Onyx = 'onyx',
+  Nova = 'nova',
+  Shimmer = 'shimmer',
+}

@@ -15,7 +15,7 @@ import { ChatClientService } from './chat-client.service';
 import { ThreadService } from './thread.service';
 import { ChatFilesService } from './chat-files.service';
 import { environment } from '../../../../environments/environment';
-import { OpenAiFile, ThreadResponse } from '@boldare/ai-assistant';
+import { OpenAiFile, GetThreadResponseDto } from '@boldare/ai-assistant';
 import { Threads } from 'openai/resources/beta';
 import MessageContentText = Threads.MessageContentText;
 import { ThreadMessage } from 'openai/resources/beta/threads';
@@ -49,7 +49,7 @@ export class ChatService {
     return message.content[0].type === 'text';
   }
 
-  parseMessages(thread: ThreadResponse): Message[] {
+  parseMessages(thread: GetThreadResponseDto): Message[] {
     return thread.messages
       .reverse()
       .filter(
@@ -69,7 +69,7 @@ export class ChatService {
         filter(threadId => !!threadId),
         tap(() => this.isLoading$.next(true)),
         mergeMap(threadId => this.threadService.getThread(threadId)),
-        map((response: ThreadResponse) => this.parseMessages(response)),
+        map((response: GetThreadResponseDto) => this.parseMessages(response)),
       )
       .subscribe(data => {
         this.messages$.next(data);
@@ -137,10 +137,7 @@ export class ChatService {
     this.isTyping$.next(true);
 
     this.chatClientService
-      .transcription({
-        threadId: this.threadService.threadId$.value,
-        file: file as File,
-      })
+      .transcription({ file: file as File })
       .pipe(take(1))
       .subscribe(response => this.sendMessage(response.content));
   }

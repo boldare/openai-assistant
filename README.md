@@ -1,18 +1,119 @@
+<p align="center">
+  <a href="https://boldare.com/" target="blank">
+    <img src="https://szukampracy.pl/uploads/download_5baaafea22d41.png" width="160" alt="Boldare" />
+  </a>
+</p>
+
 # AI Assistant
 
-Install the dependencies:
+Introducing the NestJS library, designed to harness the power of OpenAI's Assistant, enabling developers to create highly efficient, scalable, and rapid AI assistants and chatbots. This library is tailored for seamless integration into the NestJS ecosystem, offering an intuitive API, WebSockets, and tools that streamline the development of AI-driven interactions. Whether you're building a customer service bot, a virtual assistant, or an interactive chatbot for engaging user experiences, our library empowers you to leverage cutting-edge AI capabilities with minimal effort.
+
+## First steps
+
+### Prerequiring
+
+Before you start, you will need to have an account on the OpenAI platform and an API key. You can create an account [here](https://platform.openai.com/).
+
+Open or create your NestJS application where you would like to integrate the AI Assistant. If you don't have a NestJS application yet, you can create one using the following command:
+
+```bash
+$ nest new project-name
+```
+
+### Step 1: Installation
+
+Install the library using npm:
+
+```bash
+$ npm i @boldare/ai-assistant --save
+```
+
+### Step 2: Env variables
+
+Set up your environment variables, create environment variables in the `.env` file in the root directory of the project, and populate it with the necessary secrets. You will need to add the OpenAI API Key and the Assistant ID. The Assistant ID is optional, and you can leave it empty if you don't have an assistant yet.
+
+Create a `.env` file in the root directory of your project and populate it with the necessary secrets:
+
+```bash
+$ touch .env
+```
+
+Add the following content to the `.env` file:
+
+```dotenv
+# OpenAI API Key
+OPENAI_API_KEY=
+
+# Assistant ID - leave it empty if you don't have an assistant yet
+ASSISTANT_ID=
+```
+
+### Step 3: Configuration
+
+Configure the settings for your assistant. For more information about assistant parameters, you can refer to the [OpenAI documentation](https://platform.openai.com/docs/assistants/how-it-works/creating-assistants). A sample configuration can be found in ([chat.config.ts](apps%2Fapi%2Fsrc%2Fapp%2Fchat%2Fchat.config.ts)).
+
+```js
+// chat.config.ts file
+
+// Default OpenAI configuration
+export const assistantParams: AssistantCreateParams = {
+  name: 'Your assistant name',
+  instructions: `You are a chatbot assistant. Speak briefly and clearly.`,
+  tools: [
+    { type: 'code_interpreter' },
+    { type: 'retrieval' },
+    // (...) function calling - functions are configured by extended services
+  ],
+  model: 'gpt-4-1106-preview',
+  metadata: {},
+};
+
+// Additional configuration for our assistant
+export const assistantConfig: AssistantConfigParams = {
+  id: process.env['ASSISTANT_ID'], // OpenAI API Key
+  params: assistantParams, // AssistantCreateParams
+  filesDir: './apps/api/src/app/knowledge', // Path to the directory with files (the final path is "fileDir" + "single file")
+  files: [], // List of file names (or paths if you didn't fill in the above parameter)
+};
+```
+
+Import the AI Assistant module with your configuration into the module file where you intend to use it:
+
+```js
+@Module({
+  imports: [AssistantModule.forRoot(assistantConfig)],
+})
+export class ChatbotModule {}
+```
+
+# Repository
+
+The repository includes a library with an AI assistant as well as other useful parts:
+
+| Name                    | Type          | Description                                                                                                                     |
+| ----------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `@boldare/ai-assistant` | `library`     | A NestJS library based on the OpenAI Assistant for building efficient, scalable, and quick solutions for AI assistants/chatbots |
+| `@boldare/ai-embedded`  | `library`     | The code enables embedding the chatbot on various websites through JavaScript scripts.                                          |
+| `api`                   | `application` | Example usage of the `@boldare/ai-assistant` library.                                                                           |
+| `spa`                   | `application` | Example client application (SPA) with a chatbot.                                                                                |
+
+## Getting started
+
+### Step 1: Install dependencies
 
 ```bash
 $ npm install
 ```
 
-Project takes advantage of the `envfile` dependency to manage secrets. Assuming so, you need to copy `.env.dist` to `.env` file in the root directory of the project and fill it with the relevant secrets.
+### Step 2: Env variables
+
+Set up your environment variables, copy the `.env.dist` file to `.env` file in the root directory of the project, and populate it with the necessary secrets.
 
 ```bash
 $ cp .env.dist .env
 ```
 
----
+### Step 3: Run applications
 
 ```bash
 # Start the app (api and spa)
@@ -25,27 +126,12 @@ $ npm run start:api
 $ npm run start:spa
 ```
 
-Open your browser and navigate to:
+Now you can open your browser and navigate to:
 
-- http://localhost:4200/ - spa
-- http://localhost:3000/api/ - api
+| URL                            | Description                 |
+| ------------------------------ | --------------------------- |
+| http://localhost:4200/         | Client application (SPA)    |
+| http://localhost:3000/api/     | API application             |
+| http://localhost:3000/api/docs | API documentation (swagger) |
 
-Happy coding!
-
-## Ready to deploy?
-
-Just merge your code to the `main` branch.
-
-## Set up CI!
-
-Nx comes with local caching already built-in (check your `nx.json`). On CI you might want to go a step further.
-
-- [Set up remote caching](https://nx.dev/core-features/share-your-cache)
-- [Set up task distribution across multiple machines](https://nx.dev/nx-cloud/features/distribute-task-execution)
-- [Learn more how to setup CI](https://nx.dev/recipes/ci)
-
-## Connect with us!
-
-- [Join the community](https://nx.dev/community)
-- [Subscribe to the Nx Youtube Channel](https://www.youtube.com/@nxdevtools)
-- [Follow us on Twitter](https://twitter.com/nxdevtools)
+### 🎉 Happy coding 🎉

@@ -37,8 +37,10 @@
     "@nestjs/platform-express": "^10.0.2",
     "@nestjs/platform-socket.io": "^10.3.0",
     "@nestjs/serve-static": "^4.0.0",
+    "@nestjs/swagger": "^7.3.0",
     "@nestjs/websockets": "^10.3.0",
     "axios": "^1.0.0",
+    "class-validator": "^0.14.1",
     "envfile": "^7.1.0",
     "marked": "^9.1.6",
     "ngx-markdown": "^17.1.1",
@@ -53,7 +55,7 @@
     "zone.js": "~0.14.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.1.0",
+    "@angular-devkit/build-angular": "^17.2.3",
     "@angular-devkit/core": "~17.0.0",
     "@angular-devkit/schematics": "~17.0.0",
     "@angular-eslint/eslint-plugin": "~17.0.0",

@@ -17,6 +17,7 @@ Introducing the NestJS library, designed to harness the power of OpenAI's Assist
 ## 🚀 Features
 
 #### AI Assistant library features
+
 - **WebSockets**: The library provides a WebSocket server for real-time communication between the client and the assistant.
 - **REST API**: The library provides a REST API for communication with the assistant.
 - **Function calling**: The library provides a way to create functions, which allows you to extend the assistant's capabilities with custom logic.
@@ -25,6 +26,7 @@ Introducing the NestJS library, designed to harness the power of OpenAI's Assist
 - **STT (Speech-to-Text)**: The library provides a way to convert speech to text, which allows you to create voice-based interactions with the assistant.
 
 #### Additional features in the repository
+
 - **Embedded chatbot**: The library provides a way to embed the chatbot on various websites through JavaScript scripts.
 - **Chatbot client application**: The repository includes an example client application (SPA) with a chatbot.
 
@@ -92,10 +94,10 @@ export const assistantParams: AssistantCreateParams = {
 
 // Additional configuration for our assistant
 export const assistantConfig: AssistantConfigParams = {
-  id: process.env['ASSISTANT_ID'],          // OpenAI API Key
-  params: assistantParams,                  // AssistantCreateParams
+  id: process.env['ASSISTANT_ID'], // OpenAI API Key
+  params: assistantParams, // AssistantCreateParams
   filesDir: './apps/api/src/app/knowledge', // Path to the directory with files (the final path is "fileDir" + "single file")
-  files: ['file1.txt', 'file2.json'],       // List of file names (or paths if you didn't fill in the above parameter)
+  files: ['file1.txt', 'file2.json'], // List of file names (or paths if you didn't fill in the above parameter)
 };
 ```
 
@@ -115,19 +117,20 @@ Automatically, the library will add WebSockets ([chat.gateway.ts](libs/ai-assist
 Currently, the library provides the following WebSocket events:
 
 | Event name         | Description                                              |
-|--------------------|----------------------------------------------------------|
+| ------------------ | -------------------------------------------------------- |
 | `send_message`     | The event is emitted when the user sends a message.      |
 | `message_received` | The event is emitted when the assistant sends a message. |
-
 
 ### Step 4: Function calling
 
 Create a new service that extends the `AgentBase` class, fill the definition and implement the `output` method.
-* The `output` method is the main method that will be called when the function is invoked.
-* The `definition` property is an object that describes the function and its parameters.
+
+- The `output` method is the main method that will be called when the function is invoked.
+- The `definition` property is an object that describes the function and its parameters.
 
 For more information about function calling, you can refer to the [OpenAI documentation](https://platform.openai.com/docs/assistants/tools/defining-functions).
 Below is an example of a service that extends the `AgentBase` class:
+
 ```js
 @Injectable()
 export class GetNicknameAgent extends AgentBase {
@@ -152,7 +155,7 @@ export class GetNicknameAgent extends AgentBase {
   constructor(protected readonly agentService: AgentService) {
     super(agentService);
   }
-  
+
   async output(data: AgentData): Promise<string> {
     // TODO: Your logic here
     return 'Your string value';
@@ -180,10 +183,7 @@ and remember to add the `AgentsModule` above the `AssistantModule` in your main 
 
 ```js
 @Module({
-  imports: [
-    AgentsModule,
-    AssistantModule.forRoot(assistantConfig),
-  ],
+  imports: [AgentsModule, AssistantModule.forRoot(assistantConfig)],
 })
 export class ChatModule {}
 ```
@@ -195,7 +195,7 @@ export class ChatModule {}
 The repository includes a library with an AI assistant as well as other useful parts:
 
 | Name                    | Type          | Description                                                                                                                     |
-| ----------------------- | ------------- |---------------------------------------------------------------------------------------------------------------------------------|
+| ----------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | `@boldare/ai-assistant` | `library`     | A NestJS library based on the OpenAI Assistant for building efficient, scalable, and quick solutions for AI assistants/chatbots |
 | `@boldare/ai-embedded`  | `library`     | The code enables embedding the chatbot on various websites through JavaScript scripts.                                          |
 | `api`                   | `application` | Example usage of the `@boldare/ai-assistant` library.                                                                           |
@@ -233,7 +233,7 @@ npm run start:spa
 Now you can open your browser and navigate to:
 
 | URL                            | Description                             |
-|--------------------------------|-----------------------------------------|
+| ------------------------------ | --------------------------------------- |
 | http://localhost:4200/         | Client application (Angular)            |
 | http://localhost:3000/         | API application, WebSockets (socket.io) |
 | http://localhost:3000/api/     | API endpoints                           |
@@ -242,4 +242,5 @@ Now you can open your browser and navigate to:
 ### 🎉 Happy coding 🎉
 
 # License
+
 `@boldare/ai-assistant` is MIT licensed

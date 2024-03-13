@@ -1,3 +1,4 @@
+// @ts-ignore
 globalThis.ngJest = {
   testEnvironmentOptions: {
     errorOnUnknownElements: true,

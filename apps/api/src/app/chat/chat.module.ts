@@ -4,6 +4,6 @@ import { assistantConfig } from './chat.config';
 import { AgentsModule } from './agents/agents.module';
 
 @Module({
-  imports: [AssistantModule.forRoot(assistantConfig), AgentsModule],
+  imports: [AgentsModule, AssistantModule.forRoot(assistantConfig)],
 })
 export class ChatModule {}

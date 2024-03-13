@@ -46,7 +46,7 @@ export class ChatService {
   }
 
   isTextMessage(message: ThreadMessage): boolean {
-    return message.content[0].type === 'text';
+    return message.content?.[0]?.type === 'text';
   }
 
   parseMessages(thread: GetThreadResponseDto): Message[] {

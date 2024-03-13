@@ -5,9 +5,9 @@
 </p>
 
 <p align="center">
-   <a href="https://www.npmjs.com/package/@boldare/assistant-ai" target="_blank">
-    NPM
-  </a>
+ <a href="https://assistant.ai.boldare.dev/chat" target="_blank">demo</a> 🔹
+ <a href="https://assistant.ai.boldare.dev/api/docs" target="_blank">api docs</a> 🔹
+ <a href="https://www.npmjs.com/package/@boldare/assistant-ai" target="_blank">npm</a>
 </p>
 
 # 🤖 AI Assistant
@@ -122,9 +122,9 @@ Currently, the library provides the following WebSocket events:
 
 ### Step 4: Function calling
 
-Create a new service that extends the `AgentBase` class, fill the definition and implement the `output` method. 
-* The `output` method is the main method that will be called when the function is invoked. 
-* The `definition` property is an object that describes the function and its parameters. 
+Create a new service that extends the `AgentBase` class, fill the definition and implement the `output` method.
+* The `output` method is the main method that will be called when the function is invoked.
+* The `definition` property is an object that describes the function and its parameters.
 
 For more information about function calling, you can refer to the [OpenAI documentation](https://platform.openai.com/docs/assistants/tools/defining-functions).
 Below is an example of a service that extends the `AgentBase` class:

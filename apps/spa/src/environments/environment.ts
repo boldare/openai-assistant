@@ -9,5 +9,5 @@ export const environment = {
   isAttachmentEnabled: true,
   isRefreshEnabled: true,
   isConfigEnabled: true,
-  isAutoOpen: false,
+  isAutoOpen: true,
 };

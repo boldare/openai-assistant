@@ -1,6 +1,6 @@
 {
   "name": "@boldare/ai-assistant",
-  "version": "0.0.2",
+  "version": "0.0.2-dev.2",
   "dependencies": {
     "tslib": "^2.3.0",
     "openai": "^4.26.1",
@@ -16,5 +16,27 @@
   },
   "type": "commonjs",
   "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+  "typings": "./src/index.d.ts",
+  "homepage": "https://github.com/boldare/ai-assistant",
+  "keywords": [
+    "ai",
+    "assistant",
+    "boldare",
+    "nestjs",
+    "openai",
+    "chatbot",
+    "bot",
+    "assistant",
+    "ai-assistant",
+    "openai-assistant"
+  ],
+  "author": "boldare",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boldare/ai-assistant.git"
+  }
 }

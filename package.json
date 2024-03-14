@@ -12,8 +12,9 @@
     "build:api": "nx build --prod api",
     "build:ai-assistant": "nx build --prod ai-assistant",
     "build:ai-embedded": "nx build --prod ai-embedded --no-cache && npm run cp:ai-embedded",
-    "publish": "npm run build && cd dist/libs/ai-assistant/ && npm publish --access=public && cd ../../..",
+    "publish": "npm run build:ai-assistant && npm run cp:readme && cd dist/libs/ai-assistant/ && npm publish --access=public && cd ../../..",
     "cp:ai-embedded": "cp ./dist/libs/ai-embedded/main.js ./apps/spa/src/assets/js/ai-embedded.js",
+    "cp:readme": "cp ./README.md ./dist/libs/ai-assistant/README.md",
     "lint": "nx run-many --parallel --target=lint --all",
     "test": "nx run-many --parallel --target=test --all",
     "format": "nx format:write"

@@ -48,5 +48,18 @@ describe('AssistantMemoryService', () => {
       );
     });
 
+    it('should log error', async () => {
+      const error = new Error('error');
+      const sourcePath = './.env';
+      const readFileSpy = jest
+        .spyOn(fs.promises, 'readFile')
+        .mockRejectedValue(error);
+      const loggerSpy = jest.spyOn(assistantMemoryService['logger'], 'error');
+
+      await assistantMemoryService.saveAssistantId('456');
+
+      expect(readFileSpy).toHaveBeenCalledWith(sourcePath);
+      expect(loggerSpy).toHaveBeenCalledWith(`Can't save variable: ${error}`);
+    });
   });
 });

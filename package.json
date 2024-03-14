@@ -17,7 +17,8 @@
     "cp:readme": "cp ./README.md ./dist/libs/ai-assistant/README.md",
     "lint": "nx run-many --parallel --target=lint --all",
     "test": "nx run-many --parallel --target=test --all",
-    "format": "nx format:write"
+    "format": "nx format:write",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -65,6 +66,8 @@
     "@angular/cli": "~17.0.0",
     "@angular/compiler-cli": "~17.0.0",
     "@angular/language-service": "~17.0.0",
+    "@commitlint/cli": "^19.1.0",
+    "@commitlint/config-conventional": "^19.1.0",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nx/angular": "^17.2.8",
@@ -94,6 +97,7 @@
     "esbuild": "^0.19.2",
     "eslint": "~8.48.0",
     "eslint-config-prettier": "^9.0.0",
+    "husky": "^9.0.11",
     "jest": "^29.4.1",
     "jest-environment-jsdom": "^29.4.1",
     "jest-environment-node": "^29.4.1",

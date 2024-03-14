@@ -11,7 +11,6 @@
  <a href="https://github.com/boldare/ai-assistant" target="_blank">github</a>
 </p>
 
-
 # 🤖 AI Assistant
 
 Introducing the NestJS library, designed to harness the power of OpenAI's Assistant, enabling developers to create highly efficient, scalable, and rapid AI assistants and chatbots. This library is tailored for seamless integration into the NestJS ecosystem, offering an intuitive API, WebSockets, and tools that streamline the development of AI-driven interactions. Whether you're building a customer service bot, a virtual assistant, or an interactive chatbot for engaging user experiences, our library empowers you to leverage cutting-edge AI capabilities with minimal effort.
@@ -96,10 +95,10 @@ export const assistantParams: AssistantCreateParams = {
 
 // Additional configuration for our assistant
 export const assistantConfig: AssistantConfigParams = {
-  id: process.env['ASSISTANT_ID'], // OpenAI API Key
-  params: assistantParams, // AssistantCreateParams
+  id: process.env['ASSISTANT_ID'],          // OpenAI API Key
+  params: assistantParams,                  // AssistantCreateParams
   filesDir: './apps/api/src/app/knowledge', // Path to the directory with files (the final path is "fileDir" + "single file")
-  files: ['file1.txt', 'file2.json'], // List of file names (or paths if you didn't fill in the above parameter)
+  files: ['file1.txt', 'file2.json'],       // List of file names (or paths if you didn't fill in the above parameter)
 };
 ```
 

@@ -1,4 +1,4 @@
-// @ts-ignore
+// @ts-expect-error: Jest global setup
 globalThis.ngJest = {
   testEnvironmentOptions: {
     errorOnUnknownElements: true,

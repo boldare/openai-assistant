@@ -7,8 +7,10 @@
 <p align="center">
  <a href="https://assistant.ai.boldare.dev/chat" target="_blank">demo</a> 🔹
  <a href="https://assistant.ai.boldare.dev/api/docs" target="_blank">api docs</a> 🔹
- <a href="https://www.npmjs.com/package/@boldare/ai-assistant" target="_blank">npm</a>
+ <a href="https://www.npmjs.com/package/@boldare/ai-assistant" target="_blank">npm</a> 🔹
+ <a href="https://github.com/boldare/ai-assistant" target="_blank">github</a>
 </p>
+
 
 # 🤖 AI Assistant
 

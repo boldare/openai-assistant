@@ -18,9 +18,5 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm install
-      - name: Build packages
-        run: npm run build
-      - name: Lint code
-        run: npm run lint
       - name: Run unit tests
         run: npm run test

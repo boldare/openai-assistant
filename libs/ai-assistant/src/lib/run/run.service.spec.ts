@@ -128,6 +128,5 @@ describe('RunService', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-    runService.isRunning = true;
   });
 });

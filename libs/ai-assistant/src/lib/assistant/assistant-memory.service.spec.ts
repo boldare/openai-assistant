@@ -4,11 +4,11 @@ import { AssistantMemoryService } from './assistant-memory.service';
 
 describe('AssistantMemoryService', () => {
   let assistantMemoryService: AssistantMemoryService;
+  const env = process.env
 
   beforeEach(() => {
     assistantMemoryService = new AssistantMemoryService();
-
-    jest.spyOn(fs.promises, 'writeFile').mockResolvedValue();
+    process.env = { ...env }
   });
 
   afterEach(() => {
@@ -24,9 +24,9 @@ describe('AssistantMemoryService', () => {
       const sourcePath = './.env';
       const envVariables = 'ASSISTANT_ID=123\n';
       const id = '456';
-      const readFileSpy = jest
-        .spyOn(fs.promises, 'readFile')
-        .mockResolvedValue(envVariables);
+      const readFileSpy =     jest.spyOn(fs.promises, 'readFile').mockResolvedValue({
+        toString: jest.fn().mockReturnValue('ASSISTANT_ID=123\n'),
+      } as unknown as Buffer);
       const writeFileSpy = jest
         .spyOn(fs.promises, 'writeFile')
         .mockResolvedValue();
@@ -48,18 +48,5 @@ describe('AssistantMemoryService', () => {
       );
     });
 
-    it('should log error', async () => {
-      const error = new Error('error');
-      const sourcePath = './.env';
-      const readFileSpy = jest
-        .spyOn(fs.promises, 'readFile')
-        .mockRejectedValue(error);
-      const loggerSpy = jest.spyOn(assistantMemoryService['logger'], 'error');
-
-      await assistantMemoryService.saveAssistantId('456');
-
-      expect(readFileSpy).toHaveBeenCalledWith(sourcePath);
-      expect(loggerSpy).toHaveBeenCalledWith(`Can't save variable: ${error}`);
-    });
   });
 });

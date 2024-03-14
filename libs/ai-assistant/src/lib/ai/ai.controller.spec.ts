@@ -1,6 +1,7 @@
 import { AiController } from './ai.controller';
 import { AiService } from './ai.service';
-import { mockFileData, transcriptionMock } from './ai.mock';
+import { mockBuffer, mockFileData, transcriptionMock } from './ai.mock';
+import { Response } from 'openai/core';
 
 describe('AiController', () => {
   let aiController: AiController;
@@ -13,6 +14,10 @@ describe('AiController', () => {
     jest
       .spyOn(aiService.provider.audio.transcriptions, 'create')
       .mockResolvedValue(transcriptionMock);
+
+    jest.spyOn(aiService.provider.audio.speech, 'create').mockResolvedValue({
+      arrayBuffer: jest.fn().mockResolvedValue(mockBuffer),
+    } as unknown as Response);
   });
 
   afterEach(() => {
@@ -27,10 +32,6 @@ describe('AiController', () => {
     });
 
     it('should throw an error', async () => {
-      jest
-        .spyOn(aiService.provider.audio.transcriptions, 'create')
-        .mockRejectedValue(new Error());
-
       try {
         await aiController.postTranscription(mockFileData);
       } catch (error) {

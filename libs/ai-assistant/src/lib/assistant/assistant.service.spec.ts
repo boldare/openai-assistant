@@ -42,6 +42,10 @@ describe('AssistantService', () => {
       .spyOn(aiService.provider.beta.assistants, 'create')
       .mockResolvedValue({} as Assistant);
 
+    jest
+      .spyOn(assistantMemoryService, 'saveAssistantId')
+      .mockResolvedValue(undefined);
+
     jest.spyOn(fs.promises, 'writeFile').mockResolvedValue();
   });
 
@@ -157,10 +161,6 @@ describe('AssistantService', () => {
       jest
         .spyOn(assistantService, 'updateFiles')
         .mockResolvedValue({ id: '1' } as Assistant);
-
-      jest
-        .spyOn(assistantMemoryService, 'saveAssistantId')
-        .mockResolvedValue(undefined);
 
       await assistantService.create();
 

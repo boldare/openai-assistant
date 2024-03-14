@@ -6,7 +6,9 @@ import 'dotenv/config';
 
 @Injectable()
 export class AiService {
-  provider = new OpenAI();
+  provider = new OpenAI({
+    apiKey: process.env['OPENAI_API_KEY'] || '',
+  });
 
   async transcription(file: Uploadable): Promise<AiTranscription> {
     return this.provider.audio.transcriptions.create({

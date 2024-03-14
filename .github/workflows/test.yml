@@ -1,0 +1,26 @@
+name: Test suite
+
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+      - next
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install
+      - name: Build packages
+        run: npm run build
+      - name: Lint code
+        run: npm run lint
+      - name: Run unit tests
+        run: npm run test

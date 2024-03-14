@@ -1,16 +1,13 @@
-name: Commitlint
-
+name: Lint Commit Messages
 on: [pull_request]
 
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
-  lint:
+  commitlint:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.BOLDARE_GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - uses: wagoid/commitlint-github-action@v1
-        with:
-          configFile: .commitlintrc.js
+      - uses: actions/checkout@v3
+      - uses: wagoid/commitlint-github-action@v5

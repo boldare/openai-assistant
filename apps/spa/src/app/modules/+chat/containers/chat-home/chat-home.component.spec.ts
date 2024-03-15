@@ -1,23 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChatExampleComponent } from './chat-example.component';
+import { ChatHomeComponent } from './chat-home.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MarkdownModule } from 'ngx-markdown';
 
-describe('ChatExampleComponent', () => {
-  let component: ChatExampleComponent;
-  let fixture: ComponentFixture<ChatExampleComponent>;
+describe('ChatHomeComponent', () => {
+  let component: ChatHomeComponent;
+  let fixture: ComponentFixture<ChatHomeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ChatExampleComponent,
+        ChatHomeComponent,
         HttpClientTestingModule,
         MarkdownModule.forRoot(),
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ChatExampleComponent);
+    fixture = TestBed.createComponent(ChatHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

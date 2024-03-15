@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  height: 100vh;
+  max-height: 600px;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-medium);
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat__content {
+  flex: 1 1 100%;
+}

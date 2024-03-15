@@ -8,5 +8,5 @@ globalThis.ngJest = {
 
 global.setImmediate = jest.useRealTimers as unknown as typeof setImmediate;
 // @ts-expect-error: Jest global setup
-window.setImmediate = window.setTimeout
+window.setImmediate = window.setTimeout;
 import 'jest-preset-angular/setup-jest';

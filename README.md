@@ -195,12 +195,12 @@ export class ChatModule {}
 
 The repository includes a library with an AI assistant as well as other useful parts:
 
-| Name                    | Type          | Description                                                                                                                     |
-| ----------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `@boldare/ai-assistant` | `library`     | A NestJS library based on the OpenAI Assistant for building efficient, scalable, and quick solutions for AI assistants/chatbots |
-| `@boldare/ai-embedded`  | `library`     | The code enables embedding the chatbot on various websites through JavaScript scripts.                                          |
-| `api`                   | `application` | Example usage of the `@boldare/ai-assistant` library.                                                                           |
-| `spa`                   | `application` | Example client application (SPA) with a chatbot.                                                                                |
+| Name                    | Description                                                                                                                     | More                                                                                                                   |
+|-------------------------|---------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| `@boldare/ai-assistant` | A NestJS library based on the OpenAI Assistant for building efficient, scalable, and quick solutions for AI assistants/chatbots | [Documentation](https://github.com/boldare/ai-assistant/wiki/%F0%9F%A4%96-AI-Assistant)                                |
+| `@boldare/ai-embedded`  | The code enables embedding the chatbot on various websites through JavaScript scripts.                                          | [Documentation](https://github.com/boldare/ai-assistant/wiki/%F0%9F%96%87-Integrating-Chatbot-into-Your-Website)       | 
+| `api`                   | Example usage of the `@boldare/ai-assistant` library.                                                                           | [Documentation](https://github.com/boldare/ai-assistant/wiki/%F0%9F%91%A8%E2%80%8D%F0%9F%92%BB-Repository)             |
+| `spa`                   | Example client application (SPA) with a chatbot.                                                                                | [Documenation](https://github.com/boldare/ai-assistant/wiki/%F0%9F%92%AC-Chatbot-%E2%80%90-Client-application)         | 
 
 ## Getting started
 

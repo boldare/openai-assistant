@@ -1,26 +1,37 @@
-<ai-card class="chat">
-  <ai-chat-header
-    [isRefreshEnabled]="isRefreshEnabled && !!threadId()"
-    [isConfigEnabled]="isConfigEnabled && !!threadId()"
-    (refresh$)="chatService.refresh()"
-    (close$)="chatService.toggle()"
-    (config$)="chatService.clear()"></ai-chat-header>
+<img [src]="'/assets/boldare.svg'" alt="Boldare" class="chat__logo" routerLink="/" />
 
-  <ai-spinner [isActive]="isLoading()" />
-  @if (isConfigEnabled && !threadId()) {
-  <ai-configuration-form class="chat__content" />
-  } @else {
-  <ai-chat-messages
-    [messages]="messages()"
-    [isTyping]="isTyping()"
-    [tips]="tips"
-    (tipSelected$)="chatService.sendMessage($event)"
-    class="chat__content" />
-  <ai-chat-footer
-    [isDisabled]="isTyping()"
-    [isTranscriptionEnabled]="isTranscriptionEnabled"
-    [isAttachmentEnabled]="isAttachmentEnabled"
-    (sendMessage$)="chatService.sendMessage($event)"
-    (sendAudio$)="chatService.sendAudio($event)" />
-  }
-</ai-card>
+<div class="chat__nav">
+  <a
+    href="https://github.com/boldare/ai-assistant/wiki"
+    target="_blank"
+    class="chat__link">
+    Documentation
+  </a>
+  🔹
+  <a
+    href="https://assistant.ai.boldare.dev/api/docs"
+    target="_blank"
+    class="chat__link">
+    API docs
+  </a>
+  🔹
+  <a
+    href="https://github.com/boldare/ai-assistant"
+    target="_blank"
+    class="chat__link">
+    GitHub
+  </a>
+  🔹
+  <a
+    href="https://www.npmjs.com/package/@boldare/ai-assistant"
+    target="_blank"
+    class="chat__link">
+    NPM
+  </a>
+  🔹
+  <a [routerLink]="'/chat/iframe'" target="_blank" class="chat__link">
+    "Iframe" content
+  </a>
+</div>
+
+<router-outlet />

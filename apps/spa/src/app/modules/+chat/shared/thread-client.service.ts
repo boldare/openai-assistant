@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CreateThreadDto, GetThreadResponseDto } from '@boldare/ai-assistant';
+import {
+  CreateThreadDto,
+  GetThreadResponseDto,
+} from '@boldare/openai-assistant';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 

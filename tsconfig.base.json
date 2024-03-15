@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@boldare/ai-assistant": ["libs/ai-assistant/src/index.ts"],
-      "@boldare/ai-embedded": ["libs/ai-embedded/src/index.ts"]
+      "@boldare/ai-embedded": ["libs/ai-embedded/src/index.ts"],
+      "@boldare/openai-assistant": ["libs/openai-assistant/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

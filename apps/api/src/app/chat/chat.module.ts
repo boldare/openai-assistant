@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AssistantModule } from '@boldare/ai-assistant';
+import { AssistantModule } from '@boldare/openai-assistant';
 import { assistantConfig } from './chat.config';
 import { AgentsModule } from './agents/agents.module';
 

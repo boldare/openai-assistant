@@ -7,8 +7,8 @@
 <p align="center">
  <a href="https://assistant.ai.boldare.dev/chat" target="_blank">demo</a> 🔹
  <a href="https://assistant.ai.boldare.dev/api/docs" target="_blank">api docs</a> 🔹
- <a href="https://www.npmjs.com/package/@boldare/ai-assistant" target="_blank">npm</a> 🔹
- <a href="https://github.com/boldare/ai-assistant" target="_blank">github</a>
+ <a href="https://www.npmjs.com/package/@boldare/openai-assistant" target="_blank">npm</a> 🔹
+ <a href="https://github.com/boldare/openai-assistant" target="_blank">github</a>
 </p>
 
 # 🤖 AI Assistant
@@ -50,7 +50,7 @@ nest new project-name
 Install the library using npm:
 
 ```bash
-npm i @boldare/ai-assistant --save
+npm i @boldare/openai-assistant --save
 ```
 
 ### Step 2: Env variables
@@ -111,7 +111,7 @@ Import the AI Assistant module with your configuration into the module file wher
 export class ChatbotModule {}
 ```
 
-Automatically, the library will add WebSockets ([chat.gateway.ts](libs/ai-assistant/src/lib/chat/chat.gateway.ts)) and a [REST API](https://assistant.ai.boldare.dev/api/docs) for the assistant. The WebSocket server will be available at the `/` endpoint, and the [REST API](https://assistant.ai.boldare.dev/api/docs) will be available at the `/api` endpoint (depending on the API prefix).
+Automatically, the library will add WebSockets ([chat.gateway.ts](libs/openai-assistant/src/lib/chat/chat.gateway.ts)) and a [REST API](https://assistant.ai.boldare.dev/api/docs) for the assistant. The WebSocket server will be available at the `/` endpoint, and the [REST API](https://assistant.ai.boldare.dev/api/docs) will be available at the `/api` endpoint (depending on the API prefix).
 
 #### Websockets events
 
@@ -170,7 +170,7 @@ Import the service into the module file where you intend to use it:
 
 ```js
 import { Module } from '@nestjs/common';
-import { AgentModule } from '@boldare/ai-assistant';
+import { AgentModule } from '@boldare/openai-assistant';
 import { GetNicknameAgent } from './get-nickname.agent';
 
 @Module({
@@ -195,12 +195,12 @@ export class ChatModule {}
 
 The repository includes a library with an AI assistant as well as other useful parts:
 
-| Name                    | Description                                                                                                                     | More                                                                                                                   |
-|-------------------------|---------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-| `@boldare/ai-assistant` | A NestJS library based on the OpenAI Assistant for building efficient, scalable, and quick solutions for AI assistants/chatbots | [Documentation](https://github.com/boldare/ai-assistant/wiki/%F0%9F%A4%96-AI-Assistant)                                |
-| `@boldare/ai-embedded`  | The code enables embedding the chatbot on various websites through JavaScript scripts.                                          | [Documentation](https://github.com/boldare/ai-assistant/wiki/%F0%9F%96%87-Integrating-Chatbot-into-Your-Website)       | 
-| `api`                   | Example usage of the `@boldare/ai-assistant` library.                                                                           | [Documentation](https://github.com/boldare/ai-assistant/wiki/%F0%9F%91%A8%E2%80%8D%F0%9F%92%BB-Repository)             |
-| `spa`                   | Example client application (SPA) with a chatbot.                                                                                | [Documenation](https://github.com/boldare/ai-assistant/wiki/%F0%9F%92%AC-Chatbot-%E2%80%90-Client-application)         | 
+| Name                    | Description                                                                                                                     | More                                                                                                                 |
+|-------------------------|---------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
+| `@boldare/openai-assistant` | A NestJS library based on the OpenAI Assistant for building efficient, scalable, and quick solutions for AI assistants/chatbots | [Documentation](https://github.com/boldare/openai-assistant/wiki/%F0%9F%A4%96-AI-Assistant)                          |
+| `@boldare/ai-embedded`  | The code enables embedding the chatbot on various websites through JavaScript scripts.                                          | [Documentation](https://github.com/boldare/openai-assistant/wiki/%F0%9F%96%87-Integrating-Chatbot-into-Your-Website) | 
+| `api`                   | Example usage of the `@boldare/openai-assistant` library.                                                                           | [Documentation](https://github.com/boldare/openai-assistant/wiki/%F0%9F%91%A8%E2%80%8D%F0%9F%92%BB-Repository)       |
+| `spa`                   | Example client application (SPA) with a chatbot.                                                                                | [Documenation](https://github.com/boldare/openai-assistant/wiki/%F0%9F%92%AC-Chatbot-%E2%80%90-Client-application)   | 
 
 ## Getting started
 
@@ -244,4 +244,4 @@ Now you can open your browser and navigate to:
 
 # License
 
-`@boldare/ai-assistant` is MIT licensed
+`@boldare/openai-assistant` is MIT licensed

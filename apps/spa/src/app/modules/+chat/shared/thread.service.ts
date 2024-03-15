@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, Subject, take, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ThreadClientService } from './thread-client.service';
 import { ConfigurationFormService } from '../../+configuration/shared/configuration-form.service';
-import { GetThreadResponseDto } from '@boldare/ai-assistant';
+import { GetThreadResponseDto } from '@boldare/openai-assistant';
 
 @Injectable({ providedIn: 'root' })
 export class ThreadService {

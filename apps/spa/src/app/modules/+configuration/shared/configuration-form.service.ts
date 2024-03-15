@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { CreateThreadDto } from '@boldare/ai-assistant';
+import { CreateThreadDto } from '@boldare/openai-assistant';
 import { ConfigurationForm } from './configuration.model';
 import { MessageStatus, SpeechVoice } from '../../+chat/shared/chat.model';
 

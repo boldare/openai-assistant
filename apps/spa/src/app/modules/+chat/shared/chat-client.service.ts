@@ -9,7 +9,7 @@ import {
   PostSpeechDto,
   UploadFilesPayload,
   UploadFilesResponseDto,
-} from '@boldare/ai-assistant';
+} from '@boldare/openai-assistant';
 
 @Injectable({ providedIn: 'root' })
 export class ChatClientService {

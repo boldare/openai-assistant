@@ -15,7 +15,7 @@ import { ChatClientService } from './chat-client.service';
 import { ThreadService } from './thread.service';
 import { ChatFilesService } from './chat-files.service';
 import { environment } from '../../../../environments/environment';
-import { OpenAiFile, GetThreadResponseDto } from '@boldare/ai-assistant';
+import { OpenAiFile, GetThreadResponseDto } from '@boldare/openai-assistant';
 import { Threads } from 'openai/resources/beta';
 import MessageContentText = Threads.MessageContentText;
 import { ThreadMessage } from 'openai/resources/beta/threads';

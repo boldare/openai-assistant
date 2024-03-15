@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AssistantCreateParams } from 'openai/resources/beta';
-import { AgentBase, AgentData, AgentService } from '@boldare/ai-assistant';
+import { AgentBase, AgentData, AgentService } from '@boldare/openai-assistant';
 
 @Injectable()
 export class GetAnimalAgent extends AgentBase {

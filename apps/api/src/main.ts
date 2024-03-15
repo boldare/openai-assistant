@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   const config = new DocumentBuilder()
-    .setTitle('@boldare/ai-assistant')
+    .setTitle('@boldare/openai-assistant')
     .setVersion('0.1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

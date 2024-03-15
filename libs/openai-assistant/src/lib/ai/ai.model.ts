@@ -31,7 +31,7 @@ export class PostSpeechResponseDto {
 }
 
 export class PostTranscriptionDto {
-  @ApiProperty({type: 'string', format: 'binary'})
+  @ApiProperty({ type: 'string', format: 'binary' })
   file!: File;
 }
 

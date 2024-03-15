@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FilesService } from '../../../components/controls';
 import { ChatClientService } from './chat-client.service';
-import { OpenAiFile } from '@boldare/ai-assistant';
+import { OpenAiFile } from '@boldare/openai-assistant';
 
 @Injectable({ providedIn: 'root' })
 export class ChatFilesService {

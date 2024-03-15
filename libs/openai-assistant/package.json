@@ -1,6 +1,7 @@
 {
-  "name": "@boldare/ai-assistant",
-  "version": "0.0.2-dev.6",
+  "name": "@boldare/openai-assistant",
+  "description": "NestJS library for building chatbot solutions based on the OpenAI Assistant API",
+  "version": "0.0.1-dev.1",
   "private": false,
   "dependencies": {
     "tslib": "^2.3.0",
@@ -18,7 +19,7 @@
   "type": "commonjs",
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
-  "homepage": "https://github.com/boldare/ai-assistant",
+  "homepage": "https://github.com/boldare/openai-assistant",
   "keywords": [
     "ai",
     "assistant",
@@ -38,6 +39,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/boldare/ai-assistant.git"
+    "url": "git+https://github.com/boldare/openai-assistant.git"
   }
 }

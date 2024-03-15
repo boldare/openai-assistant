@@ -22,7 +22,7 @@
     "format": "nx format:write",
     "prepare": "husky"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "~17.0.0",
     "@angular/cdk": "^17.0.5",

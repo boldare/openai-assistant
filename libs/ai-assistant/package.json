@@ -1,6 +1,6 @@
 {
   "name": "@boldare/ai-assistant",
-  "version": "0.0.2-dev.5",
+  "version": "0.0.2-dev.6",
   "private": false,
   "dependencies": {
     "tslib": "^2.3.0",

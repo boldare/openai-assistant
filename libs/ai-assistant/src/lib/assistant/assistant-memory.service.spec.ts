@@ -4,11 +4,11 @@ import { AssistantMemoryService } from './assistant-memory.service';
 
 describe('AssistantMemoryService', () => {
   let assistantMemoryService: AssistantMemoryService;
-  const env = process.env
+  const env = process.env;
 
   beforeEach(() => {
     assistantMemoryService = new AssistantMemoryService();
-    process.env = { ...env }
+    process.env = { ...env };
   });
 
   afterEach(() => {
@@ -24,9 +24,11 @@ describe('AssistantMemoryService', () => {
       const sourcePath = './.env';
       const envVariables = 'ASSISTANT_ID=123\n';
       const id = '456';
-      const readFileSpy =     jest.spyOn(fs.promises, 'readFile').mockResolvedValue({
-        toString: jest.fn().mockReturnValue('ASSISTANT_ID=123\n'),
-      } as unknown as Buffer);
+      const readFileSpy = jest
+        .spyOn(fs.promises, 'readFile')
+        .mockResolvedValue({
+          toString: jest.fn().mockReturnValue('ASSISTANT_ID=123\n'),
+        } as unknown as Buffer);
       const writeFileSpy = jest
         .spyOn(fs.promises, 'writeFile')
         .mockResolvedValue();

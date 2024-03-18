@@ -20,8 +20,11 @@ export class WeatherService {
         .get('https://api.openweathermap.org/data/2.5/weather', { params })
         .pipe(
           catchError((error: AxiosError) => {
-            this.logger.error(error.response.data);
-            throw new HttpException(error.response.data, error.response.status);
+            const message = error?.response?.data || {
+              message: 'Unknown error',
+            };
+            this.logger.error(message);
+            throw new HttpException(message, error?.response?.status || 500);
           }),
         ),
     );

@@ -5,7 +5,7 @@ import { PokemonService } from './pokemon.service';
 
 @Injectable()
 export class GetPokemonListAgent extends AgentBase {
-  definition: AssistantCreateParams.AssistantToolsFunction = {
+  override definition: AssistantCreateParams.AssistantToolsFunction = {
     type: 'function',
     function: {
       name: this.constructor.name,
@@ -19,13 +19,13 @@ export class GetPokemonListAgent extends AgentBase {
   };
 
   constructor(
-    protected readonly agentService: AgentService,
+    override readonly agentService: AgentService,
     private readonly pokemonService: PokemonService,
   ) {
     super(agentService);
   }
 
-  async output(): Promise<string> {
+  override async output(): Promise<string> {
     try {
       // Get the list of Pokemon
       const pokemon = await this.pokemonService.getPokemonList();

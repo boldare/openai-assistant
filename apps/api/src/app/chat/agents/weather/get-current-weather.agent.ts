@@ -5,7 +5,7 @@ import { WeatherService } from './weather.service';
 
 @Injectable()
 export class GetCurrentWeatherAgent extends AgentBase {
-  definition: AssistantCreateParams.AssistantToolsFunction = {
+  override definition: AssistantCreateParams.AssistantToolsFunction = {
     type: 'function',
     function: {
       name: this.constructor.name,
@@ -25,13 +25,13 @@ export class GetCurrentWeatherAgent extends AgentBase {
   };
 
   constructor(
-    protected readonly agentService: AgentService,
+    override readonly agentService: AgentService,
     private readonly weatherService: WeatherService,
   ) {
     super(agentService);
   }
 
-  async output(data: AgentData): Promise<string> {
+  override async output(data: AgentData): Promise<string> {
     try {
       // Parse the parameters from the input data
       const params = JSON.parse(data.params);

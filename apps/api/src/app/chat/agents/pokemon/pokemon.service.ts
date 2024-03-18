@@ -14,8 +14,9 @@ export class PokemonService {
     const { data } = await firstValueFrom(
       this.httpService.get(`${this.apiUrl}/?limit=30`).pipe(
         catchError((error: AxiosError) => {
-          this.logger.error(error.response.data);
-          throw new HttpException(error.response.data, error.response.status);
+          const message = error?.response?.data || { message: 'Unknown error' };
+          this.logger.error(message);
+          throw new HttpException(message, error?.response?.status || 500);
         }),
       ),
     );
@@ -27,8 +28,9 @@ export class PokemonService {
     const { data } = await firstValueFrom(
       this.httpService.get(`${this.apiUrl}/${name?.toLowerCase()}`).pipe(
         catchError((error: AxiosError) => {
-          this.logger.error(error.response.data);
-          throw new HttpException(error.response.data, error.response.status);
+          const message = error?.response?.data || { message: 'Unknown error' };
+          this.logger.error(message);
+          throw new HttpException(message, error?.response?.status || 500);
         }),
       ),
     );

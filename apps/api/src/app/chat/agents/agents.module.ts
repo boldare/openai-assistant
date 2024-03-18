@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { GetAnimalAgent } from './get-animal.agent';
-import { AgentModule } from '@boldare/openai-assistant';
+import { WeatherModule } from './weather/weather.module';
+import { PokemonModule } from './pokemon/pokemon.module';
+import { CurrencyModule } from './currency/currency.module';
 
 @Module({
-  imports: [AgentModule],
-  providers: [GetAnimalAgent],
+  imports: [WeatherModule, PokemonModule, CurrencyModule],
 })
 export class AgentsModule {}

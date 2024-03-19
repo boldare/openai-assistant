@@ -1,6 +1,9 @@
 name: Demo deploy
 
 on:
+  pull_request:
+    branches:
+      - preview
   release:
     types: [published]
 

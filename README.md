@@ -19,12 +19,12 @@ Introducing the NestJS library, designed to harness the power of OpenAI's Assist
 
 #### AI Assistant library features
 
-- **WebSockets**: The library provides a WebSocket server for real-time communication between the client and the assistant.
-- **REST API**: The library provides a REST API for communication with the assistant.
 - **Function calling**: The library provides a way to create functions, which allows you to extend the assistant's capabilities with custom logic.
-- **File support**: The library provides a way to add files to the assistant, which allows you to extend the assistant's knowledge base with custom data.
 - **TTS (Text-to-Speech)**: The library provides a way to convert text to speech, which allows you to create voice-based interactions with the assistant.
 - **STT (Speech-to-Text)**: The library provides a way to convert speech to text, which allows you to create voice-based interactions with the assistant.
+- **File support**: The library provides a way to add files to the assistant, which allows you to extend the assistant's knowledge base with custom data.
+- **WebSockets**: The library provides a WebSocket server for real-time communication between the client and the assistant.
+- **REST API**: The library provides a REST API for communication with the assistant.
 
 #### Additional features in the repository
 
@@ -58,7 +58,7 @@ npm i @boldare/openai-assistant --save
 Set up your environment variables, create environment variables in the `.env` file in the root directory of the project, and populate it with the necessary secrets. The assistant ID is optional and serves as a unique identifier for your assistant. When the environment variable is not set, the assistant will be created automatically. You can use the assistant ID to connect to an existing assistant, which can be found in the OpenAI platform after creating an assistant.
 
 Create a `.env` file in the root directory of your project and populate it with the necessary secrets:
-
+ 
 ```bash
 touch .env
 ```
@@ -80,6 +80,7 @@ Please note that the `.env` file should not be committed to the repository. Add 
 The library provides a way to configure the assistant with the `AssistantModule.forRoot` method. The method takes a configuration object as an argument. Create a new configuration file like in a [sample configuration file (chat.config.ts)](apps%2Fapi%2Fsrc%2Fapp%2Fchat%2Fchat.config.ts) and fill it with the necessary configuration. 
 
 More details about the configuration with code examples can be found in the [wiki](https://github.com/boldare/openai-assistant/wiki/%F0%9F%A4%96-AI-Assistant#step-3-configuration).
+
 
 ### Step 4: Function calling
 

@@ -14,5 +14,5 @@ export const assistantConfig: AssistantConfigParams = {
   id: process.env['ASSISTANT_ID'] || '',
   params: assistantParams,
   filesDir: './apps/api/src/app/knowledge',
-  files: [],
+  files: ['33-things-to-ask-your-digital-product-development-partner.md'],
 };

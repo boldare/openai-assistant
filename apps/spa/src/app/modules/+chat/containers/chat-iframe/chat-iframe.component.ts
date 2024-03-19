@@ -35,10 +35,11 @@ export class ChatIframeComponent implements OnInit {
   isRefreshEnabled = environment.isRefreshEnabled;
   isConfigEnabled = environment.isConfigEnabled;
   tips = [
-    'Hello there! 👋',
-    'Could you please tell me your name?',
-    'Hello! How can you help me?',
-    'Hello! 👋 How are you?',
+    'Hello! 👋 How can you help me?',
+    'What’s the weather like in Warsaw?',
+    'What is the exchange rate for USD?',
+    'Show me list of Pokémon',
+    'Show me the stats for Pikachu (Pokémon)?',
   ];
 
   constructor(

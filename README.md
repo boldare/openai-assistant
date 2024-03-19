@@ -19,19 +19,19 @@ Introducing the NestJS library, designed to harness the power of OpenAI's Assist
 
 #### AI Assistant library features
 
-- **WebSockets**: The library provides a WebSocket server for real-time communication between the client and the assistant.
-- **REST API**: The library provides a REST API for communication with the assistant.
 - **Function calling**: The library provides a way to create functions, which allows you to extend the assistant's capabilities with custom logic.
-- **File support**: The library provides a way to add files to the assistant, which allows you to extend the assistant's knowledge base with custom data.
 - **TTS (Text-to-Speech)**: The library provides a way to convert text to speech, which allows you to create voice-based interactions with the assistant.
 - **STT (Speech-to-Text)**: The library provides a way to convert speech to text, which allows you to create voice-based interactions with the assistant.
+- **File support**: The library provides a way to add files to the assistant, which allows you to extend the assistant's knowledge base with custom data.
+- **WebSockets**: The library provides a WebSocket server for real-time communication between the client and the assistant.
+- **REST API**: The library provides a REST API for communication with the assistant.
 
 #### Additional features in the repository
 
 - **Embedded chatbot**: The library provides a way to embed the chatbot on various websites through JavaScript scripts.
 - **Chatbot client application**: The repository includes an example client application (SPA) with a chatbot.
 
-## Getting started
+## 🏆 Getting started
 
 In this section, you will learn how to integrate the AI Assistant library into your NestJS application. The following steps will guide you through the process of setting up the library and creating simple functionalities.
 
@@ -55,10 +55,10 @@ npm i @boldare/openai-assistant --save
 
 ### Step 2: Env variables
 
-Set up your environment variables, create environment variables in the `.env` file in the root directory of the project, and populate it with the necessary secrets. You will need to add the OpenAI API Key and the Assistant ID. The Assistant ID is optional, and you can leave it empty if you don't have an assistant yet.
+Set up your environment variables, create environment variables in the `.env` file in the root directory of the project, and populate it with the necessary secrets. The assistant ID is optional and serves as a unique identifier for your assistant. When the environment variable is not set, the assistant will be created automatically. You can use the assistant ID to connect to an existing assistant, which can be found in the OpenAI platform after creating an assistant.
 
 Create a `.env` file in the root directory of your project and populate it with the necessary secrets:
-
+ 
 ```bash
 touch .env
 ```
@@ -73,54 +73,14 @@ OPENAI_API_KEY=
 ASSISTANT_ID=
 ```
 
+Please note that the `.env` file should not be committed to the repository. Add it to the `.gitignore` file to prevent it from being committed.
+
 ### Step 3: Configuration
 
-Configure the settings for your assistant. For more information about assistant parameters, you can refer to the [OpenAI documentation](https://platform.openai.com/docs/assistants/how-it-works/creating-assistants). A sample configuration can be found in ([chat.config.ts](apps%2Fapi%2Fsrc%2Fapp%2Fchat%2Fchat.config.ts)).
+The library provides a way to configure the assistant with the `AssistantModule.forRoot` method. The method takes a configuration object as an argument. Create a new configuration file like in a [sample configuration file (chat.config.ts)](apps%2Fapi%2Fsrc%2Fapp%2Fchat%2Fchat.config.ts) and fill it with the necessary configuration. 
 
-```js
-// chat.config.ts file
+More details about the configuration with code examples can be found in the [wiki](https://github.com/boldare/openai-assistant/wiki/%F0%9F%A4%96-AI-Assistant#step-3-configuration).
 
-// Default OpenAI configuration
-export const assistantParams: AssistantCreateParams = {
-  name: 'Your assistant name',
-  instructions: `You are a chatbot assistant. Speak briefly and clearly.`,
-  tools: [
-    { type: 'code_interpreter' },
-    { type: 'retrieval' },
-    // (...) function calling - functions are configured by extended services
-  ],
-  model: 'gpt-4-1106-preview',
-  metadata: {},
-};
-
-// Additional configuration for our assistant
-export const assistantConfig: AssistantConfigParams = {
-  id: process.env['ASSISTANT_ID'],          // OpenAI API Key
-  params: assistantParams,                  // AssistantCreateParams
-  filesDir: './apps/api/src/app/knowledge', // Path to the directory with files (the final path is "fileDir" + "single file")
-  files: ['file1.txt', 'file2.json'],       // List of file names (or paths if you didn't fill in the above parameter)
-};
-```
-
-Import the AI Assistant module with your configuration into the module file where you intend to use it:
-
-```js
-@Module({
-  imports: [AssistantModule.forRoot(assistantConfig)],
-})
-export class ChatbotModule {}
-```
-
-Automatically, the library will add WebSockets ([chat.gateway.ts](libs/openai-assistant/src/lib/chat/chat.gateway.ts)) and a [REST API](https://assistant.ai.boldare.dev/api/docs) for the assistant. The WebSocket server will be available at the `/` endpoint, and the [REST API](https://assistant.ai.boldare.dev/api/docs) will be available at the `/api` endpoint (depending on the API prefix).
-
-#### Websockets events
-
-Currently, the library provides the following WebSocket events:
-
-| Event name         | Description                                              |
-| ------------------ | -------------------------------------------------------- |
-| `send_message`     | The event is emitted when the user sends a message.      |
-| `message_received` | The event is emitted when the assistant sends a message. |
 
 ### Step 4: Function calling
 
@@ -130,117 +90,16 @@ Create a new service that extends the `AgentBase` class, fill the definition and
 - The `definition` property is an object that describes the function and its parameters.
 
 For more information about function calling, you can refer to the [OpenAI documentation](https://platform.openai.com/docs/assistants/tools/defining-functions).
-Below is an example of a service that extends the `AgentBase` class:
 
-```js
-@Injectable()
-export class GetNicknameAgent extends AgentBase {
-  definition: AssistantCreateParams.AssistantToolsFunction = {
-    type: 'function',
-    function: {
-      name: this.constructor.name,
-      description: `Get the nickname of a city`,
-      parameters: {
-        type: 'object',
-        properties: {
-          location: {
-            type: 'string',
-            description: 'The city and state e.g. San Francisco, CA',
-          },
-        },
-        required: ['location'],
-      },
-    },
-  };
-
-  constructor(protected readonly agentService: AgentService) {
-    super(agentService);
-  }
-
-  async output(data: AgentData): Promise<string> {
-    // TODO: Your logic here
-    return 'Your string value';
-  }
-}
-```
-
-More examples can be found in the [agents](apps/api/src/app/chat/agents) directory.
-
-Import the service into the module file where you intend to use it:
-
-```js
-import { Module } from '@nestjs/common';
-import { AgentModule } from '@boldare/openai-assistant';
-import { GetNicknameAgent } from './get-nickname.agent';
-
-@Module({
-  imports: [AgentModule],
-  providers: [GetNicknameAgent],
-})
-export class AgentsModule {}
-```
-
-and remember to add the `AgentsModule` above the `AssistantModule` in your main module file (e.g. `chat.module.ts`):
-
-```js
-@Module({
-  imports: [AgentsModule, AssistantModule.forRoot(assistantConfig)],
-})
-export class ChatModule {}
-```
+The instructions for creating a function can be found in the [wiki](https://github.com/boldare/openai-assistant/wiki/%F0%9F%A4%96-AI-Assistant#step-4-function-calling), while examples can be found in the [agents](apps/api/src/app/chat/agents) directory.
 
 ---
 
 # 👨‍💻 Repository
 
-The repository includes a library with an AI assistant as well as other useful parts:
+The complete documentation on how to run the demo with all applications and libraries from the repository can be found in the [wiki](https://github.com/boldare/openai-assistant/wiki/%F0%9F%91%A8%E2%80%8D%F0%9F%92%BB-Repository).
 
-| Name                    | Description                                                                                                                     | More                                                                                                                 |
-|-------------------------|---------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
-| `@boldare/openai-assistant` | A NestJS library based on the OpenAI Assistant for building efficient, scalable, and quick solutions for AI assistants/chatbots | [Documentation](https://github.com/boldare/openai-assistant/wiki/%F0%9F%A4%96-AI-Assistant)                          |
-| `@boldare/ai-embedded`  | The code enables embedding the chatbot on various websites through JavaScript scripts.                                          | [Documentation](https://github.com/boldare/openai-assistant/wiki/%F0%9F%96%87-Integrating-Chatbot-into-Your-Website) | 
-| `api`                   | Example usage of the `@boldare/openai-assistant` library.                                                                           | [Documentation](https://github.com/boldare/openai-assistant/wiki/%F0%9F%91%A8%E2%80%8D%F0%9F%92%BB-Repository)       |
-| `spa`                   | Example client application (SPA) with a chatbot.                                                                                | [Documenation](https://github.com/boldare/openai-assistant/wiki/%F0%9F%92%AC-Chatbot-%E2%80%90-Client-application)   | 
-
-## Getting started
-
-### Step 1: Install dependencies
-
-```bash
-npm install
-```
-
-### Step 2: Env variables
-
-Set up your environment variables, copy the `.env.dist` file to `.env` file in the root directory of the project, and populate it with the necessary secrets.
-
-```bash
-cp .env.dist .env
-```
-
-### Step 3: Run applications
-
-```bash
-# Start the app (api and spa)
-npm run start:dev
-
-# Start the api
-npm run start:api
-
-# Start the spa
-npm run start:spa
-```
-
-Now you can open your browser and navigate to:
-
-| URL                            | Description                             |
-| ------------------------------ | --------------------------------------- |
-| http://localhost:4200/         | Client application (Angular)            |
-| http://localhost:3000/         | API application, WebSockets (socket.io) |
-| http://localhost:3000/api/     | API endpoints                           |
-| http://localhost:3000/api/docs | API documentation (swagger)             |
-
-### 🎉 Happy coding 🎉
+---
 
 # License
 

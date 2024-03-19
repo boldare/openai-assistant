@@ -1,6 +1,9 @@
 name: Demo deploy
 
 on:
+  push:
+    branches:
+      - preview
   release:
     types: [published]
 

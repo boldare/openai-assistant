@@ -4,25 +4,17 @@ import {
   MessageBody,
   OnGatewayConnection,
   SubscribeMessage,
-  WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { ChatEvents, ChatCallDto } from './chat.model';
 import { ChatService } from './chat.service';
 
-@WebSocketGateway({
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-    credentials: true,
-  },
-})
 export class ChatGateway implements OnGatewayConnection {
   @WebSocketServer() server!: Server;
   private readonly logger: Logger;
 
-  constructor(private readonly chatsService: ChatService) {
+  constructor(protected readonly chatsService: ChatService) {
     this.logger = new Logger(ChatGateway.name);
   }
 

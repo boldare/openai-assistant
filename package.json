@@ -1,6 +1,6 @@
 {
   "name": "@boldare/source",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "start": "node dist/apps/api/main.js",

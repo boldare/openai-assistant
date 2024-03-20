@@ -26,6 +26,7 @@ export class ChatGateway implements OnGatewayConnection {
     @ConnectedSocket() socket: Socket,
   ) {
     this.logger.log(`Socket "${ChatEvents.SendMessage}" (${socket.id}):
+    * assistant: ${request.assistantId}
     * thread: ${request.threadId}
     * files: ${request?.file_ids}
     * content: ${request.content}`);
@@ -34,6 +35,7 @@ export class ChatGateway implements OnGatewayConnection {
 
     this.server?.to(socket.id).emit(ChatEvents.MessageReceived, message);
     this.logger.log(`Socket "${ChatEvents.MessageReceived}" (${socket.id}):
+    * assistant: ${request.assistantId}
     * thread: ${message.threadId}
     * content: ${message.content}`);
   }

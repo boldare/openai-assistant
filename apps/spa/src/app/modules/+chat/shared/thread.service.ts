@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, take, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, Subject, take, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ThreadClientService } from './thread-client.service';
 import { ConfigurationFormService } from '../../+configuration/shared/configuration-form.service';
@@ -43,6 +43,11 @@ export class ThreadService {
   }
 
   getThread(id: string): Observable<GetThreadResponseDto> {
-    return this.threadClientService.getThread(id).pipe(take(1));
+    return this.threadClientService
+      .getThread(id)
+      .pipe(
+        take(1),
+        catchError(() => this.start()),
+      );
   }
 }

@@ -9,23 +9,23 @@ import {
   take,
   tap,
 } from 'rxjs';
-import { ChatRole, Message, MessageStatus } from './chat.model';
+import { ChatRole, ChatMessage, ChatMessageStatus } from './chat.model';
 import { ChatGatewayService } from './chat-gateway.service';
 import { ChatClientService } from './chat-client.service';
 import { ThreadService } from './thread.service';
 import { ChatFilesService } from './chat-files.service';
 import { environment } from '../../../../environments/environment';
 import { OpenAiFile, GetThreadResponseDto } from '@boldare/openai-assistant';
-import { Threads } from 'openai/resources/beta';
-import MessageContentText = Threads.MessageContentText;
-import { ThreadMessage } from 'openai/resources/beta/threads';
+import { Message } from 'openai/resources/beta/threads/messages';
+import { TextContentBlock } from 'openai/resources/beta/threads/messages/messages';
+
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
   isLoading$ = new BehaviorSubject<boolean>(false);
   isVisible$ = new BehaviorSubject<boolean>(environment.isAutoOpen);
   isTyping$ = new BehaviorSubject<boolean>(false);
-  messages$ = new BehaviorSubject<Message[]>([]);
+  messages$ = new BehaviorSubject<ChatMessage[]>([]);
 
   constructor(
     private readonly chatGatewayService: ChatGatewayService,
@@ -40,16 +40,20 @@ export class ChatService {
     this.watchVisibility();
   }
 
-  isMessageInvisible(message: ThreadMessage): boolean {
+  isMessageInvisible(message: Message): boolean {
     const metadata = message.metadata as Record<string, unknown>;
-    return metadata?.['status'] === MessageStatus.Invisible;
+    return metadata?.['status'] === ChatMessageStatus.Invisible;
   }
 
-  isTextMessage(message: ThreadMessage): boolean {
+  isTextMessage(message: Message): boolean {
     return message.content?.[0]?.type === 'text';
   }
 
-  parseMessages(thread: GetThreadResponseDto): Message[] {
+  parseMessages(thread: GetThreadResponseDto): ChatMessage[] {
+    if (!thread.messages) {
+      return [];
+    }
+
     return thread.messages
       .reverse()
       .filter(
@@ -57,7 +61,7 @@ export class ChatService {
           this.isTextMessage(message) && !this.isMessageInvisible(message),
       )
       .map(message => ({
-        content: (message.content[0] as MessageContentText).text.value,
+        content: (message.content[0] as TextContentBlock).text.value,
         role: message.role as ChatRole,
       }));
   }
@@ -92,7 +96,7 @@ export class ChatService {
     this.messages$.next([]);
   }
 
-  addMessage(message: Message): void {
+  addMessage(message: ChatMessage): void {
     this.messages$.next([...this.messages$.value, message]);
   }
 

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChatClientService } from '../../../modules/+chat/shared/chat-client.service';
-import { Message, SpeechVoice } from '../../../modules/+chat/shared/chat.model';
+import { ChatMessage, SpeechVoice } from '../../../modules/+chat/shared/chat.model';
 import { environment } from '../../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon';
 import { delay } from 'rxjs';
@@ -15,7 +15,7 @@ import { NgClass } from '@angular/common';
   styleUrl: './chat-audio.component.scss',
 })
 export class ChatAudioComponent implements OnInit {
-  @Input() message!: Message;
+  @Input() message!: ChatMessage;
   isAudioEnabled = environment.isAudioEnabled;
   isStarted = false;
   audio = new Audio();

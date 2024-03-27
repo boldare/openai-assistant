@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
-  MessageContentText,
-  Run,
-  ThreadMessage,
+  Message,
+  Run, TextContentBlock,
 } from 'openai/resources/beta/threads';
 import { AiService } from '../ai';
 
@@ -18,19 +17,19 @@ export class ChatHelpers {
     return this.parseThreadMessage(lastThreadMessage);
   }
 
-  parseThreadMessage(message?: ThreadMessage): string {
+  parseThreadMessage(message?: Message): string {
     if (!message) {
       return `Seems I'm lost, would you mind reformulating your question`;
     }
 
-    const content = message.content[0] as MessageContentText;
+    const content = message.content[0] as TextContentBlock;
     return content.text.value;
   }
 
   async getLastMessage(
     run: Run,
     role = 'assistant',
-  ): Promise<ThreadMessage | undefined> {
+  ): Promise<Message | undefined> {
     const messages = await this.threads.messages.list(run.thread_id);
     return (
       messages.data

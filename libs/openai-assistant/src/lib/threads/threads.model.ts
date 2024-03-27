@@ -1,9 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  MessageContentImageFile,
-  MessageContentText,
-} from 'openai/resources/beta/threads/messages/messages';
 import { IsOptional } from 'class-validator';
+import { ImageFileContentBlock, TextContentBlock } from 'openai/resources/beta/threads/messages/messages';
+import { Message } from 'openai/resources/beta/threads';
 
 export class GetThreadDto {
   @ApiProperty({ description: 'Unique identifier of the thread.' })
@@ -45,7 +43,7 @@ export class ThreadMessage {
   @ApiProperty({
     description: 'Content of the message in array of text and/or images.',
   })
-  content!: Array<MessageContentImageFile | MessageContentText>;
+  content!: Array<ImageFileContentBlock | TextContentBlock>;
 
   @ApiProperty({
     description: 'Role of the message author.',
@@ -83,7 +81,7 @@ export class GetThreadResponseDto {
     type: ThreadMessage,
     isArray: true,
   })
-  messages!: ThreadMessage[];
+  messages!: Message[];
 }
 
 export class CreateThreadResponseDto {

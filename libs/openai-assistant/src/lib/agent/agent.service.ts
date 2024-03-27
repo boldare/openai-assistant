@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Agent, Agents } from './agent.model';
-import { AssistantCreateParams } from 'openai/resources/beta';
+import { FunctionTool } from 'openai/resources/beta';
 
 @Injectable()
 export class AgentService {
   public agents: Agents = {};
-  public tools: AssistantCreateParams.AssistantToolsFunction[] = [];
+  public tools: FunctionTool[] = [];
 
   add(
-    definition: AssistantCreateParams.AssistantToolsFunction,
+    definition: FunctionTool,
     fn: Agent,
   ): void {
     this.tools.push(definition);

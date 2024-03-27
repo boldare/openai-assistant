@@ -8,7 +8,7 @@ export enum ChatRole {
   System = 'system',
 }
 
-export interface Message {
+export interface ChatMessage {
   metadata?: Record<string, unknown>;
   content: string;
   role: ChatRole;
@@ -19,7 +19,7 @@ export enum ChatEvents {
   MessageReceived = 'message_received',
 }
 
-export enum MessageStatus {
+export enum ChatMessageStatus {
   Invisible = 'invisible',
 }
 

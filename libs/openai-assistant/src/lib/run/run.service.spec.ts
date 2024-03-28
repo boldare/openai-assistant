@@ -4,6 +4,11 @@ import { RunService } from './run.service';
 import { RunModule } from './run.module';
 import { AiService } from '../ai';
 import { AgentService } from '../agent';
+import { AssistantStream } from 'openai/lib/AssistantStream';
+
+jest.mock('../stream/stream.utils', () => ({
+  assistantStreamEventHandler: jest.fn(),
+}));
 
 describe('RunService', () => {
   let runService: RunService;
@@ -103,10 +108,10 @@ describe('RunService', () => {
   });
 
   describe('submitAction', () => {
-    it('should call submitToolOutputs', async () => {
-      const spyOnSubmitToolOutputs = jest
-        .spyOn(aiService.provider.beta.threads.runs, 'submitToolOutputs')
-        .mockResolvedValue({} as Run);
+    it('should call submitToolOutputsStream', async () => {
+      const spyOnSubmitToolOutputsStream = jest
+        .spyOn(aiService.provider.beta.threads.runs, 'submitToolOutputsStream')
+        .mockReturnValue({} as AssistantStream);
       jest.spyOn(agentsService, 'get').mockReturnValue(jest.fn());
 
       const run = {
@@ -122,7 +127,7 @@ describe('RunService', () => {
 
       await runService.submitAction(run);
 
-      expect(spyOnSubmitToolOutputs).toHaveBeenCalled();
+      expect(spyOnSubmitToolOutputsStream).toHaveBeenCalled();
     });
   });
 

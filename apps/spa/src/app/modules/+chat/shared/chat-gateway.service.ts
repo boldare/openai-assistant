@@ -10,12 +10,12 @@ export class ChatGatewayService {
   private socket = io(environment.websocketUrl);
 
   sendMessage(payload: ChatCallDto): void {
-    this.socket.emit(ChatEvents.SendMessage, payload);
+    this.socket.emit(ChatEvents.CallStart, payload);
   }
 
   getMessages(): Observable<ChatCallDto> {
     return new Observable<ChatCallDto>(observer => {
-      this.socket.on(ChatEvents.MessageReceived, data => observer.next(data));
+      this.socket.on(ChatEvents.CallDone, data => observer.next(data));
       return () => this.socket.disconnect();
     });
   }

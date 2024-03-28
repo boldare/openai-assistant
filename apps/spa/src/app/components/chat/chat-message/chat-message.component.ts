@@ -1,5 +1,8 @@
 import { Component, HostBinding, Input } from '@angular/core';
-import { ChatRole, ChatMessage } from '../../../modules/+chat/shared/chat.model';
+import {
+  ChatRole,
+  ChatMessage,
+} from '../../../modules/+chat/shared/chat.model';
 import { MarkdownComponent } from 'ngx-markdown';
 import { ChatAudioComponent } from '../chat-audio/chat-audio.component';
 import { NgClass } from '@angular/common';

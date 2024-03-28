@@ -1,9 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { MessageCreateParams } from 'openai/resources/beta/threads';
 import { AiService } from '../ai';
 import { RunService } from '../run';
-import { ChatCallDto, ChatCallResponseDto } from './chat.model';
+import {
+  ChatCallCallbacks,
+  ChatCallDto,
+  ChatCallResponseDto,
+} from './chat.model';
 import { ChatHelpers } from './chat.helpers';
+import { MessageCreateParams } from 'openai/resources/beta/threads';
+import { AssistantStream } from 'openai/lib/AssistantStream';
+import { assistantStreamEventHandler } from '../stream/stream.utils';
 
 @Injectable()
 export class ChatService {
@@ -16,7 +22,10 @@ export class ChatService {
     private readonly chatbotHelpers: ChatHelpers,
   ) {}
 
-  async call(payload: ChatCallDto): Promise<ChatCallResponseDto> {
+  async call(
+    payload: ChatCallDto,
+    callbacks?: ChatCallCallbacks,
+  ): Promise<ChatCallResponseDto> {
     const { threadId, content, file_ids, metadata } = payload;
     const message: MessageCreateParams = {
       role: 'user',
@@ -27,15 +36,25 @@ export class ChatService {
 
     await this.threads.messages.create(threadId, message);
 
-    const run = await this.threads.runs.create(threadId, {
+    const run = this.assistantStream(threadId, callbacks);
+    const finalRun = await run.finalRun();
+
+    await this.runService.resolve(finalRun, true, callbacks);
+
+    return {
+      content: await this.chatbotHelpers.getAnswer(finalRun),
+      threadId,
+    };
+  }
+
+  assistantStream(
+    threadId: string,
+    callbacks?: ChatCallCallbacks,
+  ): AssistantStream {
+    const runner = this.threads.runs.createAndStream(threadId, {
       assistant_id: process.env['ASSISTANT_ID'] || '',
     });
 
-    await this.runService.resolve(run);
-
-    return {
-      content: await this.chatbotHelpers.getAnswer(run),
-      threadId,
-    };
+    return assistantStreamEventHandler<AssistantStream>(runner, callbacks);
   }
 }

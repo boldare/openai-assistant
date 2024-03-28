@@ -19,7 +19,6 @@ import { OpenAiFile, GetThreadResponseDto } from '@boldare/openai-assistant';
 import { Message } from 'openai/resources/beta/threads/messages';
 import { TextContentBlock } from 'openai/resources/beta/threads/messages/messages';
 
-
 @Injectable({ providedIn: 'root' })
 export class ChatService {
   isLoading$ = new BehaviorSubject<boolean>(false);

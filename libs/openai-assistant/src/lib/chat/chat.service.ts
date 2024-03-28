@@ -27,9 +27,8 @@ export class ChatService {
 
     await this.threads.messages.create(threadId, message);
 
-    const run = await this.threads.runs.create(threadId, {
-      assistant_id: process.env['ASSISTANT_ID'] || '',
-    });
+    const assistant_id = payload?.assistantId || process.env['ASSISTANT_ID'] || '';
+    const run = await this.threads.runs.create(threadId, { assistant_id });
 
     await this.runService.resolve(run);
 

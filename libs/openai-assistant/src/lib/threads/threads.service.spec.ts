@@ -1,10 +1,10 @@
 import { Test } from '@nestjs/testing';
 import { Thread } from 'openai/resources/beta';
-import { ThreadMessagesPage } from 'openai/resources/beta/threads';
 import { APIPromise } from 'openai/core';
 import { ThreadsService } from './threads.service';
 import { ThreadsModule } from './threads.module';
 import { AiService } from '../ai';
+import { MessagesPage } from 'openai/resources/beta/threads';
 
 describe('ThreadsService', () => {
   let threadsService: ThreadsService;
@@ -29,7 +29,7 @@ describe('ThreadsService', () => {
         .spyOn(aiService.provider.beta.threads.messages, 'list')
         .mockResolvedValue({
           data: [{ id: 'thread-1' }],
-        } as unknown as ThreadMessagesPage);
+        } as unknown as MessagesPage);
 
       const result = await threadsService.getThread('1');
 
@@ -39,7 +39,7 @@ describe('ThreadsService', () => {
     it('should return ThreadResponse with empty list of messages when data is undefined', async () => {
       jest
         .spyOn(aiService.provider.beta.threads.messages, 'list')
-        .mockResolvedValue({} as unknown as ThreadMessagesPage);
+        .mockResolvedValue({} as unknown as MessagesPage);
 
       const result = await threadsService.getThread('1');
 

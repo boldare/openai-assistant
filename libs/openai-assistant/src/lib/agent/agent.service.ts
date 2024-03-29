@@ -7,10 +7,7 @@ export class AgentService {
   public agents: Agents = {};
   public tools: FunctionTool[] = [];
 
-  add(
-    definition: FunctionTool,
-    fn: Agent,
-  ): void {
+  add(definition: FunctionTool, fn: Agent): void {
     this.tools.push(definition);
     this.agents[definition.function.name] = fn;
   }

@@ -15,8 +15,21 @@ export interface ChatMessage {
 }
 
 export enum ChatEvents {
-  SendMessage = 'send_message',
-  MessageReceived = 'message_received',
+  CallStart = 'callStart',
+  CallDone = 'callDone',
+  MessageCreated = 'messageCreated',
+  MessageDelta = 'messageDelta',
+  MessageDone = 'messageDone',
+  TextCreated = 'textCreated',
+  TextDelta = 'textDelta',
+  TextDone = 'textDone',
+  ImageFileDone = 'imageFileDone',
+  ToolCallCreated = 'toolCallCreated',
+  ToolCallDelta = 'toolCallDelta',
+  ToolCallDone = 'toolCallDone',
+  RunStepCreated = 'runStepCreated',
+  RunStepDelta = 'runStepDelta',
+  RunStepDone = 'runStepDone',
 }
 
 export enum ChatMessageStatus {

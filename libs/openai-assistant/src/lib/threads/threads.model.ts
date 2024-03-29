@@ -1,6 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
-import { ImageFileContentBlock, TextContentBlock } from 'openai/resources/beta/threads/messages/messages';
+import {
+  ImageFileContentBlock,
+  TextContentBlock,
+} from 'openai/resources/beta/threads/messages/messages';
 import { Message } from 'openai/resources/beta/threads';
 
 export class GetThreadDto {

@@ -8,19 +8,19 @@
 
   <ai-spinner [isActive]="isLoading()" />
   @if (isConfigEnabled && !threadId()) {
-  <ai-configuration-form class="chat__content" />
+    <ai-configuration-form class="chat__content" />
   } @else {
-  <ai-chat-messages
-    [messages]="messages()"
-    [isTyping]="isTyping()"
-    [tips]="tips"
-    (tipSelected$)="chatService.sendMessage($event)"
-    class="chat__content" />
-  <ai-chat-footer
-    [isDisabled]="isTyping()"
-    [isTranscriptionEnabled]="isTranscriptionEnabled"
-    [isAttachmentEnabled]="isAttachmentEnabled"
-    (sendMessage$)="chatService.sendMessage($event)"
-    (sendAudio$)="chatService.sendAudio($event)" />
+    <ai-chat-messages
+      [messages]="messages()"
+      [isTyping]="isTyping()"
+      [tips]="tips"
+      (tipSelected$)="chatService.sendMessage($event)"
+      class="chat__content" />
+    <ai-chat-footer
+      [isDisabled]="isTyping()"
+      [isTranscriptionEnabled]="isTranscriptionEnabled"
+      [isAttachmentEnabled]="isAttachmentEnabled"
+      (sendMessage$)="chatService.sendMessage($event)"
+      (sendAudio$)="chatService.sendAudio($event)" />
   }
 </ai-card>

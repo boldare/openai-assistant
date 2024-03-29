@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  Message,
-  Run, TextContentBlock,
-} from 'openai/resources/beta/threads';
+import { Message, Run, TextContentBlock } from 'openai/resources/beta/threads';
 import { AiService } from '../ai';
 
 @Injectable()

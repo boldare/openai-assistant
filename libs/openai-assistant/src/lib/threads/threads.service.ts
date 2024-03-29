@@ -8,9 +8,8 @@ export class ThreadsService {
   constructor(private readonly aiService: AiService) {}
 
   async getThread(id: string): Promise<GetThreadResponseDto> {
-    const messages = await this.aiService.provider.beta.threads.messages.list(
-      id,
-    );
+    const messages =
+      await this.aiService.provider.beta.threads.messages.list(id);
     return {
       id,
       messages: messages?.data || [],

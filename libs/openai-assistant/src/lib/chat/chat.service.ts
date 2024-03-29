@@ -1,9 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { MessageCreateParams } from 'openai/resources/beta/threads';
 import { AiService } from '../ai';
 import { RunService } from '../run';
-import { ChatCallDto, ChatCallResponseDto } from './chat.model';
+import {
+  ChatCallCallbacks,
+  ChatCallDto,
+  ChatCallResponseDto,
+} from './chat.model';
 import { ChatHelpers } from './chat.helpers';
+import { MessageCreateParams, Run } from 'openai/resources/beta/threads';
+import { AssistantStream } from 'openai/lib/AssistantStream';
+import { assistantStreamEventHandler } from '../stream/stream.utils';
 
 @Injectable()
 export class ChatService {
@@ -16,7 +22,10 @@ export class ChatService {
     private readonly chatbotHelpers: ChatHelpers,
   ) {}
 
-  async call(payload: ChatCallDto): Promise<ChatCallResponseDto> {
+  async call(
+    payload: ChatCallDto,
+    callbacks?: ChatCallCallbacks,
+  ): Promise<ChatCallResponseDto> {
     const { threadId, content, file_ids, metadata } = payload;
     const message: MessageCreateParams = {
       role: 'user',
@@ -27,14 +36,30 @@ export class ChatService {
 
     await this.threads.messages.create(threadId, message);
 
-    const assistant_id = payload?.assistantId || process.env['ASSISTANT_ID'] || '';
-    const run = await this.threads.runs.create(threadId, { assistant_id });
-
-    await this.runService.resolve(run);
+    const runner = await this.assistantStream(payload, callbacks);
+    const finalRun = await runner.finalRun();
 
     return {
-      content: await this.chatbotHelpers.getAnswer(run),
+      content: await this.chatbotHelpers.getAnswer(finalRun),
       threadId,
     };
+  }
+
+  async assistantStream(
+    payload: ChatCallDto,
+    callbacks?: ChatCallCallbacks,
+  ): Promise<AssistantStream> {
+    const assistant_id =
+      payload?.assistantId || process.env['ASSISTANT_ID'] || '';
+
+    const runner = this.threads.runs
+      .createAndStream(payload.threadId, { assistant_id })
+      .on('event', event => {
+        if (event.event === 'thread.run.requires_action') {
+          this.runService.submitAction(event.data, callbacks);
+        }
+      });
+
+    return assistantStreamEventHandler<AssistantStream>(runner, callbacks);
   }
 }

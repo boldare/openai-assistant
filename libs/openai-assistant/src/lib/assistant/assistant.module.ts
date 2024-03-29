@@ -1,4 +1,10 @@
-import { DynamicModule, Inject, Module, OnModuleInit, Optional } from '@nestjs/common';
+import {
+  DynamicModule,
+  Inject,
+  Module,
+  OnModuleInit,
+  Optional,
+} from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import {
   AssistantService,

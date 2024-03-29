@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChatClientService } from '../../../modules/+chat/shared/chat-client.service';
-import { ChatMessage, SpeechVoice } from '../../../modules/+chat/shared/chat.model';
+import {
+  ChatMessage,
+  SpeechVoice,
+} from '../../../modules/+chat/shared/chat.model';
 import { environment } from '../../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon';
 import { delay } from 'rxjs';

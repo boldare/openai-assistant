@@ -19,7 +19,6 @@ import { OpenAiFile, GetThreadResponseDto } from '@boldare/openai-assistant';
 import { Message } from 'openai/resources/beta/threads/messages';
 import { TextContentBlock } from 'openai/resources/beta/threads/messages/messages';
 
-
 @Injectable({ providedIn: 'root' })
 export class ChatService {
   isLoading$ = new BehaviorSubject<boolean>(false);
@@ -35,9 +34,19 @@ export class ChatService {
   ) {
     document.body.classList.add('ai-chat');
 
+    this.subscribeMessages();
     this.setInitialValues();
-    this.watchMessages();
     this.watchVisibility();
+  }
+
+  subscribeMessages(): void {
+    if (!environment.isStreamingEnabled) {
+      this.watchMessages();
+    } else {
+      this.watchTextCreated();
+      this.watchTextDelta();
+      this.watchTextDone();
+    }
   }
 
   isMessageInvisible(message: Message): boolean {
@@ -87,11 +96,13 @@ export class ChatService {
 
   refresh(): void {
     this.isLoading$.next(true);
+    this.isTyping$.next(false);
     this.messages$.next([]);
     this.threadService.start().subscribe();
   }
 
   clear(): void {
+    this.isTyping$.next(false);
     this.threadService.clear();
     this.messages$.next([]);
   }
@@ -120,15 +131,42 @@ export class ChatService {
     const files = await this.chatFilesService.sendFiles();
     this.addFileMessage(files);
 
-    this.chatGatewayService.sendMessage({
+    this.chatGatewayService.callStart({
       content,
       threadId: this.threadService.threadId$.value,
       file_ids: files.map(file => file.id) || [],
     });
   }
 
+  watchTextCreated(): Subscription {
+    return this.chatGatewayService.textCreated().subscribe(data => {
+      this.isTyping$.next(false);
+      this.addMessage({ content: data.text.value, role: ChatRole.Assistant });
+    });
+  }
+
+  watchTextDelta(): Subscription {
+    return this.chatGatewayService.textDelta().subscribe(data => {
+      const length = this.messages$.value.length;
+      this.messages$.value[length - 1].content = data.text.value;
+    });
+  }
+
+  watchTextDone(): Subscription {
+    return this.chatGatewayService.textDone().subscribe(data => {
+      this.isTyping$.next(false);
+      this.messages$.next([
+        ...this.messages$.value.slice(0, -1),
+        {
+          content: data.text.value,
+          role: ChatRole.Assistant,
+        },
+      ]);
+    });
+  }
+
   watchMessages(): Subscription {
-    return this.chatGatewayService.getMessages().subscribe(data => {
+    return this.chatGatewayService.callDone().subscribe(data => {
       this.addMessage({
         content: data.content,
         role: ChatRole.Assistant,

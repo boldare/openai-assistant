@@ -1,9 +1,5 @@
 import { Test } from '@nestjs/testing';
-import {
-  Run,
-  ThreadMessage,
-  ThreadMessagesPage,
-} from 'openai/resources/beta/threads';
+import { Message, MessagesPage, Run } from 'openai/resources/beta/threads';
 import { PagePromise } from 'openai/core';
 import { ChatModule } from './chat.module';
 import { ChatHelpers } from './chat.helpers';
@@ -28,7 +24,7 @@ describe('ChatService', () => {
 
   describe('getAnswer', () => {
     it('should return a string', async () => {
-      const threadMessage: ThreadMessage = {
+      const threadMessage: Message = {
         content: [
           {
             type: 'text',
@@ -45,7 +41,7 @@ describe('ChatService', () => {
             },
           },
         ],
-      } as unknown as ThreadMessage;
+      } as unknown as Message;
 
       jest
         .spyOn(chatbotHelpers, 'getLastMessage')
@@ -59,7 +55,7 @@ describe('ChatService', () => {
 
   describe('parseThreadMessage', () => {
     it('should return a string', () => {
-      const threadMessage: ThreadMessage = {
+      const threadMessage: Message = {
         content: [
           {
             type: 'text',
@@ -76,7 +72,7 @@ describe('ChatService', () => {
             },
           },
         ],
-      } as unknown as ThreadMessage;
+      } as unknown as Message;
 
       const result = chatbotHelpers.parseThreadMessage(threadMessage);
 
@@ -100,15 +96,12 @@ describe('ChatService', () => {
           { run_id: '1', role: 'user', id: '2' },
           { run_id: '1', role: 'assistant', id: '3' },
         ],
-      } as unknown as ThreadMessagesPage;
+      } as unknown as MessagesPage;
 
       jest
         .spyOn(aiService.provider.beta.threads.messages, 'list')
         .mockReturnValue(
-          threadMessagesPage as unknown as PagePromise<
-            ThreadMessagesPage,
-            ThreadMessage
-          >,
+          threadMessagesPage as unknown as PagePromise<MessagesPage, Message>,
         );
 
       const result = await chatbotHelpers.getLastMessage({ id: '1' } as Run);
@@ -122,15 +115,12 @@ describe('ChatService', () => {
           { run_id: '1', role: 'user', id: '2' },
           { run_id: '1', role: 'user', id: '3' },
         ],
-      } as unknown as ThreadMessagesPage;
+      } as unknown as MessagesPage;
 
       jest
         .spyOn(aiService.provider.beta.threads.messages, 'list')
         .mockReturnValue(
-          threadMessagesPage as unknown as PagePromise<
-            ThreadMessagesPage,
-            ThreadMessage
-          >,
+          threadMessagesPage as unknown as PagePromise<MessagesPage, Message>,
         );
 
       const result = await chatbotHelpers.getLastMessage({ id: '1' } as Run);

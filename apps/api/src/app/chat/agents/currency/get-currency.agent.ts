@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { AssistantCreateParams } from 'openai/resources/beta';
+import { FunctionTool } from 'openai/resources/beta';
 import { AgentBase, AgentData, AgentService } from '@boldare/openai-assistant';
 import { CurrencyService } from './currency.service';
 
 @Injectable()
 export class GetCurrencyAgent extends AgentBase {
-  override definition: AssistantCreateParams.AssistantToolsFunction = {
+  override definition: FunctionTool = {
     type: 'function',
     function: {
       name: this.constructor.name,

@@ -18,7 +18,9 @@ export class ChatGateway implements OnGatewayConnection {
     this.logger = new Logger(ChatGateway.name);
   }
 
-  async handleConnection() {}
+  async handleConnection() {
+    this.logger.log('Client connected');
+  }
 
   @SubscribeMessage(ChatEvents.SendMessage)
   async listenForMessages(

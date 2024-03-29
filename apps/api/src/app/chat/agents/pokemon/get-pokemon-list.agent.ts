@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { AssistantCreateParams } from 'openai/resources/beta';
 import { AgentBase, AgentService } from '@boldare/openai-assistant';
 import { PokemonService } from './pokemon.service';
+import { FunctionTool } from 'openai/resources/beta';
 
 @Injectable()
 export class GetPokemonListAgent extends AgentBase {
-  override definition: AssistantCreateParams.AssistantToolsFunction = {
+  override definition: FunctionTool = {
     type: 'function',
     function: {
       name: this.constructor.name,

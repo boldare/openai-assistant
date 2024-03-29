@@ -10,7 +10,7 @@ import {
   SimpleChanges,
   ViewChildren,
 } from '@angular/core';
-import { Message } from '../../../modules/+chat/shared/chat.model';
+import { ChatMessage } from '../../../modules/+chat/shared/chat.model';
 import { ChatMessageComponent } from '../chat-message/chat-message.component';
 import { ChatTypingComponent } from '../chat-typing/chat-typing.component';
 import { ChatContentComponent } from '../chat-content/chat-content.component';
@@ -29,7 +29,7 @@ import { ChatTipsComponent } from '../chat-tips/chat-tips.component';
   ],
 })
 export class ChatMessagesComponent implements AfterViewInit, OnChanges {
-  @Input() messages: Message[] = [];
+  @Input() messages: ChatMessage[] = [];
   @Input() isTyping = false;
   @Input() tips: string[] = [];
   @Output() tipSelected$ = new EventEmitter<string>();

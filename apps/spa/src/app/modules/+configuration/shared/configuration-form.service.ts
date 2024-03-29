@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CreateThreadDto } from '@boldare/openai-assistant';
 import { ConfigurationForm } from './configuration.model';
-import { MessageStatus, SpeechVoice } from '../../+chat/shared/chat.model';
+import { ChatMessageStatus, SpeechVoice } from '../../+chat/shared/chat.model';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigurationFormService {
@@ -20,7 +20,7 @@ export class ConfigurationFormService {
             * first name: ${this.form.controls.firstName.value || '-'}
           `,
           metadata: {
-            status: MessageStatus.Invisible,
+            status: ChatMessageStatus.Invisible,
           },
         },
       ],

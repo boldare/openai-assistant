@@ -1,10 +1,10 @@
 import { OnModuleInit } from '@nestjs/common';
-import { AssistantCreateParams } from 'openai/resources/beta';
+import { FunctionTool } from 'openai/resources/beta';
 import { AgentService } from './agent.service';
 import { AgentData } from './agent.model';
 
 export class AgentBase implements OnModuleInit {
-  definition!: AssistantCreateParams.AssistantToolsFunction;
+  definition!: FunctionTool;
 
   onModuleInit(): void {
     this.agentService.add(this.definition, this.output.bind(this));

@@ -139,48 +139,40 @@ export class ChatService {
   }
 
   watchTextCreated(): Subscription {
-    return this.chatGatewayService
-      .textCreated()
-      .subscribe((data) => {
-        this.isTyping$.next(false)
-        this.addMessage({ content: data.text.value, role: ChatRole.Assistant })
-      });
+    return this.chatGatewayService.textCreated().subscribe(data => {
+      this.isTyping$.next(false);
+      this.addMessage({ content: data.text.value, role: ChatRole.Assistant });
+    });
   }
 
   watchTextDelta(): Subscription {
-    return this.chatGatewayService
-      .textDelta()
-      .subscribe((data) => {
-        const length = this.messages$.value.length;
-        this.messages$.value[length - 1].content = data.text.value;
-      });
+    return this.chatGatewayService.textDelta().subscribe(data => {
+      const length = this.messages$.value.length;
+      this.messages$.value[length - 1].content = data.text.value;
+    });
   }
 
   watchTextDone(): Subscription {
-    return this.chatGatewayService
-      .textDone()
-      .subscribe((data) => {
-        this.isTyping$.next(false);
-        this.messages$.next([
-          ...this.messages$.value.slice(0, -1),
-          {
-            content: data.text.value,
-            role: ChatRole.Assistant,
-          },
-        ]);
-      });
+    return this.chatGatewayService.textDone().subscribe(data => {
+      this.isTyping$.next(false);
+      this.messages$.next([
+        ...this.messages$.value.slice(0, -1),
+        {
+          content: data.text.value,
+          role: ChatRole.Assistant,
+        },
+      ]);
+    });
   }
 
   watchMessages(): Subscription {
-    return this.chatGatewayService
-      .callDone()
-      .subscribe(data => {
-        this.addMessage({
-          content: data.content,
-          role: ChatRole.Assistant,
-        });
-        this.isTyping$.next(false);
+    return this.chatGatewayService.callDone().subscribe(data => {
+      this.addMessage({
+        content: data.content,
+        role: ChatRole.Assistant,
       });
+      this.isTyping$.next(false);
+    });
   }
 
   sendAudio(file: Blob): void {

@@ -3,7 +3,9 @@ import { ChatEvents } from './chat.model';
 import io from 'socket.io-client';
 import {
   ChatCallDto,
-  TextCreatedPayload, TextDeltaPayload, TextDonePayload
+  TextCreatedPayload,
+  TextDeltaPayload,
+  TextDonePayload,
 } from '@boldare/openai-assistant';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';

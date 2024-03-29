@@ -1,4 +1,10 @@
-import { DynamicModule, Inject, Module, OnModuleInit } from '@nestjs/common';
+import {
+  DynamicModule,
+  Inject,
+  Module,
+  OnModuleInit,
+  Optional,
+} from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import {
   AssistantService,
@@ -38,10 +44,14 @@ export class AssistantModule implements OnModuleInit {
   constructor(
     private readonly assistantService: AssistantService,
     private readonly configService: ConfigService,
-    @Inject('config') private config: AssistantConfigParams,
+    @Inject('config') @Optional() private config: AssistantConfigParams,
   ) {}
 
   async onModuleInit(): Promise<void> {
+    if (!this.config) {
+      return;
+    }
+
     this.configService.set(this.config);
     await this.assistantService.init();
   }

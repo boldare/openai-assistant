@@ -60,6 +60,9 @@ export class ChatCallDto {
   content!: string;
 
   @ApiProperty({ required: false })
+  assistantId?: string;
+
+  @ApiProperty({ required: false })
   file_ids?: string[];
 
   @ApiProperty({ required: false })

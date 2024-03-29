@@ -36,7 +36,9 @@ export class ChatService {
 
     await this.threads.messages.create(threadId, message);
 
-    const run = this.assistantStream(threadId, callbacks);
+    const assistantId =
+      payload?.assistantId || process.env['ASSISTANT_ID'] || '';
+    const run = this.assistantStream(assistantId, threadId, callbacks);
     const finalRun = await run.finalRun();
 
     await this.runService.resolve(finalRun, true, callbacks);
@@ -48,11 +50,12 @@ export class ChatService {
   }
 
   assistantStream(
+    assistantId: string,
     threadId: string,
     callbacks?: ChatCallCallbacks,
   ): AssistantStream {
     const runner = this.threads.runs.createAndStream(threadId, {
-      assistant_id: process.env['ASSISTANT_ID'] || '',
+      assistant_id: assistantId,
     });
 
     return assistantStreamEventHandler<AssistantStream>(runner, callbacks);

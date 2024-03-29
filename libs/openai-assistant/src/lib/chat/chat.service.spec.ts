@@ -5,14 +5,12 @@ import { AiModule } from './../ai/ai.module';
 import { ChatModule } from './chat.module';
 import { ChatService } from './chat.service';
 import { ChatHelpers } from './chat.helpers';
-import { RunService } from '../run';
 import { ChatCallDto } from './chat.model';
 import { AssistantStream } from 'openai/lib/AssistantStream';
 
 describe('ChatService', () => {
   let chatService: ChatService;
   let chatbotHelpers: ChatHelpers;
-  let runService: RunService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -21,23 +19,19 @@ describe('ChatService', () => {
 
     chatService = moduleRef.get<ChatService>(ChatService);
     chatbotHelpers = moduleRef.get<ChatHelpers>(ChatHelpers);
-    runService = moduleRef.get<RunService>(RunService);
 
     jest
       .spyOn(chatbotHelpers, 'getAnswer')
       .mockReturnValue(Promise.resolve('Hello response') as Promise<string>);
 
-    jest.spyOn(runService, 'resolve').mockReturnThis();
 
     jest
       .spyOn(chatService.threads.messages, 'create')
       .mockReturnValue({} as APIPromise<Message>);
 
     jest.spyOn(chatService, 'assistantStream').mockReturnValue({
-      finalRun(): Promise<Run> {
-        return Promise.resolve({} as Run);
-      },
-    } as AssistantStream);
+      finalRun: jest.fn(),
+    } as unknown as Promise<AssistantStream>);
   });
 
   it('should be defined', () => {

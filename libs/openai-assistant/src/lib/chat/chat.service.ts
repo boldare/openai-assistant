@@ -7,7 +7,7 @@ import {
   ChatCallResponseDto,
 } from './chat.model';
 import { ChatHelpers } from './chat.helpers';
-import { MessageCreateParams } from 'openai/resources/beta/threads';
+import { MessageCreateParams, Run } from 'openai/resources/beta/threads';
 import { AssistantStream } from 'openai/lib/AssistantStream';
 import { assistantStreamEventHandler } from '../stream/stream.utils';
 
@@ -36,12 +36,8 @@ export class ChatService {
 
     await this.threads.messages.create(threadId, message);
 
-    const assistantId =
-      payload?.assistantId || process.env['ASSISTANT_ID'] || '';
-    const run = this.assistantStream(assistantId, threadId, callbacks);
-    const finalRun = await run.finalRun();
-
-    await this.runService.resolve(finalRun, true, callbacks);
+    const runner = await this.assistantStream(payload, callbacks);
+    const finalRun = await runner.finalRun();
 
     return {
       content: await this.chatbotHelpers.getAnswer(finalRun),
@@ -49,14 +45,20 @@ export class ChatService {
     };
   }
 
-  assistantStream(
-    assistantId: string,
-    threadId: string,
+  async assistantStream(
+    payload: ChatCallDto,
     callbacks?: ChatCallCallbacks,
-  ): AssistantStream {
-    const runner = this.threads.runs.createAndStream(threadId, {
-      assistant_id: assistantId,
-    });
+  ): Promise<AssistantStream> {
+    const assistant_id =
+      payload?.assistantId || process.env['ASSISTANT_ID'] || '';
+
+    const runner = this.threads.runs
+      .createAndStream(payload.threadId, { assistant_id })
+      .on('event', event => {
+        if (event.event === 'thread.run.requires_action') {
+          this.runService.submitAction(event.data, callbacks);
+        }
+      });
 
     return assistantStreamEventHandler<AssistantStream>(runner, callbacks);
   }

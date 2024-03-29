@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ChatEvents } from './chat.model';
 import io from 'socket.io-client';
-import { ChatCallDto } from '@boldare/openai-assistant';
+import {
+  ChatCallDto,
+  TextCreatedPayload, TextDeltaPayload, TextDonePayload
+} from '@boldare/openai-assistant';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
@@ -9,14 +12,30 @@ import { environment } from '../../../../environments/environment';
 export class ChatGatewayService {
   private socket = io(environment.websocketUrl);
 
-  sendMessage(payload: ChatCallDto): void {
+  watchEvent<T>(event: ChatEvents): Observable<T> {
+    return new Observable<T>(observer => {
+      this.socket.on(event, data => observer.next(data));
+      return () => this.socket.disconnect();
+    });
+  }
+
+  callStart(payload: ChatCallDto): void {
     this.socket.emit(ChatEvents.CallStart, payload);
   }
 
-  getMessages(): Observable<ChatCallDto> {
-    return new Observable<ChatCallDto>(observer => {
-      this.socket.on(ChatEvents.CallDone, data => observer.next(data));
-      return () => this.socket.disconnect();
-    });
+  callDone(): Observable<ChatCallDto> {
+    return this.watchEvent(ChatEvents.CallDone);
+  }
+
+  textCreated(): Observable<TextCreatedPayload> {
+    return this.watchEvent(ChatEvents.TextCreated);
+  }
+
+  textDelta(): Observable<TextDeltaPayload> {
+    return this.watchEvent(ChatEvents.TextDelta);
+  }
+
+  textDone(): Observable<TextDonePayload> {
+    return this.watchEvent(ChatEvents.TextDone);
   }
 }

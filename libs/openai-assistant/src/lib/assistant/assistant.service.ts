@@ -30,7 +30,7 @@ export class AssistantService {
     };
   }
 
-  async init(): Promise<void> {
+  async init(): Promise<Assistant> {
     const { id, options } = this.assistantConfig.get();
 
     if (!id) {
@@ -43,8 +43,9 @@ export class AssistantService {
         this.getParams(),
         options,
       );
+      return this.assistant;
     } catch (e) {
-      await this.create();
+      return await this.create();
     }
   }
 
@@ -52,7 +53,7 @@ export class AssistantService {
     this.assistant = await this.assistants.update(this.assistant.id, params);
   }
 
-  async create(): Promise<void> {
+  async create(): Promise<Assistant> {
     const { options } = this.assistantConfig.get();
     const params = this.getParams();
     this.assistant = await this.assistants.create(params, options);
@@ -63,6 +64,8 @@ export class AssistantService {
 
     this.logger.log(`Created new assistant (${this.assistant.id})`);
     await this.assistantMemoryService.saveAssistantId(this.assistant.id);
+
+    return this.assistant;
   }
 
   async updateFiles(fileNames?: string[]): Promise<Assistant> {

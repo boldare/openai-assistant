@@ -1,6 +1,6 @@
 {
   "name": "@boldare/source",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "license": "MIT",
   "scripts": {
     "start": "node dist/apps/api/main.js",
@@ -114,5 +114,8 @@
   },
   "nx": {
     "includedScripts": []
+  },
+  "engines": {
+    "node": "^20"
   }
 }

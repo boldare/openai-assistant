@@ -74,7 +74,7 @@ describe('AssistantService', () => {
       jest
         .spyOn(aiService.provider.beta.assistants, 'update')
         .mockRejectedValueOnce('error');
-      jest.spyOn(assistantService, 'create').mockResolvedValueOnce(undefined);
+      jest.spyOn(assistantService, 'create').mockResolvedValueOnce({} as Assistant);
 
       await assistantService.init();
 
@@ -97,7 +97,7 @@ describe('AssistantService', () => {
         .spyOn(configService, 'get')
         .mockReturnValue({ ...assistantConfigMock, id: '' });
 
-      jest.spyOn(assistantService, 'create').mockResolvedValueOnce(undefined);
+      jest.spyOn(assistantService, 'create').mockResolvedValueOnce({} as Assistant);
 
       await assistantService.init();
 

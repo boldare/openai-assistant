@@ -7,7 +7,7 @@ import {
   ChatCallResponseDto,
 } from './chat.model';
 import { ChatHelpers } from './chat.helpers';
-import { MessageCreateParams, Run } from 'openai/resources/beta/threads';
+import { Message, MessageCreateParams } from 'openai/resources/beta/threads';
 import { AssistantStream } from 'openai/lib/AssistantStream';
 import { assistantStreamEventHandler } from '../stream/stream.utils';
 
@@ -26,6 +26,21 @@ export class ChatService {
     payload: ChatCallDto,
     callbacks?: ChatCallCallbacks,
   ): Promise<ChatCallResponseDto> {
+    await this.createMessage(payload);
+
+    const runner = await this.getAssistantStream(payload);
+    assistantStreamEventHandler<AssistantStream>(runner, callbacks);
+
+    const finalRun = await runner.finalRun();
+    await this.runService.resolve(await runner.finalRun(), true, callbacks);
+
+    return {
+      content: await this.chatbotHelpers.getAnswer(finalRun),
+      threadId: payload.threadId,
+    };
+  }
+
+  async createMessage(payload: ChatCallDto): Promise<Message> {
     const { threadId, content, file_ids, metadata } = payload;
     const message: MessageCreateParams = {
       role: 'user',
@@ -34,32 +49,15 @@ export class ChatService {
       metadata,
     };
 
-    await this.threads.messages.create(threadId, message);
-
-    const runner = await this.assistantStream(payload, callbacks);
-    const finalRun = await runner.finalRun();
-
-    return {
-      content: await this.chatbotHelpers.getAnswer(finalRun),
-      threadId,
-    };
+    return this.threads.messages.create(threadId, message);
   }
 
-  async assistantStream(
-    payload: ChatCallDto,
-    callbacks?: ChatCallCallbacks,
-  ): Promise<AssistantStream> {
+  async getAssistantStream(payload: ChatCallDto): Promise<AssistantStream> {
     const assistant_id =
       payload?.assistantId || process.env['ASSISTANT_ID'] || '';
 
-    const runner = this.threads.runs
-      .createAndStream(payload.threadId, { assistant_id })
-      .on('event', event => {
-        if (event.event === 'thread.run.requires_action') {
-          this.runService.submitAction(event.data, callbacks);
-        }
-      });
-
-    return assistantStreamEventHandler<AssistantStream>(runner, callbacks);
+    return this.threads.runs.createAndStream(payload.threadId, {
+      assistant_id,
+    });
   }
 }

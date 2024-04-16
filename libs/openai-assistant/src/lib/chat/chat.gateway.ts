@@ -99,10 +99,10 @@ export class ChatGateway implements OnGatewayConnection {
       `Socket "${ChatEvents.CallStart}" | threadId ${request.threadId} | files: ${request?.file_ids?.join(', ')} | content: ${request.content}`,
     );
 
-    const callbacks: ChatCallCallbacks = this.getCallbacks(socket.id);
+    const callbacks: ChatCallCallbacks = this.getCallbacks(socket?.id);
     const message = await this.chatsService.call(request, callbacks);
 
-    this.server?.to(socket.id).emit(ChatEvents.CallDone, message);
+    this.server?.to(socket?.id).emit(ChatEvents.CallDone, message);
     this.log(
       `Socket "${ChatEvents.CallDone}" | threadId ${message.threadId} | content: ${message.content}`,
     );
@@ -143,18 +143,18 @@ export class ChatGateway implements OnGatewayConnection {
     @MessageBody() data: TextCreatedPayload,
   ) {
     this.server.to(socketId).emit(ChatEvents.TextCreated, data);
-    this.log(`Socket "${ChatEvents.TextCreated}" | ${data.text.value}`);
+    this.log(`Socket "${ChatEvents.TextCreated}" | ${data.text?.value}`);
   }
 
   async emitTextDelta(socketId: string, @MessageBody() data: TextDeltaPayload) {
     this.server.to(socketId).emit(ChatEvents.TextDelta, data);
-    this.log(`Socket "${ChatEvents.TextDelta}" | ${data.textDelta.value}`);
+    this.log(`Socket "${ChatEvents.TextDelta}" | ${data.textDelta?.value}`);
   }
 
   async emitTextDone(socketId: string, @MessageBody() data: TextDonePayload) {
     this.server.to(socketId).emit(ChatEvents.TextDone, data);
     this.log(
-      `Socket "${ChatEvents.TextDone}" | threadId: ${data.message?.thread_id} | ${data.text.value}`,
+      `Socket "${ChatEvents.TextDone}" | threadId: ${data.message?.thread_id} | ${data.text?.value}`,
     );
   }
 
@@ -163,7 +163,7 @@ export class ChatGateway implements OnGatewayConnection {
     @MessageBody() data: ToolCallCreatedPayload,
   ) {
     this.server.to(socketId).emit(ChatEvents.ToolCallCreated, data);
-    this.log(`Socket "${ChatEvents.ToolCallCreated}": ${data.toolCall.id}`);
+    this.log(`Socket "${ChatEvents.ToolCallCreated}": ${data.toolCall?.id}`);
   }
 
   codeInterpreterHandler(
@@ -207,9 +207,9 @@ export class ChatGateway implements OnGatewayConnection {
     socketId: string,
     @MessageBody() data: ToolCallDeltaPayload,
   ) {
-    this.log(`Socket "${ChatEvents.ToolCallDelta}": ${data.toolCall.id}`);
+    this.log(`Socket "${ChatEvents.ToolCallDelta}": ${data.toolCall?.id}`);
 
-    switch (data.toolCallDelta.type) {
+    switch (data.toolCallDelta?.type) {
       case 'code_interpreter':
         this.codeInterpreterHandler(
           socketId,
@@ -231,7 +231,7 @@ export class ChatGateway implements OnGatewayConnection {
     @MessageBody() data: ToolCallDonePayload,
   ) {
     this.server.to(socketId).emit(ChatEvents.ToolCallDone, data);
-    this.log(`Socket "${ChatEvents.ToolCallDone}": ${data.toolCall.id}`);
+    this.log(`Socket "${ChatEvents.ToolCallDone}": ${data.toolCall?.id}`);
   }
 
   async emitImageFileDone(
@@ -239,7 +239,7 @@ export class ChatGateway implements OnGatewayConnection {
     @MessageBody() data: ImageFileDonePayload,
   ) {
     this.server.to(socketId).emit(ChatEvents.ImageFileDone, data);
-    this.log(`Socket "${ChatEvents.ImageFileDone}": ${data.content.file_id}`);
+    this.log(`Socket "${ChatEvents.ImageFileDone}": ${data.content?.file_id}`);
   }
 
   async emitRunStepCreated(
@@ -247,7 +247,7 @@ export class ChatGateway implements OnGatewayConnection {
     @MessageBody() data: RunStepCreatedPayload,
   ) {
     this.server.to(socketId).emit(ChatEvents.RunStepCreated, data);
-    this.log(`Socket "${ChatEvents.RunStepCreated}": ${data.runStep.status}`);
+    this.log(`Socket "${ChatEvents.RunStepCreated}": ${data.runStep?.status}`);
   }
 
   async emitRunStepDelta(
@@ -255,7 +255,7 @@ export class ChatGateway implements OnGatewayConnection {
     @MessageBody() data: RunStepDeltaPayload,
   ) {
     this.server.to(socketId).emit(ChatEvents.RunStepDelta, data);
-    this.log(`Socket "${ChatEvents.RunStepDelta}": ${data.runStep.status}`);
+    this.log(`Socket "${ChatEvents.RunStepDelta}": ${data.runStep?.status}`);
   }
 
   async emitRunStepDone(
@@ -263,6 +263,6 @@ export class ChatGateway implements OnGatewayConnection {
     @MessageBody() data: RunStepDonePayload,
   ) {
     this.server.to(socketId).emit(ChatEvents.RunStepDone, data);
-    this.log(`Socket "${ChatEvents.RunStepDone}": ${data.runStep.status}`);
+    this.log(`Socket "${ChatEvents.RunStepDone}": ${data.runStep?.status}`);
   }
 }

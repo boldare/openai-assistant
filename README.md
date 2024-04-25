@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://boldare.com/" target="blank">
-    <img src="https://assistant.ai.boldare.dev/assets/boldare-circle.png" width="160" alt="Boldare" />
+    <img src="https://assistant.ai.boldare.dev/assets/ai-assistant.jpg" width="280" alt="Boldare" />
   </a>
 </p>
 

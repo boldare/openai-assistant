@@ -9,7 +9,7 @@ async function bootstrap() {
   const globalPrefix = 'api';
   const config = new DocumentBuilder()
     .setTitle('@boldare/openai-assistant')
-    .setVersion('1.0.2')
+    .setVersion('1.1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
 

@@ -2,9 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 import {
   ImageFileContentBlock,
+  Message,
+  MessageCreateParams,
   TextContentBlock,
-} from 'openai/resources/beta/threads/messages/messages';
-import { Message } from 'openai/resources/beta/threads';
+} from 'openai/resources/beta/threads';
 
 export class GetThreadDto {
   @ApiProperty({ description: 'Unique identifier of the thread.' })
@@ -19,8 +20,8 @@ export class CreateThreadMessage {
   @ApiProperty({ description: 'Role of the message author.', enum: ['user'] })
   role!: 'user';
 
-  @ApiProperty({ description: 'File IDs', required: false })
-  file_ids?: Array<string>;
+  @ApiProperty({ description: 'OpenAI Attachments', required: false })
+  attachments?: Array<MessageCreateParams.Attachment> | null;
 
   @ApiProperty({ description: 'Metadata', required: false })
   metadata: unknown | null;
@@ -54,8 +55,8 @@ export class ThreadMessage {
   })
   role!: 'user' | 'assistant';
 
-  @ApiProperty({ description: 'File IDs' })
-  file_ids!: Array<string>;
+  @ApiProperty({ description: 'OpenAI Attachments' })
+  attachments?: Array<MessageCreateParams.Attachment> | null;
 
   @ApiProperty({ description: 'Metadata' })
   metadata: unknown | null;

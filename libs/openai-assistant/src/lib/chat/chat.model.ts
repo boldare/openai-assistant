@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  ImageFile,
   Message,
+  MessageCreateParams,
   MessageDelta,
   Text,
   TextDelta,
@@ -10,7 +12,6 @@ import {
   ToolCall,
   ToolCallDelta,
 } from 'openai/resources/beta/threads/runs';
-import { ImageFile } from 'openai/resources/beta/threads/messages/messages';
 import { RunStep } from 'openai/resources/beta/threads/runs/steps';
 
 export interface ChatAudio {
@@ -63,7 +64,7 @@ export class ChatCallDto {
   assistantId?: string;
 
   @ApiProperty({ required: false })
-  file_ids?: string[];
+  attachments?: Array<MessageCreateParams.Attachment> | null;
 
   @ApiProperty({ required: false })
   metadata?: unknown | null;

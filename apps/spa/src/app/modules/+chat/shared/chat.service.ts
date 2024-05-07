@@ -16,8 +16,10 @@ import { ThreadService } from './thread.service';
 import { ChatFilesService } from './chat-files.service';
 import { environment } from '../../../../environments/environment';
 import { OpenAiFile, GetThreadResponseDto } from '@boldare/openai-assistant';
-import { Message } from 'openai/resources/beta/threads/messages';
-import { TextContentBlock } from 'openai/resources/beta/threads/messages/messages';
+import {
+  Message,
+  TextContentBlock,
+} from 'openai/resources/beta/threads/messages';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -134,7 +136,13 @@ export class ChatService {
     this.chatGatewayService.callStart({
       content,
       threadId: this.threadService.threadId$.value,
-      file_ids: files.map(file => file.id) || [],
+      attachments: files.map(
+        file =>
+          ({
+            file_id: file.id,
+            tools: [{ type: 'code_interpreter' }],
+          }) || [],
+      ),
     });
   }
 

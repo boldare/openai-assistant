@@ -1,11 +1,11 @@
 {
   "name": "@boldare/openai-assistant",
   "description": "NestJS library for building chatbot solutions based on the OpenAI Assistant API",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "private": false,
   "dependencies": {
     "tslib": "^2.3.0",
-    "openai": "^4.26.1",
+    "openai": "^4.42.0",
     "@nestjs/common": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
     "dotenv": "^16.3.1",

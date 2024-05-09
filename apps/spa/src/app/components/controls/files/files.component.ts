@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { AiFilesDirective } from './files.directive';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -20,6 +20,7 @@ import { ControlIconComponent } from '../control-icon/control-icon.component';
 })
 export class FilesComponent {
   @ViewChild('input') input!: HTMLInputElement;
+  @Input() isDisabled = false;
   files = toSignal(this.fileService.files$, { initialValue: [] });
 
   constructor(private readonly fileService: FilesService) {}

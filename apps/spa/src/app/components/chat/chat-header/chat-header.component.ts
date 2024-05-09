@@ -14,6 +14,7 @@ export class ChatHeaderComponent {
   @Output() close$ = new EventEmitter();
   @Output() refresh$ = new EventEmitter();
   @Output() config$ = new EventEmitter();
+  @Input() isResponding = false;
   @Input() isRefreshEnabled = true;
   @Input() isConfigEnabled = true;
 

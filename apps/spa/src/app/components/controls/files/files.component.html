@@ -2,7 +2,9 @@
   aiFiles
   (click)="input.click()"
   (drop$)="addFiles($event)"
-  [files]="files()">
+  [files]="files()"
+  [isDisabled]="isDisabled"
+>
   <ai-control-icon>attach_file</ai-control-icon>
 
   @if (files().length) {

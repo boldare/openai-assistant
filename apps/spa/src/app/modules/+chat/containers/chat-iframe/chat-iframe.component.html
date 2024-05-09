@@ -2,6 +2,7 @@
   <ai-chat-header
     [isRefreshEnabled]="isRefreshEnabled && !!threadId()"
     [isConfigEnabled]="isConfigEnabled && !!threadId()"
+    [isResponding]="isResponding()"
     (refresh$)="chatService.refresh()"
     (close$)="chatService.toggle()"
     (config$)="chatService.clear()"></ai-chat-header>
@@ -17,7 +18,7 @@
       (tipSelected$)="chatService.sendMessage($event)"
       class="chat__content" />
     <ai-chat-footer
-      [isDisabled]="isTyping()"
+      [isDisabled]="isResponding()"
       [isTranscriptionEnabled]="isTranscriptionEnabled"
       [isAttachmentEnabled]="isAttachmentEnabled"
       (sendMessage$)="chatService.sendMessage($event)"

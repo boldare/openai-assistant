@@ -26,6 +26,7 @@ export class ChatService {
   isLoading$ = new BehaviorSubject<boolean>(false);
   isVisible$ = new BehaviorSubject<boolean>(environment.isAutoOpen);
   isTyping$ = new BehaviorSubject<boolean>(false);
+  isResponding$ = new BehaviorSubject<boolean>(false);
   messages$ = new BehaviorSubject<ChatMessage[]>([]);
 
   constructor(
@@ -99,12 +100,14 @@ export class ChatService {
   refresh(): void {
     this.isLoading$.next(true);
     this.isTyping$.next(false);
+    this.isResponding$.next(false);
     this.messages$.next([]);
     this.threadService.start().subscribe();
   }
 
   clear(): void {
     this.isTyping$.next(false);
+    this.isResponding$.next(false);
     this.threadService.clear();
     this.messages$.next([]);
   }
@@ -128,6 +131,7 @@ export class ChatService {
 
   async sendMessage(content: string, role = ChatRole.User): Promise<void> {
     this.isTyping$.next(true);
+    this.isResponding$.next(true);
     this.addMessage({ content, role });
 
     const files = await this.chatFilesService.sendFiles();
@@ -149,6 +153,7 @@ export class ChatService {
   watchTextCreated(): Subscription {
     return this.chatGatewayService.textCreated().subscribe(data => {
       this.isTyping$.next(false);
+      this.isResponding$.next(true);
       this.addMessage({ content: data.text.value, role: ChatRole.Assistant });
     });
   }
@@ -156,6 +161,7 @@ export class ChatService {
   watchTextDelta(): Subscription {
     return this.chatGatewayService.textDelta().subscribe(data => {
       const length = this.messages$.value.length;
+      this.isResponding$.next(true);
       this.messages$.value[length - 1].content = data.text.value;
     });
   }
@@ -163,6 +169,7 @@ export class ChatService {
   watchTextDone(): Subscription {
     return this.chatGatewayService.textDone().subscribe(data => {
       this.isTyping$.next(false);
+      this.isResponding$.next(false);
       this.messages$.next([
         ...this.messages$.value.slice(0, -1),
         {
@@ -180,11 +187,13 @@ export class ChatService {
         role: ChatRole.Assistant,
       });
       this.isTyping$.next(false);
+      this.isResponding$.next(false);
     });
   }
 
   sendAudio(file: Blob): void {
     this.isTyping$.next(true);
+    this.isResponding$.next(true);
 
     this.chatClientService
       .transcription({ file: file as File })

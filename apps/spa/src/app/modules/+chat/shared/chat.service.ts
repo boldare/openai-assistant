@@ -112,6 +112,10 @@ export class ChatService {
     this.messages$.next([]);
   }
 
+  changeView(): void {
+    window?.top?.postMessage('changeView', '*');
+  }
+
   addMessage(message: ChatMessage): void {
     this.messages$.next([...this.messages$.value, message]);
   }

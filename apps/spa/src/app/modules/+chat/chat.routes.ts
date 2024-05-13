@@ -14,6 +14,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'chat',
+        loadComponent: () =>
+          import('./containers/chat-cloud/chat-cloud.component').then(
+            mod => mod.ChatCloudComponent,
+          ),
+      },
+      {
         path: 'integration',
         loadComponent: () =>
           import(
@@ -23,7 +30,7 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'iframe',
+    path: 'chat/iframe',
     loadComponent: () =>
       import('./containers/chat-iframe/chat-iframe.component').then(
         mod => mod.ChatIframeComponent,

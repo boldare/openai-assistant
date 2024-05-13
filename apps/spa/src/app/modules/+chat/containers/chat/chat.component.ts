@@ -1,22 +1,34 @@
-import { Component } from '@angular/core';
-import { AssistantIframe } from '@boldare/ai-embedded';
-import { ChatService } from '../../shared/chat.service';
-import { environment } from '../../../../../environments/environment';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {
+  Router,
+  RouterLink,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
+import { ChatIframeComponent } from '../chat-iframe/chat-iframe.component';
+import { ChatIframeWrapperComponent } from '../../../../components/chat/chat-iframe-wrapper/chat-iframe-wrapper.component';
 
 @Component({
   selector: 'ai-chat',
   standalone: true,
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
-  imports: [RouterOutlet, RouterLink],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    ChatIframeComponent,
+    ChatIframeWrapperComponent,
+    RouterModule,
+  ],
 })
-export class ChatComponent {
-  constructor(private readonly chatService: ChatService) {
-    if (environment.env === 'prod') {
-      this.chatService.loadScript();
-    } else {
-      new AssistantIframe().init();
-    }
+export class ChatComponent implements OnInit {
+  constructor(private readonly router: Router) {}
+
+  ngOnInit(): void {
+    window.onmessage = event => {
+      if (event.data == 'changeView') {
+        window.location.href = this.router.url === '/chat' ? '/' : '/chat';
+      }
+    };
   }
 }

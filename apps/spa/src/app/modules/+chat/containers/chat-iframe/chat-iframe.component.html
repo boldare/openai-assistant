@@ -5,7 +5,8 @@
     [isResponding]="isResponding()"
     (refresh$)="chatService.refresh()"
     (close$)="chatService.toggle()"
-    (config$)="chatService.clear()"></ai-chat-header>
+    (config$)="chatService.clear()"
+    (changeView$)="chatService.changeView()"></ai-chat-header>
 
   <ai-spinner [isActive]="isLoading()" />
   @if (isConfigEnabled && !threadId()) {

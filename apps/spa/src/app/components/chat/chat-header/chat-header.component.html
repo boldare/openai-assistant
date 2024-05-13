@@ -1,25 +1,30 @@
 <header class="chat-header">
   <div class="chat-header__logo">
-    <img [src]="'/assets/ai-assistant-v2.svg'" alt="logo" class="chat-header__img" />
+    <img
+      [src]="'/assets/ai-assistant-v2.svg'"
+      alt="logo"
+      class="chat-header__img" />
   </div>
   <div class="chat-header__controls">
+    <button
+      mat-icon-button
+      matTooltip="Change view"
+      (click)="changeView$.emit()">
+      <mat-icon class="char-header__icon">fullscreen</mat-icon>
+    </button>
     @if (isConfigEnabled) {
-    <button
-      mat-icon-button
-      matTooltip="Settings"
-      (click)="config$.emit()"
-    >
-      <mat-icon class="char-header__icon">settings</mat-icon>
-    </button>
-    } @if (isRefreshEnabled) {
-    <button
-      mat-icon-button
-      matTooltip="Refresh"
-      (click)="refresh$.emit()"
-      [disabled]="isResponding"
-    >
-      <mat-icon class="char-header__icon">refresh</mat-icon>
-    </button>
+      <button mat-icon-button matTooltip="Settings" (click)="config$.emit()">
+        <mat-icon class="char-header__icon">settings</mat-icon>
+      </button>
+    }
+    @if (isRefreshEnabled) {
+      <button
+        mat-icon-button
+        matTooltip="Refresh"
+        (click)="refresh$.emit()"
+        [disabled]="isResponding">
+        <mat-icon class="char-header__icon">refresh</mat-icon>
+      </button>
     }
     <button
       class="ai-assistant-toggle"

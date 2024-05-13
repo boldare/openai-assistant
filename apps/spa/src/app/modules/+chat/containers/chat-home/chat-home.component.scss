@@ -1,25 +1,14 @@
 :host {
-  max-width: 600px;
-  margin-top: 40px;
-  color: var(--color-grey-600);
-  font-size: 18px;
-  letter-spacing: 0.03em;
-  text-align: center;
-  line-height: 1.6;
-  font-weight: 300;
+  display: block;
+  position: relative;
+  max-width: 800px;
+  width: 100%;
+  font-size: 14px;
+  z-index: 1;
 }
 
-.chat-home__examples {
-  margin-top: 40px;
-  font-size: 15px;
-  text-align: left;
-}
-
-.chat-home__list {
-  text-align: left;
-  margin-left: 12px;
-
-  > li {
-    padding-left: 8px;
-  }
+.chat-home__iframe {
+  display: block;
+  height: auto;
+  max-height: inherit;
 }

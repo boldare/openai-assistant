@@ -20,14 +20,14 @@ export class AssistantFilesService {
 
   async getFiles(
     attachments: string[] = [],
-    fileDir = this.assistantConfig.get().filesDir,
+    fileDir = '',
   ): Promise<FileObject[]> {
     const files: FileObject[] = [];
 
     await Promise.all(
       attachments.map(async item => {
         const file = await this.aiService.provider.files.create({
-          file: createReadStream(`${fileDir || ''}/${item}`),
+          file: createReadStream(`${fileDir}/${item}`),
           purpose: 'assistants',
         });
 
@@ -40,7 +40,7 @@ export class AssistantFilesService {
 
   async getCodeInterpreterResources(
     data: AssistantCodeInterpreter,
-    fileDir = this.assistantConfig.get().filesDir,
+    fileDir = '',
   ): Promise<ToolResources.CodeInterpreter> {
     const files = await this.getFiles(data?.fileNames, fileDir);
 
@@ -49,7 +49,7 @@ export class AssistantFilesService {
 
   async getFileSearchResources(
     data: AssistantFileSearch,
-    fileDir = this.assistantConfig.get().filesDir,
+    fileDir = '',
   ): Promise<ToolResources.FileSearch> {
     if (!data) {
       return { vector_store_ids: [] };
@@ -64,7 +64,7 @@ export class AssistantFilesService {
         }
 
         const files = values.map(item =>
-          createReadStream(`${fileDir || ''}/${item}`),
+          createReadStream(`${fileDir}/${item}`),
         );
 
         const vectorStore =
@@ -87,19 +87,23 @@ export class AssistantFilesService {
     toolResources: AssistantToolResources,
     fileDir = this.assistantConfig.get().filesDir,
   ): Promise<AssistantUpdateParams.ToolResources> {
-    const code_interpreter = toolResources.codeInterpreter
-      ? await this.getCodeInterpreterResources(
-          toolResources.codeInterpreter,
-          fileDir,
-        )
-      : undefined;
-    const file_search = toolResources.fileSearch
-      ? await this.getFileSearchResources(toolResources.fileSearch, fileDir)
-      : undefined;
+    try {
+      const code_interpreter = toolResources.codeInterpreter
+        ? await this.getCodeInterpreterResources(
+            toolResources.codeInterpreter,
+            fileDir,
+          )
+        : undefined;
+      const file_search = toolResources.fileSearch
+        ? await this.getFileSearchResources(toolResources.fileSearch, fileDir)
+        : undefined;
 
-    return {
-      ...(code_interpreter ? { code_interpreter } : {}),
-      ...(file_search ? { file_search } : {}),
-    };
+      return {
+        ...(code_interpreter ? { code_interpreter } : {}),
+        ...(file_search ? { file_search } : {}),
+      };
+    } catch (error) {
+      throw new Error(`error creating assistant tool resources ${error}`);
+    }
   }
 }

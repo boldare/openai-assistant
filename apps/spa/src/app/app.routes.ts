@@ -6,11 +6,6 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        pathMatch: 'full',
-        redirectTo: '/chat',
-      },
-      {
-        path: 'chat',
         loadChildren: () =>
           import('./modules/+chat/chat.routes').then(m => m.routes),
       },
@@ -18,6 +13,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/chat',
+    redirectTo: '/',
   },
 ];

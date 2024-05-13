@@ -3,17 +3,16 @@
   (click)="input.click()"
   (drop$)="addFiles($event)"
   [files]="files()"
-  [isDisabled]="isDisabled"
->
+  [isDisabled]="isDisabled">
   <ai-control-icon>attach_file</ai-control-icon>
 
   @if (files().length) {
-  <span class="files__counter" (click)="clear($event)">
-    <span class="files__number">
-      {{ files().length }}
+    <span class="files__counter" (click)="clear($event)">
+      <span class="files__number">
+        {{ files().length }}
+      </span>
+      <mat-icon class="files__clear"> close </mat-icon>
     </span>
-    <mat-icon class="files__clear"> close </mat-icon>
-  </span>
   }
 
   <input

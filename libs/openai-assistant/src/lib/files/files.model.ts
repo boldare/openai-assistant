@@ -42,7 +42,7 @@ export class UploadFilesResponseDto {
     isArray: true,
     type: UploadFile,
   })
-  files!: UploadFile[];
+  files!: FileObject[];
 }
 
 export class UploadFilesDto {

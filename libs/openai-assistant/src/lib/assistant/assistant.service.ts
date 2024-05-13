@@ -5,6 +5,8 @@ import { AgentService } from '../agent';
 import { AssistantFilesService } from './assistant-files.service';
 import { AssistantMemoryService } from './assistant-memory.service';
 import { ConfigService } from '../config';
+import { AssistantToolResources } from './assistant.model';
+import * as dotenv from 'dotenv';
 
 @Injectable()
 export class AssistantService {
@@ -29,17 +31,18 @@ export class AssistantService {
       ],
     };
   }
-
   async init(): Promise<Assistant> {
     const { id, options } = this.assistantConfig.get();
+    const config = dotenv.config();
+    const assistantId = id || config.parsed?.['ASSISTANT_ID'];
 
-    if (!id) {
+    if (!assistantId) {
       return await this.create();
     }
 
     try {
       this.assistant = await this.assistants.update(
-        id,
+        assistantId,
         this.getParams(),
         options,
       );
@@ -58,7 +61,7 @@ export class AssistantService {
     const params = this.getParams();
     this.assistant = await this.assistants.create(params, options);
 
-    if (this.assistantConfig.get().files?.length) {
+    if (this.assistantConfig.get().toolResources) {
       this.assistant = await this.updateFiles();
     }
 
@@ -68,11 +71,15 @@ export class AssistantService {
     return this.assistant;
   }
 
-  async updateFiles(fileNames?: string[]): Promise<Assistant> {
-    const names = fileNames || this.assistantConfig.get().files || [];
-    const file_ids = await this.assistantFilesService.create(names);
+  async updateFiles(
+    toolResources?: AssistantToolResources,
+  ): Promise<Assistant> {
+    const resources =
+      toolResources || this.assistantConfig.get().toolResources || {};
+    const updatedResources = await this.assistantFilesService.create(resources);
 
-    await this.update({ file_ids });
+    await this.update({ tool_resources: updatedResources });
+
     return this.assistant;
   }
 }

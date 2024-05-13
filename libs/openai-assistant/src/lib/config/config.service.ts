@@ -3,7 +3,7 @@ import { AssistantConfigParams } from '../assistant';
 
 @Injectable()
 export class ConfigService {
-  private params!: AssistantConfigParams;
+  params!: AssistantConfigParams;
 
   set(params: AssistantConfigParams): void {
     this.params = params;

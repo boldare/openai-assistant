@@ -6,9 +6,17 @@ export interface AssistantConfigParams {
   params: AssistantCreateParams;
   options?: RequestOptions;
   filesDir?: string;
-  files?: string[];
+  toolResources?: AssistantToolResources | null;
 }
 
-export interface AssistantFiles {
-  files?: string[];
+export interface AssistantToolResources {
+  fileSearch?: AssistantFileSearch;
+  codeInterpreter?: AssistantCodeInterpreter;
 }
+
+export interface AssistantUpdate {
+  toolResources: AssistantToolResources;
+}
+
+export type AssistantFileSearch = Record<string, string[]> | null;
+export type AssistantCodeInterpreter = Record<'fileNames', string[]> | null;

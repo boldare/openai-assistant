@@ -7,36 +7,71 @@
   flex-direction: column;
   max-width: 900px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 50px 20px 20px;
   font-size: 16px;
 }
 
 .chat__logo {
   width: 100%;
-  max-width: 260px;
-  margin-bottom: 60px;
   cursor: pointer;
+  margin: 0 auto 20px;
+  max-width: 200px;
 }
 
 .chat__nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 20px;
   text-align: center;
   justify-content: center;
+  font-size: 13px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 6px;
+  background-color: var(--color-blue-500);
+  color: var(--color-white);
 
   @include min-screen($tablet) {
-    gap: 24px;
+    font-size: 14px;
+    gap: 22px;
   }
 }
 
 .chat__link,
 .chat__link:visited {
-  color: var(--color-grey-600);
+  color: var(--color-white);
   text-decoration: none;
 
   &:hover {
-    color: var(--color-primary-500);
+    color: var(--color-grey-300);
+  }
+}
+
+.chat__header {
+  display: flex;
+  flex-direction: column;
+  max-width: 240px;
+  width: 100%;
+  text-decoration: none;
+  color: var(--color-black);
+  text-align: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.chat__description {
+  font-size: 13px;
+  max-width: 460px;
+  text-align: center;
+  color: var(--color-grey-600);
+  font-weight: 100;
+  margin-bottom: 20px;
+
+  @include min-screen($tablet) {
+    font-size: 15px;
   }
 }

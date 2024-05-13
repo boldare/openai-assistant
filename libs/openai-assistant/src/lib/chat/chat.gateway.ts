@@ -96,7 +96,7 @@ export class ChatGateway implements OnGatewayConnection {
     @ConnectedSocket() socket: Socket,
   ) {
     this.log(
-      `Socket "${ChatEvents.CallStart}" | threadId ${request.threadId} | files: ${request?.file_ids?.join(', ')} | content: ${request.content}`,
+      `Socket "${ChatEvents.CallStart}" | threadId ${request.threadId} | files: ${request?.attachments?.length} | content: ${request.content}`,
     );
 
     const callbacks: ChatCallCallbacks = this.getCallbacks(socket?.id);

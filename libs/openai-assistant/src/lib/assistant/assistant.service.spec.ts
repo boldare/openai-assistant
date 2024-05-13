@@ -7,8 +7,12 @@ import { AiService } from '../ai';
 import { ConfigService } from '../config';
 import { AgentService } from '../agent';
 import { definitionMock } from '../agent/agent.mock';
-import { AssistantConfigParams } from './assistant.model';
+import {
+  AssistantConfigParams,
+  AssistantToolResources,
+} from './assistant.model';
 import * as fs from 'fs';
+import * as dotenv from 'dotenv';
 
 jest.mock('../config', () => ({
   ConfigService: jest.fn().mockReturnValue({
@@ -74,7 +78,9 @@ describe('AssistantService', () => {
       jest
         .spyOn(aiService.provider.beta.assistants, 'update')
         .mockRejectedValueOnce('error');
-      jest.spyOn(assistantService, 'create').mockResolvedValueOnce({} as Assistant);
+      jest
+        .spyOn(assistantService, 'create')
+        .mockResolvedValueOnce({} as Assistant);
 
       await assistantService.init();
 
@@ -96,8 +102,12 @@ describe('AssistantService', () => {
       jest
         .spyOn(configService, 'get')
         .mockReturnValue({ ...assistantConfigMock, id: '' });
-
-      jest.spyOn(assistantService, 'create').mockResolvedValueOnce({} as Assistant);
+      jest
+        .spyOn(assistantService, 'create')
+        .mockResolvedValueOnce({} as Assistant);
+      jest
+        .spyOn(dotenv, 'config')
+        .mockReturnValue({ parsed: { ASSISTANT_ID: '' } });
 
       await assistantService.init();
 
@@ -143,9 +153,14 @@ describe('AssistantService', () => {
     });
 
     it('should upload files', async () => {
+      const fileNames = ['file1', 'file2'];
+      const toolResources: AssistantToolResources = {
+        codeInterpreter: { fileNames },
+        fileSearch: { boldare: fileNames },
+      };
       jest.spyOn(configService, 'get').mockReturnValue({
         ...assistantConfigMock,
-        files: ['file1', 'file2'],
+        toolResources,
       } as AssistantConfigParams);
 
       jest
@@ -174,9 +189,10 @@ describe('AssistantService', () => {
       jest
         .spyOn(aiService.provider.beta.assistants, 'update')
         .mockResolvedValue({ id: '2' } as Assistant);
-      jest
-        .spyOn(assistantFilesService, 'create')
-        .mockResolvedValue(['file1', 'file2']);
+      jest.spyOn(assistantFilesService, 'create').mockResolvedValue({
+        code_interpreter: { file_ids: ['file1'] },
+        file_search: { vector_store_ids: ['file1'] },
+      });
 
       await assistantService.updateFiles();
 

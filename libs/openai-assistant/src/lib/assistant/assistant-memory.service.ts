@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { writeFile, readFile } from 'fs/promises';
 import * as envfile from 'envfile';
-import * as process from 'process';
+import * as dotenv from 'dotenv';
 
 @Injectable()
 export class AssistantMemoryService {
@@ -20,6 +20,7 @@ export class AssistantMemoryService {
       process.env['ASSISTANT_ID'] = id;
 
       await writeFile(sourcePath, envfile.stringify(newVariables));
+      dotenv.config({ path: sourcePath });
     } catch (error) {
       this.logger.error(`Can't save variable: ${error}`);
     }

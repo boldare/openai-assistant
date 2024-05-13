@@ -5,4 +5,8 @@
 
 .input__suffix {
   margin-right: 4px;
+
+  &.mat-mdc-button-disabled {
+    opacity: 0.5;
+  }
 }

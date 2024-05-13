@@ -1,25 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChatHomeComponent } from './chat-home.component';
+import { ChatCloudComponent } from './chat-cloud.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MarkdownModule } from 'ngx-markdown';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ChatHomeComponent', () => {
-  let component: ChatHomeComponent;
-  let fixture: ComponentFixture<ChatHomeComponent>;
+  let component: ChatCloudComponent;
+  let fixture: ComponentFixture<ChatCloudComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ChatHomeComponent,
+        ChatCloudComponent,
         HttpClientTestingModule,
-        BrowserAnimationsModule,
         MarkdownModule.forRoot(),
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ChatHomeComponent);
+    fixture = TestBed.createComponent(ChatCloudComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

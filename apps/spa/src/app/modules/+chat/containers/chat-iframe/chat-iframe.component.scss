@@ -4,6 +4,13 @@
   max-height: 600px;
   background-color: var(--color-white);
   border-radius: var(--border-radius-medium);
+
+  &.chat-home__iframe .chat__content,
+  &.chat-home__iframe ::ng-deep .messages {
+    min-height: 280px;
+    height: calc(100vh - 350px);
+    overflow: auto;
+  }
 }
 
 .chat {

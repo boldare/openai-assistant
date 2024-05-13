@@ -41,11 +41,11 @@ export class ChatService {
   }
 
   async createMessage(payload: ChatCallDto): Promise<Message> {
-    const { threadId, content, file_ids, metadata } = payload;
+    const { threadId, content, attachments, metadata } = payload;
     const message: MessageCreateParams = {
       role: 'user',
       content,
-      file_ids,
+      attachments,
       metadata,
     };
 
@@ -56,7 +56,7 @@ export class ChatService {
     const assistant_id =
       payload?.assistantId || process.env['ASSISTANT_ID'] || '';
 
-    return this.threads.runs.createAndStream(payload.threadId, {
+    return this.threads.runs.stream(payload.threadId, {
       assistant_id,
     });
   }

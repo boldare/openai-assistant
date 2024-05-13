@@ -8,7 +8,7 @@ export const environment = {
   isTranscriptionEnabled: true,
   isAttachmentEnabled: true,
   isRefreshEnabled: true,
-  isConfigEnabled: true,
+  isConfigEnabled: false,
   isAutoOpen: true,
   isStreamingEnabled: true,
 };

@@ -7,6 +7,7 @@ import { AiService } from '../ai';
 import { AgentService } from '../agent';
 import { AssistantFilesService } from './assistant-files.service';
 import { AssistantMemoryService } from './assistant-memory.service';
+import { AssistantToolResources } from './assistant.model';
 
 describe('AssistantController', () => {
   let assistantController: AssistantController;
@@ -38,11 +39,14 @@ describe('AssistantController', () => {
     jest
       .spyOn(assistantService, 'updateFiles')
       .mockReturnValue(Promise.resolve({} as Assistant));
-    const files = { files: [] };
+    const toolResources: AssistantToolResources = {
+      codeInterpreter: { fileNames: ['file1'] },
+      fileSearch: { boldare: ['file1'] },
+    };
 
-    await assistantController.updateAssistant(files);
+    await assistantController.updateAssistant({ toolResources });
 
-    expect(assistantService.updateFiles).toHaveBeenCalledWith(files.files);
+    expect(assistantService.updateFiles).toHaveBeenCalledWith(toolResources);
   });
 
   afterEach(() => {

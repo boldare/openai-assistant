@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import * as RecordRTC from 'recordrtc';
@@ -14,6 +14,7 @@ import { ControlItemComponent } from '../control-item/control-item.component';
 })
 export class RecorderComponent {
   @Output() send$ = new EventEmitter<Blob>();
+  @Input() isDisabled = false;
   record: RecordRTC.StereoAudioRecorder | null = null;
   recording = false;
   url!: string;

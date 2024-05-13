@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'ai-control-item',
@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './control-item.component.html',
   styleUrl: './control-item.component.scss',
 })
-export class ControlItemComponent {}
+export class ControlItemComponent {
+  @HostBinding('class.is-disabled') @Input() isDisabled = false;
+}

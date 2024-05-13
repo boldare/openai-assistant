@@ -1,6 +1,7 @@
 import { AbstractAssistantStreamRunner } from 'openai/lib/AbstractAssistantStreamRunner';
 import { AssistantStreamEvents } from 'openai/lib/AssistantStream';
 import {
+  ImageFile,
   Message,
   MessageDelta,
   Text,
@@ -11,7 +12,6 @@ import {
   ToolCall,
   ToolCallDelta,
 } from 'openai/resources/beta/threads/runs';
-import { ImageFile } from 'openai/resources/beta/threads/messages/messages';
 import { RunStep } from 'openai/resources/beta/threads/runs/steps';
 import { ChatCallCallbacks, ChatEvents } from '../chat/chat.model';
 

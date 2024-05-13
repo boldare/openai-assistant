@@ -29,6 +29,9 @@ export class ChatIframeComponent implements OnInit {
   messages = toSignal(this.chatService.messages$, { initialValue: [] });
   isTyping = toSignal(this.chatService.isTyping$, { initialValue: false });
   isLoading = toSignal(this.chatService.isLoading$, { initialValue: false });
+  isResponding = toSignal(this.chatService.isResponding$, {
+    initialValue: false,
+  });
   threadId = toSignal(this.threadService.threadId$, { initialValue: '' });
   isTranscriptionEnabled = environment.isTranscriptionEnabled;
   isAttachmentEnabled = environment.isAttachmentEnabled;

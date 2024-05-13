@@ -1,4 +1,7 @@
-<ai-control-item [ngClass]="{ 'is-active': recording }" (click)="onRecord()">
+<ai-control-item
+  (click)="onRecord()"
+  [ngClass]="{ 'is-active': recording }"
+  [isDisabled]="isDisabled">
   <ai-control-icon class="recorder__icon">mic</ai-control-icon>
   <div class="recorder__circle"></div>
 </ai-control-item>

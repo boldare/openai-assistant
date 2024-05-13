@@ -4,8 +4,7 @@
     placeholder="Aa"
     autocomplete="off"
     [(ngModel)]="content"
-    [disabled]="isDisabled"
-    (keydown.enter)="send(content)" />
+    (keydown.enter)="!isDisabled && send(content)" />
   <button
     class="input__suffix"
     mat-icon-button

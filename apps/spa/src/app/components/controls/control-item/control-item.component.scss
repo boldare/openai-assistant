@@ -22,4 +22,9 @@
     background-color: var(--color-grey-300);
     color: var(--color-grey-900);
   }
+
+  &.is-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 }

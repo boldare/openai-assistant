@@ -1,8 +1,10 @@
+const { protocol, hostname, port } = window.location;
+
 export const environment = {
   env: 'prod',
-  appUrl: 'https://assistant.ai.boldare.dev',
-  apiUrl: 'https://assistant.ai.boldare.dev/api',
-  websocketUrl: 'https://assistant.ai.boldare.dev',
+  appUrl: `${protocol}//${hostname}:${port}`,
+  apiUrl: `${protocol}//${hostname}:${port}/api`,
+  websocketUrl: `${protocol}//${hostname}:${port}`,
   isThreadMemorized: true,
   isAudioEnabled: true,
   isTranscriptionEnabled: true,

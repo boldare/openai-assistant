@@ -1,4 +1,6 @@
+const { protocol, hostname, port } = window.location;
+
 export const environment = {
   env: 'dev',
-  appUrl: 'http://localhost:4200',
+  appUrl: `${protocol}//${hostname}:${port}`,
 };

@@ -1,8 +1,10 @@
+const { protocol, hostname, port } = window.location;
+
 export const environment = {
   env: 'dev',
-  appUrl: 'http://localhost:4200',
-  apiUrl: 'http://localhost:3000/api',
-  websocketUrl: 'http://localhost:3000',
+  appUrl: `${protocol}//${hostname}:${port}`,
+  apiUrl: `${protocol}//${hostname}:3000/api`,
+  websocketUrl: `${protocol}//${hostname}:3000`,
   isThreadMemorized: true,
   isAudioEnabled: true,
   isTranscriptionEnabled: true,

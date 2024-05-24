@@ -1,11 +1,11 @@
 <p align="center">
-  <a href="https://boldare.com/" target="blank">
+  <a href="https://www.boldare.com/services/ai-software-development-consulting/" target="blank">
     <img src="https://assistant.ai.boldare.dev/assets/ai-assistant.jpg" width="280" alt="Boldare" />
   </a>
 </p>
 
 <p align="center">
- <a href="https://assistant.ai.boldare.dev/chat" target="_blank">demo</a> 🔹
+ <a href="https://assistant.ai.boldare.dev/" target="_blank">demo</a> 🔹
  <a href="https://assistant.ai.boldare.dev/api/docs" target="_blank">api docs</a> 🔹
  <a href="https://www.npmjs.com/package/@boldare/openai-assistant" target="_blank">npm</a> 🔹
  <a href="https://github.com/boldare/openai-assistant" target="_blank">github</a>
@@ -35,7 +35,9 @@ Introducing the NestJS library, designed to harness the power of OpenAI's Assist
 
 In this section, you will learn how to integrate the AI Assistant library into your NestJS application. The following steps will guide you through the process of setting up the library and creating simple functionalities.
 
-### Step 0: Prerequiring
+### Step 0: Prerequisites
+
+Install Node.js which includes Node Package Manager (`^20.0.0` version).
 
 Before you start, you will need to have an account on the OpenAI platform and an API key. You can create an account [here](https://platform.openai.com/).
 

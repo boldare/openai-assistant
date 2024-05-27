@@ -13,6 +13,7 @@
     <ai-configuration-form class="chat__content" />
   } @else {
     <ai-chat-messages
+      [initialMessages]="initialMessages"
       [messages]="messages()"
       [isTyping]="isTyping()"
       [tips]="tips"

@@ -29,6 +29,7 @@ import { ChatTipsComponent } from '../chat-tips/chat-tips.component';
   ],
 })
 export class ChatMessagesComponent implements AfterViewInit, OnChanges {
+  @Input() initialMessages: ChatMessage[] = [];
   @Input() messages: ChatMessage[] = [];
   @Input() isTyping = false;
   @Input() tips: string[] = [];

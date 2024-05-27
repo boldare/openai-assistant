@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { ChatService } from '../../shared/chat.service';
 import { ThreadService } from '../../shared/thread.service';
@@ -8,8 +9,8 @@ import { ChatHeaderComponent } from '../../../../components/chat/chat-header/cha
 import { ChatMessagesComponent } from '../../../../components/chat/chat-messages/chat-messages.component';
 import { ChatFooterComponent } from '../../../../components/chat/chat-footer/chat-footer.component';
 import { ConfigurationFormComponent } from '../../../+configuration/components/configuration-form/configuration-form.component';
-import { take } from 'rxjs';
 import { SpinnerComponent } from '../../../../components/spinner/spinner.component';
+import { ChatMessage } from '../../shared/chat.model';
 
 @Component({
   selector: 'ai-chat-iframe',
@@ -37,6 +38,7 @@ export class ChatIframeComponent implements OnInit {
   isAttachmentEnabled = environment.isAttachmentEnabled;
   isRefreshEnabled = environment.isRefreshEnabled;
   isConfigEnabled = environment.isConfigEnabled;
+  initialMessages: ChatMessage[] = [];
   tips = [
     'Hello! 👋 How can you help me?',
     'What’s the weather like in Warsaw?',

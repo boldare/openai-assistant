@@ -8,7 +8,9 @@ export class AssistantIframe {
   trigger!: HTMLElement;
 
   constructor(config: Partial<AssistantIframeConfig> = {}) {
-    const url = `${environment.appUrl}/chat/iframe`;
+    const { protocol, hostname, port } = window.location;
+    const appUrl = environment.appUrl || `${protocol}//${hostname}:${port}`;
+    const url = `${appUrl}/chat/iframe`;
 
     this.config = {
       url: config.url || url,

@@ -11,6 +11,11 @@
         [matTooltip]="!isDisabled ? 'Add files' : ''"
         [isDisabled]="isDisabled" />
     }
+    @if (isImageContentEnabled) {
+      <ai-message-content
+        [matTooltip]="!isDisabled ? 'Add images' : ''"
+        [isDisabled]="isDisabled" />
+    }
   </ai-controls>
 
   <ai-input

@@ -1,3 +1,5 @@
+import { MessageContent } from 'openai/resources/beta/threads';
+
 export interface AudioResponse {
   content: string;
 }
@@ -10,7 +12,7 @@ export enum ChatRole {
 
 export interface ChatMessage {
   metadata?: Record<string, unknown>;
-  content: string;
+  content: string | Array<MessageContent>;
   role: ChatRole;
 }
 

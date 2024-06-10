@@ -1,13 +1,13 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { AiFilesDirective } from './files.directive';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FilesService } from './files.service';
+import { MessageContentService } from './message-content.service';
 import { ControlItemComponent } from '../control-item/control-item.component';
 import { ControlIconComponent } from '../control-icon/control-icon.component';
+import { AiFilesDirective } from '../files/files.directive';
 
 @Component({
-  selector: 'ai-files',
+  selector: 'ai-message-content',
   standalone: true,
   imports: [
     MatIcon,
@@ -15,18 +15,20 @@ import { ControlIconComponent } from '../control-icon/control-icon.component';
     ControlItemComponent,
     ControlIconComponent,
   ],
-  templateUrl: './files.component.html',
-  styleUrl: './files.component.scss',
+  templateUrl: './message-content.component.html',
+  styleUrl: './message-content.component.scss',
 })
-export class FilesComponent {
+export class MessageContentComponent {
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
   @Input() isDisabled = false;
-  files = toSignal(this.fileService.files$, { initialValue: [] });
+  imageContentList$ = toSignal(this.messageContentService.data$, {
+    initialValue: [],
+  });
 
-  constructor(private readonly fileService: FilesService) {}
+  constructor(private readonly messageContentService: MessageContentService) {}
 
   addFiles(files: FileList) {
-    this.fileService.add(files);
+    this.messageContentService.add(files);
   }
 
   onFileChange(event: Event) {
@@ -39,6 +41,6 @@ export class FilesComponent {
     event.stopPropagation();
     this.input.nativeElement.files = null;
     this.input.nativeElement.value = '';
-    this.fileService.clear();
+    this.messageContentService.clear();
   }
 }

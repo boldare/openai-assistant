@@ -38,14 +38,14 @@ export class ChatIframeComponent implements OnInit {
   isAttachmentEnabled = environment.isAttachmentEnabled;
   isRefreshEnabled = environment.isRefreshEnabled;
   isConfigEnabled = environment.isConfigEnabled;
-  initialMessages: ChatMessage[] = [];
+  isImageContentEnabled = environment.isImageContentEnabled;
   tips = [
     'Hello! 👋 How can you help me?',
     'What’s the weather like in Warsaw?',
     'What is the exchange rate for USD?',
-    'Show me list of Pokémon',
     'Show me the stats for Pikachu (Pokémon)?',
   ];
+  initialMessages: ChatMessage[] = [];
 
   constructor(
     private readonly threadService: ThreadService,

@@ -1,0 +1,25 @@
+<ai-control-item
+  aiFiles
+  (click)="input.click()"
+  (drop$)="addFiles($event)"
+  [files]="imageContentList$()"
+  [isDisabled]="isDisabled">
+  <ai-control-icon>image</ai-control-icon>
+
+  @if (imageContentList$().length) {
+    <span class="files__counter" (click)="clear($event)">
+      <span class="files__number">
+        {{ imageContentList$().length }}
+      </span>
+      <mat-icon class="files__clear"> close </mat-icon>
+    </span>
+  }
+
+  <input
+    class="files__input"
+    type="file"
+    (change)="onFileChange($event)"
+    multiple
+    accept=".jpeg, .jpg, .gif, .png"
+    #input />
+</ai-control-item>

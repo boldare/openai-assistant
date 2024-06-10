@@ -9,17 +9,20 @@ import {
   take,
   tap,
 } from 'rxjs';
+import { OpenAiFile, GetThreadResponseDto } from '@boldare/openai-assistant';
 import { ChatRole, ChatMessage, ChatMessageStatus } from './chat.model';
 import { ChatGatewayService } from './chat-gateway.service';
 import { ChatClientService } from './chat-client.service';
 import { ThreadService } from './thread.service';
 import { ChatFilesService } from './chat-files.service';
 import { environment } from '../../../../environments/environment';
-import { OpenAiFile, GetThreadResponseDto } from '@boldare/openai-assistant';
 import {
+  ImageFileContentBlock,
   Message,
-  TextContentBlock,
+  MessageContent,
+  Text,
 } from 'openai/resources/beta/threads/messages';
+import { MessageContentService } from '../../../components/controls/message-content/message-content.service';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -34,6 +37,7 @@ export class ChatService {
     private readonly chatClientService: ChatClientService,
     private readonly threadService: ThreadService,
     private readonly chatFilesService: ChatFilesService,
+    private readonly messageContentService: MessageContentService,
   ) {
     document.body.classList.add('ai-chat');
 
@@ -61,7 +65,7 @@ export class ChatService {
     return message.content?.[0]?.type === 'text';
   }
 
-  parseMessages(thread: GetThreadResponseDto): ChatMessage[] {
+  parseMessages(thread: GetThreadResponseDto): Message[] {
     if (!thread.messages) {
       return [];
     }
@@ -71,11 +75,7 @@ export class ChatService {
       .filter(
         message =>
           this.isTextMessage(message) && !this.isMessageInvisible(message),
-      )
-      .map(message => ({
-        content: (message.content[0] as TextContentBlock).text.value,
-        role: message.role as ChatRole,
-      }));
+      );
   }
 
   setInitialValues(): void {
@@ -85,7 +85,10 @@ export class ChatService {
         filter(threadId => !!threadId),
         tap(() => this.isLoading$.next(true)),
         mergeMap(threadId => this.threadService.getThread(threadId)),
-        map((response: GetThreadResponseDto) => this.parseMessages(response)),
+        map(
+          (response: GetThreadResponseDto) =>
+            this.parseMessages(response) as ChatMessage[],
+        ),
       )
       .subscribe(data => {
         this.messages$.next(data);
@@ -142,7 +145,7 @@ export class ChatService {
     this.addFileMessage(files);
 
     this.chatGatewayService.callStart({
-      content,
+      content: await this.getMessageContent(content),
       threadId: this.threadService.threadId$.value,
       attachments: files.map(
         file =>
@@ -152,6 +155,45 @@ export class ChatService {
           }) || [],
       ),
     });
+  }
+
+  async getMessageContent(content: string): Promise<MessageContent[]> {
+    const images = (await this.messageContentService.sendFiles()) || [];
+    const imageFileContentList =
+      images?.map(
+        file =>
+          ({
+            type: 'image_file',
+            image_file: {
+              file_id: file.id,
+            },
+          }) as ImageFileContentBlock,
+      ) || [];
+
+    this.messages$.next([
+      ...this.messages$.value.slice(0, -1),
+      {
+        content: [
+          {
+            type: 'text',
+            text: {
+              value: content,
+              annotations: [],
+            },
+          },
+          ...imageFileContentList,
+        ],
+        role: ChatRole.User,
+      },
+    ]);
+
+    return [
+      {
+        type: 'text',
+        text: content as unknown as Text,
+      },
+      ...imageFileContentList,
+    ];
   }
 
   watchTextCreated(): Subscription {

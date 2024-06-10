@@ -7,6 +7,7 @@ import {
   RecorderComponent,
 } from '../../controls';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MessageContentComponent } from '../../controls/message-content/message-content.component';
 
 @Component({
   selector: 'ai-chat-footer',
@@ -20,6 +21,7 @@ import { MatTooltip } from '@angular/material/tooltip';
     RecorderComponent,
     FilesComponent,
     MatTooltip,
+    MessageContentComponent,
   ],
 })
 export class ChatFooterComponent {
@@ -28,4 +30,5 @@ export class ChatFooterComponent {
   @Input() isDisabled = false;
   @Input() isTranscriptionEnabled = false;
   @Input() isAttachmentEnabled = false;
+  @Input() isImageContentEnabled = false;
 }

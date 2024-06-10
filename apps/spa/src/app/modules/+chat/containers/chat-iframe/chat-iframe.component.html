@@ -23,6 +23,7 @@
       [isDisabled]="isResponding()"
       [isTranscriptionEnabled]="isTranscriptionEnabled"
       [isAttachmentEnabled]="isAttachmentEnabled"
+      [isImageContentEnabled]="isImageContentEnabled"
       (sendMessage$)="chatService.sendMessage($event)"
       (sendAudio$)="chatService.sendAudio($event)" />
   }

@@ -1,10 +1,10 @@
 <div class="messages">
   @for (message of initialMessages.concat(messages); track message) {
     <span #item>
-    <ai-chat-message [message]="message"></ai-chat-message>
-  </span>
+      <ai-chat-message [message]="message"></ai-chat-message>
+    </span>
   } @empty {
-  <ai-chat-tips [tips]="tips" (tipSelected$)="tipSelected$.emit($event)" />
+    <ai-chat-tips [tips]="tips" (tipSelected$)="tipSelected$.emit($event)" />
   }
   <ai-chat-typing [isTyping]="isTyping"></ai-chat-typing>
 </div>

@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   ImageFile,
   Message,
+  MessageContent,
   MessageCreateParams,
   MessageDelta,
   Text,
@@ -58,7 +59,7 @@ export class ChatCallDto {
   threadId!: string;
 
   @ApiProperty()
-  content!: string;
+  content!: string | Array<MessageContent>;
 
   @ApiProperty({ required: false })
   assistantId?: string;

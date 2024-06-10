@@ -3,12 +3,13 @@
   height: 100vh;
   max-height: 600px;
   background-color: var(--color-white);
-  border-radius: var(--border-radius-medium);
+  border-radius: 0 0 var(--border-radius-medium) var(--border-radius-medium);
 
   &.chat-home__iframe .chat__content,
   &.chat-home__iframe ::ng-deep .messages {
     min-height: 280px;
-    height: calc(100vh - 350px);
+    height: calc(100vh - 300px);
+    max-height: 500px;
     overflow: auto;
   }
 }

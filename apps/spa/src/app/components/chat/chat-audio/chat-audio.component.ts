@@ -1,14 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { delay } from 'rxjs';
+import { ChatAudioResponse, PostSpeechDto } from '@boldare/openai-assistant';
+import { NgClass } from '@angular/common';
+import { getMessageText } from '../../controls/message-content/message-content.helpers';
 import { ChatClientService } from '../../../modules/+chat/shared/chat-client.service';
 import {
   ChatMessage,
   SpeechVoice,
 } from '../../../modules/+chat/shared/chat.model';
 import { environment } from '../../../../environments/environment';
-import { MatIconModule } from '@angular/material/icon';
-import { delay } from 'rxjs';
-import { ChatAudioResponse, PostSpeechDto } from '@boldare/openai-assistant';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'ai-chat-audio',
@@ -19,9 +20,16 @@ import { NgClass } from '@angular/common';
 })
 export class ChatAudioComponent implements OnInit {
   @Input() message!: ChatMessage;
-  isAudioEnabled = environment.isAudioEnabled;
   isStarted = false;
   audio = new Audio();
+
+  get getMessageText(): string {
+    if (!environment.isAudioEnabled || !this.message) {
+      return '';
+    }
+
+    return getMessageText(this.message);
+  }
 
   constructor(private readonly chatService: ChatClientService) {}
 
@@ -42,6 +50,10 @@ export class ChatAudioComponent implements OnInit {
   }
 
   speech(): void {
+    if (!this.getMessageText) {
+      return;
+    }
+
     this.isStarted = true;
 
     if (this.audio.src) {
@@ -50,7 +62,7 @@ export class ChatAudioComponent implements OnInit {
     }
 
     const payload: PostSpeechDto = {
-      content: this.message.content,
+      content: getMessageText(this.message),
       voice: SpeechVoice.Onyx,
     };
 

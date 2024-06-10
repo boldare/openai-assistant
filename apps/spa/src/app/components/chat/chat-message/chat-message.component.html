@@ -1,12 +1,23 @@
-@if (message) { @if (message.role === 'assistant') {
-<ai-chat-avatar></ai-chat-avatar>
-}
-
-<div class="chat-message">
-  <span markdown [data]="message.content"></span>
-
-  @if (message.role !== chatRole.System) {
-  <ai-chat-audio [message]="message"></ai-chat-audio>
+@if (message) {
+  @if (message.role === 'assistant') {
+    <ai-chat-avatar></ai-chat-avatar>
   }
-</div>
+
+  <div class="chat-message">
+    @if (messageText) {
+      <span markdown [data]="messageText"></span>
+    }
+
+    @if (message.role !== chatRole.System) {
+      <ai-chat-audio [message]="message"></ai-chat-audio>
+    }
+
+    @if (messageImage.length) {
+      <div class="chat-message__file">
+        @for (image of messageImage; track messageImage) {
+          <div>File ID: {{ image.image_file.file_id }}</div>
+        }
+      </div>
+    }
+  </div>
 }

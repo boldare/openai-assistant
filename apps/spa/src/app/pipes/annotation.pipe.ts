@@ -5,7 +5,7 @@ import { isTextContentBlock } from '../components/controls/message-content/messa
 
 @Pipe({
   standalone: true,
-  name: 'annotation'
+  name: 'annotation',
 })
 export class AnnotationPipe implements PipeTransform {
   transform(event: MessageWithAnnotations<{ message: Message }>): string {
@@ -14,7 +14,7 @@ export class AnnotationPipe implements PipeTransform {
     }
 
     const { text } = event.data.message.content[0];
-    
+
     if (!event.annotations?.length) {
       return text.value;
     }

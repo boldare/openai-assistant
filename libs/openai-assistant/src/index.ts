@@ -5,3 +5,4 @@ export * from './lib/chat';
 export * from './lib/run';
 export * from './lib/files';
 export * from './lib/threads';
+export * from './lib/annotations';

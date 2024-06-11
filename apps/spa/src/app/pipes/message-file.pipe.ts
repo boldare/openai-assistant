@@ -5,14 +5,14 @@ import { ImageFileContentBlock } from 'openai/resources/beta/threads';
 
 @Pipe({
   standalone: true,
-  name: 'messageImageFile'
+  name: 'messageImageFile',
 })
 export class MessageImageFilePipe implements PipeTransform {
-  transform(message: ChatMessage): ImageFileContentBlock[] {
+  transform(message: Partial<ChatMessage>): ImageFileContentBlock[] {
     if (typeof message.content === 'string') {
       return [];
     }
-  
-    return message.content.filter(isImageFileContentBlock);
+
+    return message?.content?.filter(isImageFileContentBlock) || [];
   }
 }

@@ -4,18 +4,21 @@ import { ChatMessage } from '../modules/+chat/shared/chat.model';
 
 @Pipe({
   standalone: true,
-  name: 'messageText'
+  name: 'messageText',
+  pure: false,
 })
 export class MessageTextPipe implements PipeTransform {
-  transform(message: ChatMessage): string {
+  transform(message: Partial<ChatMessage>): string {
     if (typeof message.content === 'string') {
       return message.content;
     }
-  
+
     // @TODO: handle all types of message content
-    return message.content
-      .filter(isTextContentBlock)
-      .map(block => block.text.value)
-      .join(' ');
+    return (
+      message.content
+        ?.filter(isTextContentBlock)
+        ?.map(block => block.text.value)
+        ?.join(' ') || ''
+    );
   }
 }

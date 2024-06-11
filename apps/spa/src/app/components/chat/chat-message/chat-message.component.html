@@ -8,13 +8,12 @@
       <span markdown [data]="message | messageText"></span>
     }
 
-    @if (message.role !== chatRole.System) {
-      <ai-chat-audio [message]="message"></ai-chat-audio>
-    }
-
     @if ((message | messageImageFile).length) {
       <div class="chat-message__file">
-        @for (image of message | messageImageFile; track image.image_file.file_id) {
+        @for (
+          image of message | messageImageFile;
+          track image.image_file.file_id
+        ) {
           <div>File ID: {{ image.image_file.file_id }}</div>
         }
       </div>

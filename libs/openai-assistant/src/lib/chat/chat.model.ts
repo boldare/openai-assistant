@@ -52,7 +52,7 @@ export class ChatCallResponseDto {
   threadId!: string;
 
   @ApiProperty()
-  content!: string;
+  content!: Array<MessageContent>;
 }
 
 export class ChatCallDto {
@@ -60,7 +60,7 @@ export class ChatCallDto {
   threadId!: string;
 
   @ApiProperty()
-  content!: string | Array<MessageContent>;
+  content!: Array<MessageContent>;
 
   @ApiProperty({ required: false })
   assistantId?: string;

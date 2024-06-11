@@ -12,6 +12,6 @@ export const environment = {
   isRefreshEnabled: true,
   isConfigEnabled: false,
   isAutoOpen: true,
-  isStreamingEnabled: true,
+  isStreamingEnabled: false,
   isImageContentEnabled: true,
 };

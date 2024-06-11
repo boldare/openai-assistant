@@ -9,7 +9,6 @@ import { NgClass } from '@angular/common';
 import { ChatAvatarComponent } from '../chat-avatar/chat-avatar.component';
 import { MessageTextPipe } from '../../../pipes/message-text.pipe';
 import { MessageImageFilePipe } from '../../../pipes/message-file.pipe';
-import { AnnotationPipe } from '../../../pipes/annotation.pipe';
 
 @Component({
   selector: 'ai-chat-message',
@@ -26,7 +25,7 @@ import { AnnotationPipe } from '../../../pipes/annotation.pipe';
   ],
 })
 export class ChatMessageComponent {
-  @Input() message!: ChatMessage;
+  @Input() message!: Partial<ChatMessage>;
   @Input() class = '';
   chatRole = ChatRole;
 

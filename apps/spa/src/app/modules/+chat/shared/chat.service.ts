@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   distinctUntilChanged,
@@ -10,10 +10,10 @@ import {
   tap,
 } from 'rxjs';
 import {
-  ImageFileContentBlock,
   Message,
   MessageContent,
   Text,
+  TextContentBlock,
 } from 'openai/resources/beta/threads/messages';
 import { OpenAiFile, GetThreadResponseDto } from '@boldare/openai-assistant';
 import { ChatRole, ChatMessage, ChatMessageStatus } from './chat.model';
@@ -24,6 +24,13 @@ import { ChatFilesService } from './chat-files.service';
 import { MessageContentService } from '../../../components/controls/message-content/message-content.service';
 import { environment } from '../../../../environments/environment';
 import { AnnotationPipe } from '../../../pipes/annotation.pipe';
+import {
+  imageFileContentBlock,
+  messageAttachment,
+  messageContentBlock,
+  textContentBlock,
+} from './chat.helpers';
+import { isTextContentBlock } from '../../../components/controls/message-content/message-content.helpers';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -31,7 +38,7 @@ export class ChatService {
   isVisible$ = new BehaviorSubject<boolean>(environment.isAutoOpen);
   isTyping$ = new BehaviorSubject<boolean>(false);
   isResponding$ = new BehaviorSubject<boolean>(false);
-  messages$ = new BehaviorSubject<ChatMessage[]>([]);
+  messages$ = new BehaviorSubject<Partial<ChatMessage>[]>([]);
 
   constructor(
     private readonly chatGatewayService: ChatGatewayService,
@@ -121,7 +128,7 @@ export class ChatService {
     window?.top?.postMessage('changeView', '*');
   }
 
-  addMessage(message: ChatMessage): void {
+  addMessage(message: Partial<ChatMessage>): void {
     this.messages$.next([...this.messages$.value, message]);
   }
 
@@ -129,19 +136,14 @@ export class ChatService {
     if (!files?.length) {
       return;
     }
-
-    this.addMessage({
-      content: `The user has attached files to the message: ${files
-        .map(file => file.filename)
-        .join(', ')}`,
-      role: ChatRole.System,
-    });
   }
 
   async sendMessage(content: string, role = ChatRole.User): Promise<void> {
     this.isTyping$.next(true);
     this.isResponding$.next(true);
-    this.addMessage({ content, role });
+
+    const message = messageContentBlock([textContentBlock(content)], role);
+    this.addMessage(message);
 
     const files = await this.chatFilesService.sendFiles();
     this.addFileMessage(files);
@@ -149,44 +151,18 @@ export class ChatService {
     this.chatGatewayService.callStart({
       content: await this.getMessageContent(content),
       threadId: this.threadService.threadId$.value,
-      attachments: files.map(
-        file =>
-          ({
-            file_id: file.id,
-            tools: [{ type: 'code_interpreter' }],
-          }) || [],
-      ),
+      attachments: files.map(file => messageAttachment(file.id) || []),
     });
   }
 
   async getMessageContent(content: string): Promise<MessageContent[]> {
     const images = (await this.messageContentService.sendFiles()) || [];
     const imageFileContentList =
-      images?.map(
-        file =>
-          ({
-            type: 'image_file',
-            image_file: {
-              file_id: file.id,
-            },
-          }) as ImageFileContentBlock,
-      ) || [];
+      images?.map(file => imageFileContentBlock(file.id)) || [];
 
     this.messages$.next([
       ...this.messages$.value.slice(0, -1),
-      {
-        content: [
-          {
-            type: 'text',
-            text: {
-              value: content,
-              annotations: [],
-            },
-          },
-          ...imageFileContentList,
-        ],
-        role: ChatRole.User,
-      },
+      messageContentBlock([textContentBlock(content)], ChatRole.User),
     ]);
 
     return [
@@ -202,7 +178,12 @@ export class ChatService {
     return this.chatGatewayService.textCreated().subscribe(data => {
       this.isTyping$.next(false);
       this.isResponding$.next(true);
-      this.addMessage({ content: data.text.value, role: ChatRole.Assistant });
+
+      const message = messageContentBlock(
+        [textContentBlock(data.text.value)],
+        ChatRole.Assistant,
+      );
+      this.addMessage(message);
     });
   }
 
@@ -210,7 +191,14 @@ export class ChatService {
     return this.chatGatewayService.textDelta().subscribe(data => {
       const length = this.messages$.value.length;
       this.isResponding$.next(true);
-      this.messages$.value[length - 1].content = data.text.value;
+
+      const lastMessageContent = this.messages$.value[length - 1]?.content?.[0];
+
+      if (isTextContentBlock(lastMessageContent)) {
+        (
+          this.messages$.value[length - 1].content?.[0] as TextContentBlock
+        ).text = data.text;
+      }
     });
   }
 
@@ -218,13 +206,14 @@ export class ChatService {
     return this.chatGatewayService.textDone().subscribe(event => {
       this.isTyping$.next(false);
       this.isResponding$.next(false);
-      this.messages$.next([
-        ...this.messages$.value.slice(0, -1),
-        {
-          content: this.annotationPipe.transform(event),
-          role: ChatRole.Assistant,
-        },
-      ]);
+
+      const annotationContent = this.annotationPipe.transform(event);
+      const message = messageContentBlock(
+        [textContentBlock(annotationContent)],
+        ChatRole.Assistant,
+      );
+
+      this.messages$.next([...this.messages$.value.slice(0, -1), message]);
     });
   }
 

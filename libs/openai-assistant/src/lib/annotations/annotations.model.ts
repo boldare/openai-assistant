@@ -1,5 +1,5 @@
-import { FileObject } from "openai/resources";
-import { Annotation } from "openai/resources/beta/threads/messages";
+import { FileObject } from 'openai/resources';
+import { Annotation } from 'openai/resources/beta/threads/messages';
 
 export interface AnnotationData {
   annotation: Annotation;

@@ -24,12 +24,14 @@ import {
   RunStepCreatedPayload,
   RunStepDeltaPayload,
   RunStepDonePayload,
+  MessageWithAnnotations,
 } from './chat.model';
 import { ChatService } from './chat.service';
 import {
   CodeInterpreterToolCallDelta,
   FunctionToolCallDelta,
 } from 'openai/resources/beta/threads/runs';
+import { getAnnotations } from '../annotations/annotations.utils';
 
 export class ChatGateway implements OnGatewayConnection {
   @WebSocketServer() server!: Server;
@@ -132,10 +134,17 @@ export class ChatGateway implements OnGatewayConnection {
     socketId: string,
     @MessageBody() data: MessageDonePayload,
   ) {
-    this.server.to(socketId).emit(ChatEvents.MessageDone, data);
+    const annotations = await getAnnotations(data.message, this.chatsService.provider);
+    const messageWithAnnotations: MessageWithAnnotations<MessageDonePayload> = {
+      data,
+      annotations,
+    };
+
+    this.server.to(socketId).emit(ChatEvents.MessageDone, messageWithAnnotations);
     this.log(
       `Socket "${ChatEvents.MessageDone}" | threadId: ${data.message.thread_id}`,
     );
+
   }
 
   async emitTextCreated(
@@ -152,7 +161,13 @@ export class ChatGateway implements OnGatewayConnection {
   }
 
   async emitTextDone(socketId: string, @MessageBody() data: TextDonePayload) {
-    this.server.to(socketId).emit(ChatEvents.TextDone, data);
+    const annotations = await getAnnotations(data.message, this.chatsService.provider);
+    const messageWithAnnotations: MessageWithAnnotations<MessageDonePayload> = {
+      data,
+      annotations,
+    };
+
+    this.server.to(socketId).emit(ChatEvents.TextDone, messageWithAnnotations);
     this.log(
       `Socket "${ChatEvents.TextDone}" | threadId: ${data.message?.thread_id} | ${data.text?.value}`,
     );

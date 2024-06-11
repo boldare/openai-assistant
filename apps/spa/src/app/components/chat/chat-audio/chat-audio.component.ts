@@ -2,19 +2,20 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { delay } from 'rxjs';
 import { ChatAudioResponse, PostSpeechDto } from '@boldare/openai-assistant';
-import { NgClass } from '@angular/common';
-import { getMessageText } from '../../controls/message-content/message-content.helpers';
+import { CommonModule } from '@angular/common';
 import { ChatClientService } from '../../../modules/+chat/shared/chat-client.service';
 import {
   ChatMessage,
   SpeechVoice,
 } from '../../../modules/+chat/shared/chat.model';
+import { MessageTextPipe } from '../../../pipes/message-text.pipe';
 import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'ai-chat-audio',
   standalone: true,
-  imports: [MatIconModule, NgClass],
+  imports: [MatIconModule, CommonModule, MessageTextPipe],
+  providers: [MessageTextPipe],
   templateUrl: './chat-audio.component.html',
   styleUrl: './chat-audio.component.scss',
 })
@@ -22,16 +23,12 @@ export class ChatAudioComponent implements OnInit {
   @Input() message!: ChatMessage;
   isStarted = false;
   audio = new Audio();
+  isAudioEnabled = environment.isAudioEnabled;
 
-  get getMessageText(): string {
-    if (!environment.isAudioEnabled || !this.message) {
-      return '';
-    }
-
-    return getMessageText(this.message);
-  }
-
-  constructor(private readonly chatService: ChatClientService) {}
+  constructor(
+    private readonly chatService: ChatClientService,
+    private readonly messageTextPipe: MessageTextPipe,
+  ) {}
 
   ngOnInit(): void {
     this.audio.onended = this.onEnded.bind(this);
@@ -50,7 +47,9 @@ export class ChatAudioComponent implements OnInit {
   }
 
   speech(): void {
-    if (!this.getMessageText) {
+    const content = this.messageTextPipe.transform(this.message);
+
+    if (!content) {
       return;
     }
 
@@ -62,7 +61,7 @@ export class ChatAudioComponent implements OnInit {
     }
 
     const payload: PostSpeechDto = {
-      content: getMessageText(this.message),
+      content,
       voice: SpeechVoice.Onyx,
     };
 

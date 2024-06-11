@@ -14,6 +14,7 @@ import {
   ToolCallDelta,
 } from 'openai/resources/beta/threads/runs';
 import { RunStep } from 'openai/resources/beta/threads/runs/steps';
+import { AnnotationData } from '../annotations/annotations.model';
 
 export interface ChatAudio {
   file: File;
@@ -145,4 +146,9 @@ export interface ChatCallCallbacks {
   [ChatEvents.RunStepCreated]?: (data: RunStepCreatedPayload) => Promise<void>;
   [ChatEvents.RunStepDelta]?: (data: RunStepDeltaPayload) => Promise<void>;
   [ChatEvents.RunStepDone]?: (data: RunStepDonePayload) => Promise<void>;
+}
+
+export interface MessageWithAnnotations<T> {
+  data: T;
+  annotations: AnnotationData[];
 }

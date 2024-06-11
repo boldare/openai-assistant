@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import {
   BehaviorSubject,
   distinctUntilChanged,
@@ -9,20 +9,21 @@ import {
   take,
   tap,
 } from 'rxjs';
-import { OpenAiFile, GetThreadResponseDto } from '@boldare/openai-assistant';
-import { ChatRole, ChatMessage, ChatMessageStatus } from './chat.model';
-import { ChatGatewayService } from './chat-gateway.service';
-import { ChatClientService } from './chat-client.service';
-import { ThreadService } from './thread.service';
-import { ChatFilesService } from './chat-files.service';
-import { environment } from '../../../../environments/environment';
 import {
   ImageFileContentBlock,
   Message,
   MessageContent,
   Text,
 } from 'openai/resources/beta/threads/messages';
+import { OpenAiFile, GetThreadResponseDto } from '@boldare/openai-assistant';
+import { ChatRole, ChatMessage, ChatMessageStatus } from './chat.model';
+import { ChatGatewayService } from './chat-gateway.service';
+import { ChatClientService } from './chat-client.service';
+import { ThreadService } from './thread.service';
+import { ChatFilesService } from './chat-files.service';
 import { MessageContentService } from '../../../components/controls/message-content/message-content.service';
+import { environment } from '../../../../environments/environment';
+import { AnnotationPipe } from '../../../pipes/annotation.pipe';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -38,6 +39,7 @@ export class ChatService {
     private readonly threadService: ThreadService,
     private readonly chatFilesService: ChatFilesService,
     private readonly messageContentService: MessageContentService,
+    private readonly annotationPipe: AnnotationPipe,
   ) {
     document.body.classList.add('ai-chat');
 
@@ -213,13 +215,13 @@ export class ChatService {
   }
 
   watchTextDone(): Subscription {
-    return this.chatGatewayService.textDone().subscribe(data => {
+    return this.chatGatewayService.textDone().subscribe(event => {
       this.isTyping$.next(false);
       this.isResponding$.next(false);
       this.messages$.next([
         ...this.messages$.value.slice(0, -1),
         {
-          content: data.text.value,
+          content: this.annotationPipe.transform(event),
           role: ChatRole.Assistant,
         },
       ]);

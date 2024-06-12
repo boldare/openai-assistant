@@ -7,8 +7,9 @@ import { MarkdownComponent } from 'ngx-markdown';
 import { ChatAudioComponent } from '../chat-audio/chat-audio.component';
 import { NgClass } from '@angular/common';
 import { ChatAvatarComponent } from '../chat-avatar/chat-avatar.component';
-import { MessageTextPipe } from '../../../pipes/message-text.pipe';
 import { MessageImageFilePipe } from '../../../pipes/message-file.pipe';
+import { AnnotationPipe } from '../../../pipes/annotation.pipe';
+import { ChatAnnotationsComponent } from '../chat-annotations/chat-annotations.component';
 
 @Component({
   selector: 'ai-chat-message',
@@ -20,8 +21,9 @@ import { MessageImageFilePipe } from '../../../pipes/message-file.pipe';
     MarkdownComponent,
     ChatAudioComponent,
     ChatAvatarComponent,
-    MessageTextPipe,
     MessageImageFilePipe,
+    AnnotationPipe,
+    ChatAnnotationsComponent,
   ],
 })
 export class ChatMessageComponent {

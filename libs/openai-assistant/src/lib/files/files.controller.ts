@@ -1,5 +1,7 @@
 import {
   Controller,
+  Get,
+  Param,
   Post,
   UploadedFiles,
   UseInterceptors,
@@ -8,6 +10,7 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { FilesService } from './files.service';
 import { UploadFilesDto, UploadFilesResponseDto } from './files.model';
 import { ApiBody, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { FileObject } from 'openai/resources';
 
 @ApiTags('Files')
 @Controller('assistant/files')
@@ -25,5 +28,10 @@ export class FilesController {
     return {
       files: await this.filesService.files(uploadedData.files),
     };
+  }
+
+  @Get('/retrive/:fileId')
+  async retriveFile(@Param() params: { fileId: string }): Promise<FileObject> {
+    return this.filesService.retriveFile(params.fileId);
   }
 }

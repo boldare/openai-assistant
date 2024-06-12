@@ -1,0 +1,10 @@
+@if (message && message.type === 'text' && message.text.annotations.length) {
+  <div class="title">Annotations:</div>
+  <div class="content">
+    @for (annotation of message.text.annotations; track annotation.text) {
+      <ai-chat-annotation [annotation]="annotation" [index]="$index + 1">
+        [{{ $index + 1 }}]
+      </ai-chat-annotation>
+    }
+  </div>
+}

@@ -10,6 +10,7 @@ import {
   UploadFilesPayload,
   UploadFilesResponseDto,
 } from '@boldare/openai-assistant';
+import { FileObject } from 'openai/resources';
 
 @Injectable({ providedIn: 'root' })
 export class ChatClientService {
@@ -47,6 +48,12 @@ export class ChatClientService {
         `${this.apiUrl}/files`,
         formData,
       ),
+    );
+  }
+
+  retriveFile(fileId: string): Observable<FileObject> {
+    return this.httpClient.get<FileObject>(
+      `${this.apiUrl}/files/retrive/${fileId}`,
     );
   }
 }

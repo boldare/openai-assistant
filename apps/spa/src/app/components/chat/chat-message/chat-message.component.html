@@ -4,8 +4,11 @@
   }
 
   <div class="chat-message">
-    @if (message | messageText) {
-      <span markdown [data]="message | messageText"></span>
+    @for (msg of message.content; track msg) {
+      @if (msg.type === 'text') {
+        <span markdown [data]="msg | annotation"></span>
+      }
+      <ai-chat-annotations [message]="msg" />
     }
 
     @if ((message | messageImageFile).length) {

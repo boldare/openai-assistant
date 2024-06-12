@@ -9,6 +9,7 @@ import { AnnotationData, AnnotationType } from './annotations.model';
 export const isFileCitation = (item: {
   type: string;
 }): item is FileCitationAnnotation => item.type === 'file_citation';
+
 export const isFilePath = (item: {
   type: string;
 }): item is FilePathAnnotation => item.type === 'file_path';

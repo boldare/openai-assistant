@@ -23,7 +23,6 @@ import { ThreadService } from './thread.service';
 import { ChatFilesService } from './chat-files.service';
 import { MessageContentService } from '../../../components/controls/message-content/message-content.service';
 import { environment } from '../../../../environments/environment';
-import { AnnotationPipe } from '../../../pipes/annotation.pipe';
 import {
   imageFileContentBlock,
   messageAttachment,
@@ -46,7 +45,6 @@ export class ChatService {
     private readonly threadService: ThreadService,
     private readonly chatFilesService: ChatFilesService,
     private readonly messageContentService: MessageContentService,
-    private readonly annotationPipe: AnnotationPipe,
   ) {
     document.body.classList.add('ai-chat');
 
@@ -70,10 +68,6 @@ export class ChatService {
     return metadata?.['status'] === ChatMessageStatus.Invisible;
   }
 
-  isTextMessage(message: Message): boolean {
-    return message.content?.[0]?.type === 'text';
-  }
-
   parseMessages(thread: GetThreadResponseDto): Message[] {
     if (!thread.messages) {
       return [];
@@ -81,10 +75,7 @@ export class ChatService {
 
     return thread.messages
       .reverse()
-      .filter(
-        message =>
-          this.isTextMessage(message) && !this.isMessageInvisible(message),
-      );
+      .filter(message => !this.isMessageInvisible(message));
   }
 
   setInitialValues(): void {
@@ -162,7 +153,10 @@ export class ChatService {
 
     this.messages$.next([
       ...this.messages$.value.slice(0, -1),
-      messageContentBlock([textContentBlock(content)], ChatRole.User),
+      messageContentBlock(
+        [textContentBlock(content), ...imageFileContentList],
+        ChatRole.User,
+      ),
     ]);
 
     return [
@@ -180,7 +174,7 @@ export class ChatService {
       this.isResponding$.next(true);
 
       const message = messageContentBlock(
-        [textContentBlock(data.text.value)],
+        [textContentBlock('')],
         ChatRole.Assistant,
       );
       this.addMessage(message);
@@ -197,7 +191,10 @@ export class ChatService {
       if (isTextContentBlock(lastMessageContent)) {
         (
           this.messages$.value[length - 1].content?.[0] as TextContentBlock
-        ).text = data.text;
+        ).text.value += data.textDelta.value || '';
+        (
+          this.messages$.value[length - 1].content?.[0] as TextContentBlock
+        ).text.annotations = data.text.annotations || [];
       }
     });
   }
@@ -207,13 +204,13 @@ export class ChatService {
       this.isTyping$.next(false);
       this.isResponding$.next(false);
 
-      const annotationContent = this.annotationPipe.transform(event);
-      const message = messageContentBlock(
-        [textContentBlock(annotationContent)],
-        ChatRole.Assistant,
-      );
-
-      this.messages$.next([...this.messages$.value.slice(0, -1), message]);
+      this.messages$.next([
+        ...this.messages$.value.slice(0, -1),
+        {
+          ...this.messages$.value.pop(),
+          annotations: event.annotations,
+        },
+      ]);
     });
   }
 

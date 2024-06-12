@@ -6,6 +6,7 @@ import { ImageFileContentBlock } from 'openai/resources/beta/threads';
 @Pipe({
   standalone: true,
   name: 'messageImageFile',
+  pure: true,
 })
 export class MessageImageFilePipe implements PipeTransform {
   transform(message: Partial<ChatMessage>): ImageFileContentBlock[] {

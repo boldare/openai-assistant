@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   ImageFile,
   Message,
+  MessageContent,
   MessageCreateParams,
   MessageDelta,
   Text,
@@ -13,6 +14,7 @@ import {
   ToolCallDelta,
 } from 'openai/resources/beta/threads/runs';
 import { RunStep } from 'openai/resources/beta/threads/runs/steps';
+import { AnnotationData } from '../annotations/annotations.model';
 
 export interface ChatAudio {
   file: File;
@@ -50,7 +52,7 @@ export class ChatCallResponseDto {
   threadId!: string;
 
   @ApiProperty()
-  content!: string;
+  content!: Array<MessageContent>;
 }
 
 export class ChatCallDto {
@@ -58,7 +60,7 @@ export class ChatCallDto {
   threadId!: string;
 
   @ApiProperty()
-  content!: string;
+  content!: Array<MessageContent>;
 
   @ApiProperty({ required: false })
   assistantId?: string;
@@ -144,4 +146,9 @@ export interface ChatCallCallbacks {
   [ChatEvents.RunStepCreated]?: (data: RunStepCreatedPayload) => Promise<void>;
   [ChatEvents.RunStepDelta]?: (data: RunStepDeltaPayload) => Promise<void>;
   [ChatEvents.RunStepDone]?: (data: RunStepDonePayload) => Promise<void>;
+}
+
+export interface MessageWithAnnotations<T> {
+  data: T;
+  annotations: AnnotationData[];
 }

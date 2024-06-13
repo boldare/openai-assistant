@@ -22,6 +22,10 @@
     );
   }
 
+  .mat-mdc-form-field-infix {
+    width: 100%;
+  }
+
   mat-form-field {
     width: 100%;
     font-size: 14px;
@@ -79,5 +83,27 @@
 
   .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
     top: 28px;
+  }
+
+  .popover {
+    background: var(--color-grey-600);
+    transition: none;
+    padding: 4px 12px;
+    margin-bottom: 4px;
+    margin-left: -20px;
+    color: white;
+
+    .mat-mdc-menu-content {
+      align-items: center;
+      display: flex;
+      padding: 0;
+      font-size: 12px;
+    }
+
+    .icon {
+      font-size: inherit;
+      height: initial;
+      width: initial;
+    }
   }
 }

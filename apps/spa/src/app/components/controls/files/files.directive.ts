@@ -6,6 +6,7 @@ import {
   EventEmitter,
   Input,
 } from '@angular/core';
+import { MessageContent } from 'openai/src/resources/beta/threads/messages';
 
 @Directive({
   standalone: true,
@@ -13,7 +14,7 @@ import {
 })
 export class AiFilesDirective {
   @Output() drop$: EventEmitter<FileList> = new EventEmitter();
-  @Input() files: File[] = [];
+  @Input() files: Array<File | MessageContent> = [];
   event = 'init';
 
   @HostBinding('class') get getClasses(): string {

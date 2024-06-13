@@ -1,0 +1,33 @@
+@import 'settings';
+
+:host {
+  display: flex;
+  align-items: baseline;
+  gap: $size-2;
+  border-top: 1px dashed var(--color-grey-500);
+  margin-top: $size-3;
+  padding-top: $size-3;
+  font-size: 12px;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.title {
+  font-weight: 500;
+}
+
+.content {
+  display: flex;
+  gap: $size-1;
+  margin-top: $size-2;
+}
+
+.annotation {
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+}

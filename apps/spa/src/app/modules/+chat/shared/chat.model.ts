@@ -1,3 +1,6 @@
+import { AnnotationData } from '@boldare/openai-assistant';
+import { Message } from 'openai/resources/beta/threads';
+
 export interface AudioResponse {
   content: string;
 }
@@ -5,12 +8,10 @@ export interface AudioResponse {
 export enum ChatRole {
   User = 'user',
   Assistant = 'assistant',
-  System = 'system',
 }
 
-export interface ChatMessage {
-  metadata?: Record<string, unknown>;
-  content: string;
+export interface ChatMessage extends Message {
+  annotations?: AnnotationData[];
   role: ChatRole;
 }
 

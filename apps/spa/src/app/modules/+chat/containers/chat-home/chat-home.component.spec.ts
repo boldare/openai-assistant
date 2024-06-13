@@ -4,6 +4,7 @@ import { ChatHomeComponent } from './chat-home.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MarkdownModule } from 'ngx-markdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AnnotationPipe } from '../../../../pipes/annotation.pipe';
 
 describe('ChatHomeComponent', () => {
   let component: ChatHomeComponent;
@@ -17,6 +18,7 @@ describe('ChatHomeComponent', () => {
         BrowserAnimationsModule,
         MarkdownModule.forRoot(),
       ],
+      providers: [AnnotationPipe],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChatHomeComponent);

@@ -6,7 +6,7 @@ export const assistantParams: AssistantCreateParams = {
   name: '@boldare/openai-assistant',
   instructions: `You are a chatbot assistant. Use the general knowledge to answer questions. Speak briefly and clearly.`,
   tools: [{ type: 'code_interpreter' }, { type: 'file_search' }],
-  model: 'gpt-4-turbo',
+  model: 'gpt-4o',
   temperature: 0.05,
 };
 

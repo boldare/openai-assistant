@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { ChatMessageComponent } from './chat-message.component';
-import { MarkdownModule } from 'ngx-markdown';
 
 describe('ChatMessageComponent', () => {
   let component: ChatMessageComponent;

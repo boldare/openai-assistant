@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { APIPromise } from 'openai/core';
-import { Message, Run } from 'openai/resources/beta/threads';
+import { Message, MessageContent, Run } from 'openai/resources/beta/threads';
 import { AssistantStream } from 'openai/lib/AssistantStream';
 import { AiModule } from './../ai/ai.module';
 import { ChatModule } from './chat.module';
@@ -29,9 +29,17 @@ describe('ChatService', () => {
 
     jest.spyOn(runService, 'resolve').mockReturnThis();
 
-    jest
-      .spyOn(chatbotHelpers, 'getAnswer')
-      .mockReturnValue(Promise.resolve('Hello response') as Promise<string>);
+    jest.spyOn(chatbotHelpers, 'getAnswer').mockReturnValue(
+      Promise.resolve([
+        {
+          type: 'text',
+          text: {
+            value: 'Hello response',
+            annotations: [],
+          },
+        },
+      ]) as Promise<MessageContent[]>,
+    );
 
     jest
       .spyOn(chatService.threads.messages, 'create')
@@ -49,7 +57,18 @@ describe('ChatService', () => {
 
   describe('call', () => {
     it('should create "thread run"', async () => {
-      const payload = { content: 'Hello', threadId: '1' } as ChatCallDto;
+      const payload = {
+        content: [
+          {
+            type: 'text',
+            text: {
+              value: 'Hello',
+              annotations: [],
+            },
+          },
+        ],
+        threadId: '1',
+      } as ChatCallDto;
       const spyOnThreadRunsCreate = jest
         .spyOn(chatService.threads.messages, 'create')
         .mockResolvedValue({} as Message);
@@ -60,14 +79,36 @@ describe('ChatService', () => {
     });
 
     it('should return ChatCallResponse', async () => {
-      const payload = { content: 'Hello', threadId: '1' } as ChatCallDto;
+      const payload = {
+        content: [
+          {
+            type: 'text',
+            text: {
+              value: 'Hello response',
+              annotations: [],
+            },
+          },
+        ],
+        threadId: '1',
+      } as ChatCallDto;
       jest
         .spyOn(chatService.threads.runs, 'create')
         .mockResolvedValue({} as Run);
 
       const result = await chatService.call(payload);
 
-      expect(result).toEqual({ content: 'Hello response', threadId: '1' });
+      expect(result).toEqual({
+        content: [
+          {
+            type: 'text',
+            text: {
+              value: 'Hello response',
+              annotations: [],
+            },
+          },
+        ],
+        threadId: '1',
+      });
     });
   });
 

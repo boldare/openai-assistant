@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { AiFilesDirective } from './files.directive';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -19,7 +19,7 @@ import { ControlIconComponent } from '../control-icon/control-icon.component';
   styleUrl: './files.component.scss',
 })
 export class FilesComponent {
-  @ViewChild('input') input!: HTMLInputElement;
+  @ViewChild('input') input!: ElementRef<HTMLInputElement>;
   @Input() isDisabled = false;
   files = toSignal(this.fileService.files$, { initialValue: [] });
 
@@ -37,7 +37,8 @@ export class FilesComponent {
   clear(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
-    this.input.files = null;
+    this.input.nativeElement.files = null;
+    this.input.nativeElement.value = '';
     this.fileService.clear();
   }
 }

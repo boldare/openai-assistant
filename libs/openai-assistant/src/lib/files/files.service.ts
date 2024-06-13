@@ -22,4 +22,8 @@ export class FilesService {
       }),
     );
   }
+
+  async retriveFile(fileId: string): Promise<FileObject> {
+    return await this.provider.files.retrieve(fileId);
+  }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { AssistantIframe } from '@boldare/ai-embedded';
 import { ChatService } from '../../shared/chat.service';
 import { environment } from '../../../../../environments/environment';
-import { AssistantIframe } from '@boldare/ai-embedded';
 
 @Component({
   selector: 'ai-chat-home',

@@ -3,6 +3,7 @@ import { ChatEvents } from './chat.model';
 import io from 'socket.io-client';
 import {
   ChatCallDto,
+  MessageWithAnnotations,
   TextCreatedPayload,
   TextDeltaPayload,
   TextDonePayload,
@@ -37,7 +38,7 @@ export class ChatGatewayService {
     return this.watchEvent(ChatEvents.TextDelta);
   }
 
-  textDone(): Observable<TextDonePayload> {
+  textDone(): Observable<MessageWithAnnotations<TextDonePayload>> {
     return this.watchEvent(ChatEvents.TextDone);
   }
 }

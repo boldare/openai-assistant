@@ -7,7 +7,11 @@ import {
   ChatCallResponseDto,
 } from './chat.model';
 import { ChatHelpers } from './chat.helpers';
-import { Message, MessageCreateParams } from 'openai/resources/beta/threads';
+import {
+  Message,
+  MessageContentPartParam,
+  MessageCreateParams,
+} from 'openai/resources/beta/threads';
 import { AssistantStream } from 'openai/lib/AssistantStream';
 import { assistantStreamEventHandler } from '../stream/stream.utils';
 
@@ -44,7 +48,7 @@ export class ChatService {
     const { threadId, content, attachments, metadata } = payload;
     const message: MessageCreateParams = {
       role: 'user',
-      content,
+      content: content as Array<MessageContentPartParam>,
       attachments,
       metadata,
     };

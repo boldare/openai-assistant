@@ -1,5 +1,5 @@
-@for (tip of tips; track tip) {
-<ai-chat-tip (click)="tipSelected$.emit(tip)">
-  {{ tip }}
-</ai-chat-tip>
+@for (tip of tips; track $index) {
+  <ai-chat-tip (click)="tipSelected$.emit(tip)">
+    {{ tip }}
+  </ai-chat-tip>
 }

@@ -28,7 +28,15 @@ describe('ChatController', () => {
       jest
         .spyOn(chatService, 'call')
         .mockResolvedValue({} as ChatCallResponseDto);
-      const payload = { content: 'Hello' } as ChatCallDto;
+      const payload = {
+        threadId: '123',
+        content: [
+          {
+            text: { value: 'Hello', annotations: [] },
+            type: 'text',
+          },
+        ],
+      } as ChatCallDto;
 
       await chatController.call(payload);
 

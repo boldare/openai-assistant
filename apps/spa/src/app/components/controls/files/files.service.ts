@@ -6,9 +6,12 @@ export class FilesService {
   files$ = new BehaviorSubject<File[]>([]);
 
   add(files: FileList) {
+    const convertedFiles = Object.keys(files).map(
+      key => files[key as unknown as number],
+    );
     const updatedFiles = [
       ...this.files$.value,
-      ...Object.keys(files).map(key => files[key as unknown as number]),
+      ...convertedFiles,
     ];
 
     this.files$.next(updatedFiles);

@@ -1,5 +1,5 @@
 <div class="messages">
-  @for (message of initialMessages.concat(messages); track message) {
+  @for (message of initialMessages.concat(messages); track message.id) {
     <span #item>
       <ai-chat-message [message]="message"></ai-chat-message>
     </span>

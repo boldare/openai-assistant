@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MarkdownModule } from 'ngx-markdown';
+import { ChatAnnotationsComponent } from './chat-annotations.component';
 
-import { ChatMessageComponent } from './chat-message.component';
-
-describe('ChatMessageComponent', () => {
-  let component: ChatMessageComponent;
-  let fixture: ComponentFixture<ChatMessageComponent>;
+describe('ChatAnnotationsComponent', () => {
+  let component: ChatAnnotationsComponent;
+  let fixture: ComponentFixture<ChatAnnotationsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChatMessageComponent, MarkdownModule.forRoot()],
+      imports: [ChatAnnotationsComponent, MarkdownModule.forRoot()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ChatMessageComponent);
+    fixture = TestBed.createComponent(ChatAnnotationsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

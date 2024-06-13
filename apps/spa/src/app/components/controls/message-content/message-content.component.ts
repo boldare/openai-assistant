@@ -1,10 +1,10 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { MessageContentService } from './message-content.service';
 import { ControlItemComponent } from '../control-item/control-item.component';
 import { ControlIconComponent } from '../control-icon/control-icon.component';
 import { AiFilesDirective } from '../files/files.directive';
+import { MessageContentService } from './message-content.service';
 
 @Component({
   selector: 'ai-message-content',

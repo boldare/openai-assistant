@@ -3,6 +3,7 @@ import { Socket } from 'socket.io';
 import { ChatGateway } from './chat.gateway';
 import { ChatModule } from './chat.module';
 import { ChatService } from './chat.service';
+import { ChatCallDto } from './chat.model';
 
 describe('ChatGateway', () => {
   let chatGateway: ChatGateway;
@@ -17,9 +18,15 @@ describe('ChatGateway', () => {
     chatService = moduleRef.get<ChatService>(ChatService);
     chatGateway = new ChatGateway(chatService);
 
-    jest
-      .spyOn(chatService, 'call')
-      .mockResolvedValue({ threadId: '123', content: 'Hello' });
+    jest.spyOn(chatService, 'call').mockResolvedValue({
+      threadId: '123',
+      content: [
+        {
+          text: { value: 'Hello', annotations: [] },
+          type: 'text',
+        },
+      ],
+    });
   });
 
   it('should be defined', () => {
@@ -28,7 +35,15 @@ describe('ChatGateway', () => {
 
   describe('listenForMessages', () => {
     it('should call chatService.call', async () => {
-      const request = { threadId: '123', content: 'Hello' };
+      const request = {
+        threadId: '123',
+        content: [
+          {
+            text: { value: 'Hello', annotations: [] },
+            type: 'text',
+          },
+        ],
+      } as ChatCallDto;
 
       await chatGateway.listenForMessages(request, {} as Socket);
 

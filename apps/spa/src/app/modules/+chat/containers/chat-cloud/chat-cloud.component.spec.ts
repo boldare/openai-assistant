@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ChatCloudComponent } from './chat-cloud.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MarkdownModule } from 'ngx-markdown';
+
+import { ChatCloudComponent } from './chat-cloud.component';
+import { AnnotationPipe } from '../../../../pipes/annotation.pipe';
 
 describe('ChatHomeComponent', () => {
   let component: ChatCloudComponent;
@@ -15,6 +16,7 @@ describe('ChatHomeComponent', () => {
         HttpClientTestingModule,
         MarkdownModule.forRoot(),
       ],
+      providers: [AnnotationPipe],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChatCloudComponent);

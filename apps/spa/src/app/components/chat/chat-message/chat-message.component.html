@@ -4,17 +4,19 @@
   }
 
   <div class="chat-message">
-    @if (messageText) {
-      <span markdown [data]="messageText"></span>
+    @for (msg of message.content; track $index) {
+      @if (msg.type === 'text') {
+        <span markdown [data]="msg | annotation"></span>
+      }
+      <ai-chat-annotations [message]="msg" />
     }
 
-    @if (message.role !== chatRole.System) {
-      <ai-chat-audio [message]="message"></ai-chat-audio>
-    }
-
-    @if (messageImage.length) {
+    @if ((message | messageImageFile).length) {
       <div class="chat-message__file">
-        @for (image of messageImage; track messageImage) {
+        @for (
+          image of message | messageImageFile;
+          track image.image_file.file_id
+        ) {
           <div>File ID: {{ image.image_file.file_id }}</div>
         }
       </div>

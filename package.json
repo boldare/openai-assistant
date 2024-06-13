@@ -18,7 +18,9 @@
     "cp:readme": "cp ./README.md ./dist/libs/openai-assistant/README.md",
     "lint": "nx run-many --parallel --target=lint --all",
     "test:openai-assistant": "nx test openai-assistant",
+    "test:watch:openai-assistant": "nx test openai-assistant --watch",
     "test:spa": "nx test spa",
+    "test:watch:spa": "nx test spa --watch",
     "test": "nx run-many --parallel --target=test --all",
     "format": "nx format:write",
     "prepare": "husky"

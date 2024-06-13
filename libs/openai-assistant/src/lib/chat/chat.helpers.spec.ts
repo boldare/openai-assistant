@@ -4,6 +4,7 @@ import { PagePromise } from 'openai/core';
 import { ChatModule } from './chat.module';
 import { ChatHelpers } from './chat.helpers';
 import { AiService } from '../ai';
+import { error } from 'console';
 
 describe('ChatService', () => {
   let chatbotHelpers: ChatHelpers;
@@ -23,7 +24,7 @@ describe('ChatService', () => {
   });
 
   describe('getAnswer', () => {
-    it('should return a string', async () => {
+    it('should return array of MessageContent', async () => {
       const threadMessage: Message = {
         content: [
           {
@@ -44,17 +45,17 @@ describe('ChatService', () => {
       } as unknown as Message;
 
       jest
-        .spyOn(chatbotHelpers, 'getLastMessage')
+        .spyOn(chatbotHelpers, 'geRunMessage')
         .mockReturnValue(Promise.resolve(threadMessage));
 
       const result = await chatbotHelpers.getAnswer({} as Run);
 
-      expect(result).toBe('Hello');
+      expect(result).toBe(threadMessage.content);
     });
   });
 
   describe('parseThreadMessage', () => {
-    it('should return a string', () => {
+    it('should return a array of MessageContent', () => {
       const threadMessage: Message = {
         content: [
           {
@@ -64,36 +65,21 @@ describe('ChatService', () => {
               annotations: [],
             },
           },
-          {
-            type: 'text',
-            text: {
-              value: 'Hello 2',
-              annotations: [],
-            },
-          },
         ],
       } as unknown as Message;
 
       const result = chatbotHelpers.parseThreadMessage(threadMessage);
 
-      expect(result).toBe('Hello');
-    });
-
-    it('should return a default message', () => {
-      const result = chatbotHelpers.parseThreadMessage();
-
-      expect(result).toBe(
-        `Seems I'm lost, would you mind reformulating your question`,
-      );
+      expect(result).toBe(threadMessage.content);
     });
   });
 
-  describe('getLastMessage', () => {
+  describe('geRunMessage', () => {
     it('should return a ThreadMessage', async () => {
       const threadMessagesPage = {
         data: [
           { run_id: '1', role: 'assistant', id: '1' },
-          { run_id: '1', role: 'user', id: '2' },
+          { run_id: '2', role: 'user', id: '2' },
           { run_id: '1', role: 'assistant', id: '3' },
         ],
       } as unknown as MessagesPage;
@@ -104,7 +90,7 @@ describe('ChatService', () => {
           threadMessagesPage as unknown as PagePromise<MessagesPage, Message>,
         );
 
-      const result = await chatbotHelpers.getLastMessage({ id: '1' } as Run);
+      const result = await chatbotHelpers.geRunMessage({ id: '1' } as Run);
 
       expect(result).toBe(threadMessagesPage.data[2]);
     });
@@ -123,7 +109,7 @@ describe('ChatService', () => {
           threadMessagesPage as unknown as PagePromise<MessagesPage, Message>,
         );
 
-      const result = await chatbotHelpers.getLastMessage({ id: '1' } as Run);
+      const result = await chatbotHelpers.geRunMessage({ id: '1' } as Run);
 
       expect(result).toBe(undefined);
     });

@@ -52,7 +52,7 @@ nest new project-name
 Install the library using npm:
 
 ```bash
-npm i @boldare/openai-assistant --save
+npm i @boldare/openai-assistant openai --save
 ```
 
 ### Step 2: Env variables

@@ -1,12 +1,11 @@
 {
   "name": "@boldare/source",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "license": "MIT",
   "scripts": {
     "set-env": "ts-node libs/ai-embedded/set-env.mjs",
     "start": "node dist/apps/api/main.js",
     "start:dev": "nx run-many --parallel --target=serve --projects=api,spa ",
-    "reset": "nx reset",
     "start:spa": "nx serve spa",
     "start:api": "nx serve api",
     "update": "nx migrate latest && nx migrate --run-migrations",

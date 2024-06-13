@@ -8,10 +8,7 @@ describe('ChatAnnotationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        ChatAnnotationComponent, 
-        HttpClientTestingModule,
-      ],
+      imports: [ChatAnnotationComponent, HttpClientTestingModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChatAnnotationComponent);

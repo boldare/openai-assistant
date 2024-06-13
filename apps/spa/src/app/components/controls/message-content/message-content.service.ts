@@ -10,10 +10,10 @@ export class MessageContentService {
   constructor(private readonly chatClientService: ChatClientService) {}
 
   add(files: FileList) {
-    const updatedFiles = [
-      ...this.data$.value,
-      ...Object.keys(files).map(key => files[key as unknown as number]),
-    ];
+    const convertedFiles = Object.keys(files).map(
+      key => files[key as unknown as number],
+    );
+    const updatedFiles = [...this.data$.value, ...convertedFiles];
     this.data$.next(updatedFiles);
   }
 

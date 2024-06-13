@@ -4,7 +4,7 @@
   }
 
   <div class="chat-message">
-    @for (msg of message.content; track msg) {
+    @for (msg of message.content; track $index) {
       @if (msg.type === 'text') {
         <span markdown [data]="msg | annotation"></span>
       }

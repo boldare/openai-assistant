@@ -204,10 +204,13 @@ export class ChatService {
       this.isTyping$.next(false);
       this.isResponding$.next(false);
 
+      const lastChatMessage = this.messages$.value.pop();
+      (lastChatMessage?.content?.[0]  as TextContentBlock).text.annotations = event.data.text.annotations
+
       this.messages$.next([
-        ...this.messages$.value.slice(0, -1),
+        ...this.messages$.value,
         {
-          ...this.messages$.value.pop(),
+          ...lastChatMessage,
           annotations: event.annotations,
         },
       ]);

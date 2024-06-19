@@ -192,6 +192,15 @@ The complete documentation on how to run the demo with all applications and libr
 
 ---
 
+## Contributions
+
+Would you like to see new features in the library? 
+- You can freely contribute to the project! Just create a pull request with your changes.
+- [Talk your idea over with one of our engineers.](https://calendly.com/olivier-halupczok/30min)
+- You can also [post your idea here](https://github.com/boldare/openai-assistant/discussions).
+
+---
+
 ## License
 
 `@boldare/openai-assistant` and this repository is MIT licensed

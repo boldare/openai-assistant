@@ -5,10 +5,11 @@
 </p>
 
 <p align="center">
- <a href="https://assistant.ai.boldare.dev/" target="_blank">demo</a> 🔹
- <a href="https://assistant.ai.boldare.dev/api/docs" target="_blank">api docs</a> 🔹
+ <a href="https://assistant.ai.boldare.dev/" target="_blank">Demo</a> 🔹
+ <a href="https://assistant.ai.boldare.dev/api/docs" target="_blank">API docs</a> 🔹
  <a href="https://www.npmjs.com/package/@boldare/openai-assistant" target="_blank">npm</a> 🔹
- <a href="https://github.com/boldare/openai-assistant" target="_blank">github</a>
+ <a href="https://github.com/boldare/openai-assistant" target="_blank">Github</a> 🔹
+ <a href="https://www.boldare.com/services/ai-software-development-consulting/" target="_blank">How we can help you</a>
 </p>
 
 # 🤖 AI Assistant
@@ -21,7 +22,7 @@ Introducing the NestJS library. Whether you're building a virtual assistant, or 
 
 ## 🚀 Features
 
-#### AI Assistant library features
+### AI Assistant library features
 
 - **Function calling**: The library provides a way to create functions, which allows you to extend the assistant's capabilities with custom logic.
 - **TTS (Text-to-Speech)**: The library provides a way to convert text to speech, which allows you to create voice-based interactions with the assistant.
@@ -174,25 +175,23 @@ Run your application and this will allow you to test the assistant.
 
 ---
 
+
+## 🤔 Are you stuck?
+
+Boldare's engineers are here to help you. If you have any questions or need help with the implementation, feel free to **[click here to book a call with one of our engineers.](https://calendly.com/olivier-halupczok/30min)**
+
+**Learn more how [Boldare can help you with AI development on our website](https://www.boldare.com/services/ai-software-development-consulting/).**
+
+You can also ask questions in the [GitHub Discussions](https://github.com/boldare/openai-assistant/discussions) section.
+
+---
+
 ## 👨‍💻 Repository
 
 The complete documentation on how to run the demo with all applications and libraries from the repository can be found in the [wiki](https://github.com/boldare/openai-assistant/wiki/%F0%9F%91%A8%E2%80%8D%F0%9F%92%BB-Repository).
 
-## Are you stuck?
-
-Boldare's engineers are here to help you. If you have any questions or need help with the implementation, feel free to **[click here to book a call with one of our engineers.](https://calendly.com/olivier-halupczok/30min)**
-
-You can also ask questions in the [GitHub Discussions](https://github.com/boldare/openai-assistant/discussions) section.
-
-**Learn more how Boldare can help you with [AI development on our website](https://www.boldare.com/services/ai-software-development-consulting/).**
-
-
-
-
-<!-- TODO: Use this calendly link to book a cal with one of our engineers to get help: https://calendly.com/d/4n8-4n8-4n8/30min -->
-
 ---
 
-# License
+## License
 
 `@boldare/openai-assistant` and this repository is MIT licensed

@@ -158,18 +158,15 @@ Run your application and this will allow you to test the assistant.
   # use this if you are using the repository:
   npm run start:dev
 
-  # if you are using NestJS please check the npm scripts in the package.json file
+  # if you are using your own NestJS application, please check the npm scripts in the package.json file
   # defualt command for NestJS is:
   npm run start
   ```
 
   Then you can test the assistant.
   1. First, you need to create a thread. You can create one
-  by sending a POST request to the `/assistant/threads` endpoint with the empty body:
-  ```
-  {}
-  ```
-  2. Then you can send a message to the assistant by sending a POST request to the `/assistant/chat` endpoint with the following body.
+  by sending a POST request to the `/assistant/threads` endpoint with the **empty body**.
+  2. Then you can send a message to the assistant by sending a POST request to the `/assistant/chat` endpoint with the following body:
   ```json
   {
     "threadId": "your-thread-id",

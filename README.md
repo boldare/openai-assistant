@@ -11,6 +11,9 @@
  <a href="https://github.com/boldare/openai-assistant" target="_blank">github</a>
 </p>
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/boldare/openai-assistant/tree/feat/heroku-deploy-btn)
+
+
 # 🤖 AI Assistant
 
 Introducing the NestJS library, designed to harness the power of OpenAI's Assistant, enabling developers to create highly efficient, scalable, and rapid AI assistants and chatbots. This library is tailored for seamless integration into the NestJS ecosystem, offering an intuitive API, WebSockets, and tools that streamline the development of AI-driven interactions. Whether you're building a customer service bot, a virtual assistant, or an interactive chatbot for engaging user experiences, our library empowers you to leverage cutting-edge AI capabilities with minimal effort.

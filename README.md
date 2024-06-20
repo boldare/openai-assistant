@@ -122,12 +122,7 @@ export const assistantConfig: AssistantConfigParams = {
   toolResources: {
     file_search: {
       // Provide files if you use file_search tool
-      files: [
-        {
-          name: 'example',
-          content: 'This is an example file.',
-        },
-      ],
+      fileNames: ['example1.txt', 'example2.txt'],
     },
   },
 };

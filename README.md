@@ -168,7 +168,7 @@ Run your application and this will allow you to test the assistant.
 
   Then you can test the assistant.
   1. First, you need to create a thread. You can create one
-  by sending a POST request to the `/assistant/threads` endpoint with the **empty body**.
+  by sending a POST request to the `/assistant/threads` endpoint with the **empty object in the body**.
   2. Then you can send a message to the assistant by sending a POST request to the `/assistant/chat` endpoint with the following body:
   ```json
   {
@@ -176,6 +176,9 @@ Run your application and this will allow you to test the assistant.
     "content": "Hello, how are you?"
   }
   ```
+  3. The assistant will respond with a message. You can send more messages to the assistant by sending a POST request to the `/assistant/chat` endpoint with the same body as in step 2.
+
+  Congrats! You have successfully integrated the AI Assistant library into your NestJS application. 🎉
 
 ---
 

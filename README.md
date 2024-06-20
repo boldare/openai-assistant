@@ -24,19 +24,20 @@ Introducing the NestJS library. Whether you're building a virtual assistant, or 
 
 ### AI Assistant library features
 
-- **Function calling**: The library provides a way to create functions, which allows you to extend the assistant's capabilities with custom logic.
-- **TTS (Text-to-Speech)**: The library provides a way to convert text to speech, which allows you to create voice-based interactions with the assistant.
-- **STT (Speech-to-Text)**: The library provides a way to convert speech to text, which allows you to create voice-based interactions with the assistant.
-- **File support**: The library provides a way to add files to the assistant, which allows you to extend the assistant's knowledge base with custom data.
-- **WebSockets**: The library provides a WebSocket server for real-time communication between the client and the assistant.
-- **REST API**: The library provides a REST API for communication with the assistant.
+- **Function calling**: create functions, so assistant can execute your custom logic!
+- **TTS (Text-to-Speech)**: convert text to speech, so you can hear your assistant!
+- **STT (Speech-to-Text)**: convert speech to text, so you can make conversation easier!
+- **File support**: add files to the assistant, so you can extend assistant's knowledge base with custom data!
+- **WebSockets**: establish WebSocket server for real-time communication between the client and the assistant!
+- **REST API**: Just use ready REST API for communication with the assistant!
+- **Vision with GPT-4o** - use the GPT-4o and make your assistant understand images and generate text based on them!
 
 #### Additional features in the repository
 
-The repository not only contains a library but also provides additional features. You don't have to build everything from scratch. You can just clone the repository and run it to take advantage of the features above and below:
+The repository contains a library but also provides additional features. You can just clone the repository and use it instantly to gain from all features:
 
-- **Embedded chatbot**: The library provides a way to embed the chatbot on various websites through JavaScript scripts.
-- **Chatbot client application**: The repository includes an example client application (SPA) with a chatbot.
+- **Embedded chatbot**: embed the chatbot on various websites through JavaScript scripts!
+- **Chatbot client application**: use ready client application (SPA) with a chatbot!
 
 ## 🏆 Getting started
 
@@ -58,13 +59,18 @@ Open or create your NestJS application where you would like to integrate the AI 
 nest new project-name
 ```
 
+Now you have to install the packages. Go to the next step.
+
 ### Step 1: Installation
 
+Make sure you are in the root directory of your project.
 Install the library and `openai` package using npm:
 
 ```bash
 npm i @boldare/openai-assistant openai --save
 ```
+
+The library is installed but we have to configure it. Go to the next step.
 
 ### Step 2: Env variables
 
@@ -87,6 +93,8 @@ ASSISTANT_ID=
 ```
 
 Please note that the `.env` file should not be committed to the repository. *Add the `.env` file to the `.gitignore`* file to prevent it from being committed.
+
+This was the first step needed to run the library. The next step is to configure the assistant.
 
 ### Step 3: Configuration
 

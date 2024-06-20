@@ -134,7 +134,7 @@ From now you can run your application and call the assistant.
 
 ### Step 4: Function calling
 
-Function calling allows you to extend the assistant's capabilities with custom logic. **If you are not going to use function calling you can jump to: [Step 5: Testing](#step-5-testing).**
+Function calling allows you to extend the assistant's capabilities with custom logic. **If you are not going to use function calling you can jump to: [Step 5: Testing](#step-5-running-the-application-and-testing).**
 
 Create a new service that extends the `AgentBase` class, fill the definition and implement the `output` method.
 

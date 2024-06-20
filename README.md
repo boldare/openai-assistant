@@ -101,9 +101,7 @@ import { AssistantCreateParams } from 'openai/resources/beta';
 export const assistantParams: AssistantCreateParams = {
   name: 'Your assistant name',
   instructions: `You are a chatbot assistant. Speak briefly and clearly.`,
-  tools: [
-    { type: 'code_interpreter' }, 
-  ],
+  tools: [{ type: 'file_search'}],
   model: 'gpt-4-turbo',
   temperature: 0.05,
 };
@@ -114,8 +112,14 @@ export const assistantConfig: AssistantConfigParams = {
   params: assistantParams,
   filesDir: './apps/api/src/app/knowledge',
   toolResources: {
-    codeInterpreter: {
-      fileNames: [],
+    file_search: {
+      // Provide files if you use file_search tool
+      files: [
+        {
+          name: 'example',
+          content: 'This is an example file.',
+        },
+      ],
     },
   },
 };

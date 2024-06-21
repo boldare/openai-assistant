@@ -26,6 +26,9 @@ Introducing the NestJS library. Whether you're building a virtual assistant, or 
 <div align="center" style="text-align: center;">
 
 [![Watch the tutorial](https://img.youtube.com/vi/rxPdFat90qY/0.jpg)](https://www.youtube.com/watch?v=rxPdFat90qY)
+
+[Video - AI Assistant in 15 min](https://www.youtube.com/watch?v=rxPdFat90qY)
+
 </div>
 
 ## 🚀 Features

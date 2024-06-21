@@ -1,0 +1,31 @@
+{
+  "name": "Openai Assistant by Boldare",
+  "description": "A NestJS project for OpenAI Assistant powered by Boldare",
+  "repository": "https://github.com/boldare/openai-assistant",
+  "logo": "https://assistant.ai.boldare.dev/assets/ai-assistant.jpg",
+  "keywords": ["nestjs", "openai", "assistant", "boldare", "ai", "chatbot", "assistant-ai"],
+  "env": {
+    "OPENAI_API_KEY": {
+      "description": "API key for OpenAI. You can generate and find it in the OpenAI dashboard.",
+      "required": true
+    },
+    "ASSISTANT_ID": {
+      "description": "Assistant ID has to be defined for Heroku deployment. You can create and find it in the OpenAI dashboard.",
+      "required": true
+    },
+    "APP_URL": {
+      "description": "URL of your application - required only if you want to embed the chatbot to the different domains",
+      "required": false
+    },
+    "OPENWEATHER_API_KEY": {
+      "description": "API key for OpenWeather - required only if you want to use weather tool",
+      "required": false
+    }
+  },
+  "scripts": {},
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  }
+}

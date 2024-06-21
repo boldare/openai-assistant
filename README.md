@@ -1,20 +1,21 @@
-<p align="center">
+<div align="center" style="text-align: center;">
   <a href="https://www.boldare.com/services/ai-software-development-consulting/" target="blank">
     <img src="https://assistant.ai.boldare.dev/assets/ai-assistant.jpg" width="280" alt="Boldare" />
-  </a>
-</p>
+  </a><br><br>
 
-<p align="center">
- <a href="https://assistant.ai.boldare.dev/" target="_blank">Demo</a> 🔹
- <a href="https://assistant.ai.boldare.dev/api/docs" target="_blank">API docs</a> 🔹
- <a href="https://www.npmjs.com/package/@boldare/openai-assistant" target="_blank">npm</a> 🔹
- <a href="https://github.com/boldare/openai-assistant" target="_blank">Github</a> 🔹
- <a href="https://www.boldare.com/services/ai-software-development-consulting/" target="_blank">How we can help you</a>
-</p>
+  A NestJS library for building efficient, scalable, and fast solutions using the OpenAI Assistant API (chatbots). <br> Kickstart your AI Assistant development in under 15 minutes 🚀
 
+  <a href="https://assistant.ai.boldare.dev/" target="_blank"><img alt="demo" src="https://img.shields.io/badge/demo-👀-green"></a>&nbsp;
+  <a href="https://assistant.ai.boldare.dev/api/docs" target="_blank"><img alt="docs" src="https://img.shields.io/badge/api docs-📚-orange"></a>&nbsp;
+  <a href="https://www.npmjs.com/package/@boldare/openai-assistant" target="_blank"><img alt="npm" src="https://img.shields.io/npm/v/%40boldare%2Fopenai-assistant"></a>&nbsp;
+  <a href="https://www.boldare.com/services/ai-software-development-consulting/" target="_blank"><img alt="docs" src="https://img.shields.io/badge/How we can help you-💡-brown"></a>&nbsp;
+  <a href="https://github.com/boldare/openai-assistant" target="_blank"><img alt="Github" src="https://img.shields.io/github/stars/boldare/openai-assistant"></a>
+   
+  [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/boldare/openai-assistant)
 
-# 🤖 AI Assistant
-`@boldare/openai-assistant` - library to kickstart your AI Assistant development under 15 minutes.
+</div>
+
+# AI Assistant
 
 Introducing the NestJS library. Whether you're building a virtual assistant, or an interactive chatbot for engaging user experiences, our library empowers you to leverage cutting-edge AI capabilities with minimal effort.
 
@@ -22,7 +23,13 @@ Introducing the NestJS library. Whether you're building a virtual assistant, or 
 
 ## 📚 Watch the tutorial
 
+<div align="center" style="text-align: center;">
+
 [![Watch the tutorial](https://img.youtube.com/vi/rxPdFat90qY/0.jpg)](https://www.youtube.com/watch?v=rxPdFat90qY)
+
+[Video - AI Assistant in 15 min](https://www.youtube.com/watch?v=rxPdFat90qY)
+
+</div>
 
 ## 🚀 Features
 
@@ -47,9 +54,9 @@ The repository contains a library but also provides additional features. You can
 
 In this section, you will learn how to integrate the AI Assistant library into your NestJS application. The following steps will guide you through the process of setting up the library and creating simple functionalities.
 
-<!-- The information that after this steps we will have the endpoints ready -->
-
-### Step 0: Prerequisites
+</details>
+<details>
+<summary><b>Step 0:</b> Prerequisites</summary><br>
 
 - Node.js (`^20.0.0` version)
 - npm (`^10.0.0` version)
@@ -65,7 +72,9 @@ nest new project-name
 
 Now you have to install the packages. Go to the next step.
 
-### Step 1: Installation
+</details>
+<details>
+<summary><b>Step 1:</b> Installation</summary><br>
 
 Make sure you are in the root directory of your project.
 Install the library and `openai` package using npm:
@@ -76,7 +85,9 @@ npm i @boldare/openai-assistant openai --save
 
 The library is installed but we have to configure it. Go to the next step.
 
-### Step 2: Env variables
+</details>
+<details>
+<summary><b>Step 2:</b> Env variables</summary><br>
 
 Set up your environment variables, create environment variables in the `.env` file in the root directory of the project, and populate it with the necessary secrets. The assistant ID is optional and serves as a unique identifier for your assistant. When the environment variable is not set, the assistant will be created automatically. You can use the assistant ID to connect to an existing assistant, which can be found in the OpenAI platform after creating an assistant.
 
@@ -100,7 +111,9 @@ Please note that the `.env` file should not be committed to the repository. *Add
 
 This was the first step needed to run the library. The next step is to configure the assistant.
 
-### Step 3: Configuration
+</details>
+<details>
+<summary><b>Step 3:</b> Configuration</summary><br>
 
 The library provides a way to configure the assistant with the `AssistantModule.forRoot` method. The method takes a configuration object as an argument. Create a new configuration file like in a [sample configuration file (chat.config.ts)](apps%2Fapi%2Fsrc%2Fapp%2Fchat%2Fchat.config.ts) and fill it with the necessary configuration. 
 
@@ -139,7 +152,10 @@ More details about the configuration can be found in the [wiki](https://github.c
 From now you can run your application and call the assistant.
 
 
-### Step 4: Function calling
+</details>
+<details>
+<summary><b>Step 4:</b> Function calling</summary><br>
+
 
 Function calling allows you to extend the assistant's capabilities with custom logic. **If you are not going to use function calling you can jump to: [Step 5: Testing](#step-5-running-the-application-and-testing).**
 
@@ -157,7 +173,9 @@ The instructions for creating a function can be found in the [wiki](https://gith
 If you've defined a function and the output method, you can now call it from the assistant just by asking him to do the action described in the function definition.
 
 
-### Step 5: Running the application and testing
+</details>
+<details>
+<summary><b>Step 5:</b> Running the application and testing</summary><br>
 
 Run your application and this will allow you to test the assistant. 
   
@@ -184,24 +202,18 @@ Run your application and this will allow you to test the assistant.
 
   Congrats! You have successfully integrated the AI Assistant library into your NestJS application. 🎉
 
----
-
+</details>
 
 ## 🤔 Are you stuck?
 
-Boldare's engineers are here to help you. If you have any questions or need help with the implementation, feel free to **[click here to book a call with one of our engineers.](https://calendly.com/olivier-halupczok/30min)**
+The complete documentation on how to run the demo with all applications and libraries from the repository can be found in the [wiki](https://github.com/boldare/openai-assistant/wiki/%F0%9F%91%A8%E2%80%8D%F0%9F%92%BB-Repository).
 
-**Learn more how [Boldare can help you with AI development on our website](https://www.boldare.com/services/ai-software-development-consulting/).**
+Boldare's engineers are here to help you. If you have any questions or need help with the implementation, feel free to [book a call](https://calendly.com/olivier-halupczok/30min) with one of our engineers.
+
+Learn more how **[Boldare can help you with AI development](https://www.boldare.com/services/ai-software-development-consulting/)**.
 
 You can also ask questions in the [GitHub Discussions](https://github.com/boldare/openai-assistant/discussions) section.
 
----
-
-## 👨‍💻 Repository
-
-The complete documentation on how to run the demo with all applications and libraries from the repository can be found in the [wiki](https://github.com/boldare/openai-assistant/wiki/%F0%9F%91%A8%E2%80%8D%F0%9F%92%BB-Repository).
-
----
 
 ## Contributions
 
@@ -209,8 +221,6 @@ Would you like to see new features in the library?
 - You can freely contribute to the project! Just create a pull request with your changes.
 - [Talk your idea over with one of our engineers.](https://calendly.com/olivier-halupczok/30min)
 - You can also [post your idea here](https://github.com/boldare/openai-assistant/discussions).
-
----
 
 ## License
 

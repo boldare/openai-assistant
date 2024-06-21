@@ -22,6 +22,8 @@ Introducing the NestJS library. Whether you're building a virtual assistant, or 
 
 ## 📚 Watch the tutorial
 
+[Click at the thumbnail or here to watch the tutorial.](https://www.youtube.com/watch?v=rxPdFat90qY)
+
 [![Watch the tutorial](https://img.youtube.com/vi/rxPdFat90qY/0.jpg)](https://www.youtube.com/watch?v=rxPdFat90qY)
 
 ## 🚀 Features

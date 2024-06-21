@@ -51,8 +51,6 @@ The repository contains a library but also provides additional features. You can
 
 In this section, you will learn how to integrate the AI Assistant library into your NestJS application. The following steps will guide you through the process of setting up the library and creating simple functionalities.
 
-<!-- The information that after this steps we will have the endpoints ready -->
-
 </details>
 <details>
 <summary><b>Step 0:</b> Prerequisites</summary><br>
@@ -155,7 +153,6 @@ From now you can run your application and call the assistant.
 <details>
 <summary><b>Step 4:</b> Function calling</summary><br>
 
-Function calling allows you to extend the assistant's capabilities with custom logic. **If you are not going to use function calling you can jump to: [Step 5: Testing](#step-5-running-the-application-and-testing).**
 
 Function calling allows you to extend the assistant's capabilities with custom logic. **If you are not going to use function calling you can jump to: [Step 5: Testing](#step-5-running-the-application-and-testing).**
 

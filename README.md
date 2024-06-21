@@ -12,13 +12,17 @@
  <a href="https://www.boldare.com/services/ai-software-development-consulting/" target="_blank">How we can help you</a>
 </p>
 
-# 🤖 AI Assistant
 
+# 🤖 AI Assistant
 `@boldare/openai-assistant` - library to kickstart your AI Assistant development under 15 minutes.
 
 Introducing the NestJS library. Whether you're building a virtual assistant, or an interactive chatbot for engaging user experiences, our library empowers you to leverage cutting-edge AI capabilities with minimal effort.
 
 **The library provides ready-to-use API endpoints** handling your assistant and WebSocket server for real-time communication between the client and the assistant. Install the library and paste the config to get it running.
+
+## 📚 Watch the tutorial
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rxPdFat90qY?si=WjSM_fvS2SoLWZLr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## 🚀 Features
 

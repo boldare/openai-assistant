@@ -6,7 +6,7 @@ import {
   EventEmitter,
   Input,
 } from '@angular/core';
-import { MessageContent } from 'openai/src/resources/beta/threads/messages';
+import { MessageContent } from 'openai/resources/beta/threads/messages';
 
 @Directive({
   standalone: true,

@@ -1,5 +1,5 @@
 import { TextContentBlock } from 'openai/resources/beta/threads/messages';
-import { ImageFileContentBlock } from 'openai/src/resources/beta/threads/messages';
+import { ImageFileContentBlock } from 'openai/resources/beta/threads/messages';
 
 export function isTextContentBlock(item?: {
   type?: string;

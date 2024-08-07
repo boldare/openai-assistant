@@ -5,7 +5,7 @@ import { AiService } from '../ai';
 import { ConfigService } from '../config';
 import { AssistantCreateParams, VectorStore } from 'openai/resources/beta';
 import ToolResources = AssistantCreateParams.ToolResources;
-import { AssistantUpdateParams } from 'openai/src/resources/beta/assistants';
+import { AssistantUpdateParams } from 'openai/resources/beta/assistants';
 import {
   AssistantCodeInterpreter,
   AssistantFileSearch,

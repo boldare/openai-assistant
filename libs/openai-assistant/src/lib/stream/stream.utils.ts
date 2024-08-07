@@ -1,5 +1,3 @@
-import { AbstractAssistantStreamRunner } from 'openai/lib/AbstractAssistantStreamRunner';
-import { AssistantStreamEvents } from 'openai/lib/AssistantStream';
 import {
   ImageFile,
   Message,
@@ -14,9 +12,10 @@ import {
 } from 'openai/resources/beta/threads/runs';
 import { RunStep } from 'openai/resources/beta/threads/runs/steps';
 import { ChatCallCallbacks, ChatEvents } from '../chat/chat.model';
+import { AssistantStream } from 'openai/lib/AssistantStream';
 
 export const assistantStreamEventHandler = <T>(
-  runner: AbstractAssistantStreamRunner<AssistantStreamEvents>,
+  runner: AssistantStream,
   callbacks?: ChatCallCallbacks,
 ) => {
   return runner

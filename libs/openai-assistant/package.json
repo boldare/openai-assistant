@@ -17,7 +17,7 @@
     "socket.io": "^4.7.3"
   },
   "peerDependencies": {
-    "openai": "^4.51.0"
+    "openai": "^4.55.0"
   },
   "type": "commonjs",
   "main": "./src/index.js",

@@ -3,7 +3,7 @@ import {
   MessageContent,
   MessageCreateParams,
 } from 'openai/resources/beta/threads';
-import { TextContentBlock } from 'openai/src/resources/beta/threads/messages';
+import { TextContentBlock } from 'openai/resources/beta/threads/messages';
 import { ChatMessage, ChatRole } from './chat.model';
 import { CodeInterpreterTool, FileSearchTool } from 'openai/resources/beta';
 

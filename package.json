@@ -1,6 +1,6 @@
 {
   "name": "@boldare/source",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "license": "MIT",
   "scripts": {
     "set-env": "ts-node libs/ai-embedded/set-env.mjs",
@@ -17,12 +17,12 @@
     "publish": "npm run build:openai-assistant && npm run cp:readme && cd dist/libs/openai-assistant/ && npm publish --access=public && cd ../../..",
     "cp:ai-embedded": "cp ./dist/libs/ai-embedded/main.js ./apps/spa/src/assets/js/ai-embedded.js",
     "cp:readme": "cp ./README.md ./dist/libs/openai-assistant/README.md",
-    "lint": "nx run-many --parallel --target=lint --all",
+    "lint": "nx run-many --parallel --target=lint --all --skip-nx-cache",
     "test:openai-assistant": "nx test openai-assistant",
     "test:watch:openai-assistant": "nx test openai-assistant --watch",
     "test:spa": "nx test spa",
     "test:watch:spa": "nx test spa --watch",
-    "test": "nx run-many --parallel --target=test --all",
+    "test": "nx run-many --parallel --target=test --all --skip-nx-cache",
     "format": "nx format:write",
     "prepare": "husky"
   },

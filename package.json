@@ -12,7 +12,7 @@
     "build": "npm run set-env && npm run build:ai-embedded && npm run build:spa && npm run build:api",
     "build:spa": "nx build --prod --skip-nx-cache spa",
     "build:api": "nx build --prod api",
-    "build:openai-assistant": "nx build --prod openai-assistant",
+    "build:openai-assistant": "nx build --prod openai-assistant --skip-nx-cache",
     "build:ai-embedded": "nx build ai-embedded --prod --skip-nx-cache && npm run cp:ai-embedded",
     "publish": "npm run build:openai-assistant && npm run cp:readme && cd dist/libs/openai-assistant/ && npm publish --access=public && cd ../../..",
     "cp:ai-embedded": "cp ./dist/libs/ai-embedded/main.js ./apps/spa/src/assets/js/ai-embedded.js",

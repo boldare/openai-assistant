@@ -65,5 +65,6 @@
       "e2eTestRunner": "none"
     }
   },
-  "useInferencePlugins": false
+  "useInferencePlugins": false,
+  "neverConnectToCloud": true
 }

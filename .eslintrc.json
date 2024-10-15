@@ -25,7 +25,7 @@
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nx/typescript"],
       "rules": {
-        "@typescript-eslint/no-extra-semi": "error",
+        "@typescript-eslint/no-extra-semi": "off",
         "no-extra-semi": "off"
       }
     },
@@ -33,7 +33,7 @@
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nx/javascript"],
       "rules": {
-        "@typescript-eslint/no-extra-semi": "error",
+        "@typescript-eslint/no-extra-semi": "off",
         "no-extra-semi": "off"
       }
     },

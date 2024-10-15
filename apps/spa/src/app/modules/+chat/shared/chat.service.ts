@@ -169,7 +169,7 @@ export class ChatService {
   }
 
   watchTextCreated(): Subscription {
-    return this.chatGatewayService.textCreated().subscribe(data => {
+    return this.chatGatewayService.textCreated().subscribe(() => {
       this.isTyping$.next(false);
       this.isResponding$.next(true);
 

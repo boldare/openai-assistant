@@ -65,13 +65,5 @@
       "e2eTestRunner": "none"
     }
   },
-  "useInferencePlugins": false,
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "test"]
-      }
-    }
-  }
+  "useInferencePlugins": false
 }

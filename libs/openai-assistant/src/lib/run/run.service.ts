@@ -33,6 +33,8 @@ export class RunService {
         case 'failed':
         case 'expired':
         case 'completed':
+        case 'incomplete':
+        case 'queued':
           return;
         case 'requires_action':
           await this.submitAction(run, callbacks);

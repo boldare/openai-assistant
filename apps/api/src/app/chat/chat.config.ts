@@ -13,10 +13,13 @@ export const assistantParams: AssistantCreateParams = {
 export const assistantConfig: AssistantConfigParams = {
   id: process.env['ASSISTANT_ID'] || '',
   params: assistantParams,
+  assistantPrefix: 'assistant-prefix',
   filesDir: './apps/api/src/app/knowledge',
   toolResources: {
     fileSearch: {
-      fileNames: ['33-things-to-ask-your-digital-product-development-partner.md'],
+      fileNames: [
+        '33-things-to-ask-your-digital-product-development-partner.md',
+      ],
     },
     codeInterpreter: {
       fileNames: [],

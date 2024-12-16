@@ -1,4 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { Type } from '@nestjs/common/interfaces';
+
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ChatCallDto, ChatCallResponseDto } from './chat.model';
 import { ChatService } from './chat.service';

@@ -4,7 +4,6 @@ import { createReadStream } from 'fs';
 import { AiService } from '../ai';
 import { ConfigService } from '../config';
 import { AssistantCreateParams, VectorStore } from 'openai/resources/beta';
-import ToolResources = AssistantCreateParams.ToolResources;
 import { AssistantUpdateParams } from 'openai/resources/beta/assistants';
 import {
   AssistantCodeInterpreter,
@@ -41,7 +40,7 @@ export class AssistantFilesService {
   async getCodeInterpreterResources(
     data: AssistantCodeInterpreter,
     fileDir = '',
-  ): Promise<ToolResources.CodeInterpreter> {
+  ): Promise<AssistantCreateParams.ToolResources.CodeInterpreter> {
     const files = await this.getFiles(data?.fileNames, fileDir);
 
     return { file_ids: files.map(({ id }) => id) };
@@ -50,7 +49,7 @@ export class AssistantFilesService {
   async getFileSearchResources(
     data: AssistantFileSearch,
     fileDir = '',
-  ): Promise<ToolResources.FileSearch> {
+  ): Promise<AssistantCreateParams.ToolResources.FileSearch> {
     if (!data) {
       return { vector_store_ids: [] };
     }

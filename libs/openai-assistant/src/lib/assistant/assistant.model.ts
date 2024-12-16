@@ -6,6 +6,7 @@ export interface AssistantConfigParams {
   params: AssistantCreateParams;
   options?: RequestOptions;
   filesDir?: string;
+  assistantPrefix?: string;
   toolResources?: AssistantToolResources | null;
 }
 

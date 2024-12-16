@@ -1,10 +1,12 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { Type } from '@nestjs/common/interfaces';
+
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ChatCallDto, ChatCallResponseDto } from './chat.model';
 import { ChatService } from './chat.service';
 
+@Controller(`assistant/chat`)
 @ApiTags('Chat')
-@Controller('assistant/chat')
 export class ChatController {
   constructor(public readonly chatsService: ChatService) {}
 

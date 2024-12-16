@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import { DynamicModule, Module } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { FilesController } from './files.controller';
 import { AiModule } from '../ai';
+import { createControllerWithPrefix } from '../../utils/controllers';
 
 @Module({
   imports: [AiModule],
@@ -9,4 +10,19 @@ import { AiModule } from '../ai';
   controllers: [FilesController],
   exports: [FilesService],
 })
-export class FilesModule {}
+export class FilesModule {
+  static register(prefix: string): DynamicModule {
+    return {
+      module: FilesModule,
+      providers: [
+        AiModule,
+        {
+          provide: 'PREFIX',
+          useValue: prefix,
+        },
+      ],
+      controllers: [createControllerWithPrefix(FilesController, prefix)],
+      exports: [FilesService],
+    };
+  }
+}

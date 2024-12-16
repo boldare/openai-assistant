@@ -5,7 +5,18 @@ import { AgentsModule } from './agents/agents.module';
 import { ChatSockets } from './chat.sockets';
 
 @Module({
-  imports: [AgentsModule, AssistantModule.forRoot(assistantConfig)],
+  imports: [
+    AgentsModule,
+    // AssistantModule.forFeature(assistantConfig),
+    AssistantModule.forFeature({
+      ...assistantConfig,
+      assistantPrefix: 'cx',
+    }),
+    AssistantModule.forFeature({
+      ...assistantConfig,
+      assistantPrefix: 'claims',
+    }),
+  ],
   providers: [ChatSockets],
 })
 export class ChatModule {}

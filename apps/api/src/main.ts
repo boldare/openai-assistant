@@ -11,13 +11,14 @@ async function bootstrap() {
     .setTitle('@boldare/openai-assistant')
     .setVersion('1.2.1')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
-
-  SwaggerModule.setup('api/docs', app, document);
-
+  
   app.setGlobalPrefix(globalPrefix);
 
   app.enableCors(cors);
+  
+  const document = SwaggerModule.createDocument(app, config);
+
+  SwaggerModule.setup('api/docs', app, document);
 
   const port = process.env['PORT'] || 3000;
   await app.listen(port);

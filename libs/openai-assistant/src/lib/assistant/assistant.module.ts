@@ -26,20 +26,14 @@ const sharedServices = [
   AssistantMemoryService,
 ];
 
-const sharedModules = [
+const sharedModulesWithoutControllers = [AgentModule, RunModule];
+const sharedModulesWithControllers = [
   AiModule,
-  AgentModule,
-  RunModule,
-  FilesModule,
   ThreadsModule,
+  FilesModule,
   ChatModule,
 ];
 
-@Module({
-  imports: [ConfigModule, HttpModule, ...sharedModules],
-  providers: [...sharedServices],
-  exports: [...sharedServices, ...sharedModules],
-})
 export class AssistantModule implements OnModuleInit {
   constructor(
     private readonly assistantService: AssistantService,
@@ -56,14 +50,29 @@ export class AssistantModule implements OnModuleInit {
     await this.assistantService.init();
   }
 
-  static forRoot(config: AssistantConfigParams): DynamicModule {
+  static register(config: AssistantConfigParams): DynamicModule {
     return {
       module: AssistantModule,
+      imports: [
+        ConfigModule,
+        HttpModule,
+        ...sharedModulesWithoutControllers,
+        ...sharedModulesWithControllers.map(module =>
+          module.register(config?.assistantPrefix || ''),
+        ),
+      ],
       providers: [
         {
           provide: 'config',
           useValue: config,
         },
+        ...sharedServices,
+      ],
+
+      exports: [
+        ...sharedServices,
+        ...sharedModulesWithoutControllers,
+        ...sharedModulesWithControllers,
       ],
     };
   }

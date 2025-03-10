@@ -52,7 +52,7 @@
     "envfile": "^7.1.0",
     "ngx-markdown": "^18.1.0",
     "openai": "^4.67.3",
-    "prismjs": "^1.29.0",
+    "prismjs": "^1.30.0",
     "recordrtc": "^5.6.2",
     "reflect-metadata": "^0.2.1",
     "rxjs": "^7.8.0",
